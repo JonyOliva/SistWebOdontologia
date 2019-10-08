@@ -4,16 +4,60 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="Resources/css/bootstrap.min.css">
+<jsp:include page="masterInclude.html"></jsp:include>
 <title>Inicio</title>
 </head>
+
+<style>
+	body{
+	    margin: 0 auto 0 auto;
+	    width: 100%;
+	    background: #ebf9f6;
+	}
+	input{
+	    border-radius: 4px;
+	    text-align: center;
+	}
+	.box{
+		background: white;
+	    width:300px;
+	    border-radius:6px;
+	    margin: 3% auto 0 auto;
+	    padding: 20px;
+	    border: #9de2d4 1px solid; 
+	}
+</style>
+
 <body>
 	<div class="container">
-	<h3 class="text-success">Prueba de boostrap</h3>
+	
+		<div>
+			<form action="adminTurnos.jsp" class="box">
+				<table>
+				<tr>
+					<td>
+						Email:
+					</td>
+					<td>
+						<input type="email">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Contraseña:
+					</td>
+					<td>
+						<input type="password">
+					</td>
+				</tr>
+				</table>
+				<br>
+				<div style="text-align: center">
+					<button > Iniciar sesión</button>
+				</div >
+			</form>
+		</div>
+	
 	</div>
-	
-	<script type="text/javascript" src="Resources/js/jquery-3.4.1.min.js"></script>
-	<script type="text/javascript" src="Resources/js/bootstrap.min.js"></script>
-	
 </body>
 </html>
