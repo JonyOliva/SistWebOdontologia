@@ -38,7 +38,7 @@ input {
 		<div>
 			<div>
 				<h5 class="titular">
-					Agregar/editar turno
+					Turno
 					</h1>
 			</div>
 			<form class="box">
@@ -50,6 +50,16 @@ input {
 					<tr>
 						<td>Odontologo:</td>
 						<td><input></td>
+					</tr>
+					<tr>
+						<td>Horario:</td>
+						<td>
+							<select style="margin-bottom: 10px;">
+								<option>09:30hs</option>
+								<option>10:00hs</option>
+								<option>10:30hs</option>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td>Fecha:</td>

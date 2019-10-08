@@ -16,10 +16,11 @@ const Estados = [
 const D_NORMAL = 0;
 const OFFSET = 15;
 const ESTPARCIAL = 4;
+const VACIO = "0";
 
 var estadoSelect = {
     tipo : 0,
-    Str: "0",
+    Str: VACIO,
     url: Estados[D_NORMAL]
 }
 
@@ -82,12 +83,19 @@ class Diente{
     }
 
     getEstadoStr(){
-        return {
-            left: this.estadoStr[0],
-            up: this.estadoStr[1],
-            right: this.estadoStr[2],
-            bottom: this.estadoStr[3],
-            center: this.estadoStr[4]
+        if(this.estadoStr[0] != VACIO ||
+            this.estadoStr[1] != VACIO ||
+            this.estadoStr[2] != VACIO ||
+            this.estadoStr[3] != VACIO ||
+            this.estadoStr[4] != VACIO)
+        {
+            return {
+                left: this.estadoStr[0],
+                up: this.estadoStr[1],
+                right: this.estadoStr[2],
+                bottom: this.estadoStr[3],
+                center: this.estadoStr[4]
+            }
         }
     }
 
@@ -180,34 +188,46 @@ function guardarOdontograma(maxilar, mandibular){
     var odontograma = new Array();
     let id = 18;
     for (let i = 0; i < maxilar.length/2; i++) {
-        odontograma.push({
-            id: id,
-            estado: maxilar[i].getEstadoStr()
-        })
+        let data = maxilar[i].getEstadoStr();
+        if(data){
+            odontograma.push({
+                id: id,
+                estado: maxilar[i].getEstadoStr()
+            })
+        }
         id--;
     }
     id = 21;
     for (let i = maxilar.length/2; i < maxilar.length; i++) {
-        odontograma.push({
-            id: id,
-            estado: maxilar[i].getEstadoStr()
-        })
+        let data = maxilar[i].getEstadoStr();
+        if(data){
+            odontograma.push({
+                id: id,
+                estado: maxilar[i].getEstadoStr()
+            })
+        }
         id++;
     }
     id = 48;
     for (let i = 0; i < mandibular.length/2; i++) {
-        odontograma.push({
-            id: id,
-            estado: mandibular[i].getEstadoStr()
-        })
+        let data = mandibular[i].getEstadoStr();
+        if(data){
+            odontograma.push({
+                id: id,
+                estado: mandibular[i].getEstadoStr()
+            })
+        }
         id--;
     }
     id = 31;
     for (let i = mandibular.length/2; i < mandibular.length; i++) {
-        odontograma.push({
-            id: id,
-            estado: mandibular[i].getEstadoStr()
-        })
+        let data = mandibular[i].getEstadoStr();
+        if(data){
+            odontograma.push({
+                id: id,
+                estado: mandibular[i].getEstadoStr()
+            })
+        }
         id++;
     }
     console.log(odontograma);

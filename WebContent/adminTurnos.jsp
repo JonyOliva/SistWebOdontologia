@@ -20,7 +20,7 @@
 					</h1>
 			</div>
 			<div>
-				<a href="regTurno.jsp" class=" btn btn-default"
+				<a href="registroTurno.jsp" class=" btn btn-default"
 					style="color: black; background: #48C9B0;">Agregar nuevo
 					turno</a>
 			</div>
