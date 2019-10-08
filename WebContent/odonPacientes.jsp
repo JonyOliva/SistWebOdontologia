@@ -20,10 +20,6 @@
 					Menú Pacientes
 					</h1>
 			</div>
-			<div>
-				<a href="fichaPaciente.jsp" class="btn btn-primary">Agregar
-					nuevo paciente</a>
-			</div>
 			<br>
 			<table border=1>
 				<tr>

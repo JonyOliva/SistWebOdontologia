@@ -38,7 +38,7 @@ input {
 		<div>
 			<div>
 				<h5 class="titular">
-					Agregar/editar paciente
+					Paciente
 					</h1>
 			</div>
 			<form class="box">
