@@ -20,7 +20,9 @@
 					Menú Pacientes
 					</h1>
 			</div>
-			<br>
+			<div style="margin-bottom: 10px;">
+				Buscar: <input type="text">
+			</div>
 			<table border=1>
 				<tr>
 					<th>Nombre</th>
@@ -40,7 +42,8 @@
 					<td>07/5/1962</td>
 					<td>Calle 123</td>
 					<td></td>
-					<td><a href="menuPaciente.jsp" class="btn btn-primary">Ficha paciente</a></td>
+					<td><a href="menuPaciente.jsp" class="btn btn-primary">Ficha
+							paciente</a></td>
 				</tr>
 			</table>
 		</div>

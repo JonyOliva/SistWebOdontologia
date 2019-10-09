@@ -13,24 +13,27 @@
 	<jsp:include page="masterMenuAdmin.html"></jsp:include>
 
 	<div class="container mt-3">
-
+	
 		<div>
 			<div>
 				<h5 class="titular">
 					Menú Pacientes
 					</h1>
 			</div>
-			<div>
-				<a href="fichaPaciente.jsp" class="btn btn-primary">Agregar
-					nuevo paciente</a>
-			</div>
 			<br>
+			<div>
+				<div class="row" style="margin-bottom: 10px;">
+				<div class="col-6">Buscar: <input type="text"></div>
+					<div class="col-6" style="text-align:right;"><a href="fichaPaciente.jsp" class="btn btn-primary">Agregar
+					nuevo paciente</a></div>
+				</div>
+			</div>
 			<table border=1>
 				<tr>
 					<th>Nombre</th>
 					<th>Apellido</th>
 					<th>DNI</th>
-					<th>Telï¿½fono</th>
+					<th>Teléfono</th>
 					<th>Fecha de nacimiento</th>
 					<th>Domicilio</th>
 					<th>Extra</th>

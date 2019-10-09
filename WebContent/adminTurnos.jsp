@@ -9,13 +9,11 @@
 </head>
 
 <style>
-
-.btnVerde{
-color: black;
-background: #48C9B0;
-border: grey solid 1px;
+.btnVerde {
+	color: black;
+	background: #48C9B0;
+	border: grey solid 1px;
 }
-
 </style>
 
 <body>
@@ -30,9 +28,19 @@ border: grey solid 1px;
 					Menú Turnos
 					</h1>
 			</div>
+			<br>
 			<div>
-				<a href="registroTurno.jsp" class=" btn btn-default btnVerde">Agregar nuevo turno</a>
+				<div class="row">
+					<div class="col-6">
+						Buscar: <input type="text">
+					</div>
+					<div class="col-6" style="text-align: right;">
+						<a href="registroTurno.jsp" class=" btn btn-default btnVerde">Agregar
+							nuevo turno</a>
+					</div>
+				</div>
 			</div>
+			<div></div>
 			<br>
 			<table border=1>
 				<tr>
@@ -48,9 +56,8 @@ border: grey solid 1px;
 					<td>28/04/2020</td>
 					<td>activo</td>
 					<td style="text-align: center;"><a href="registroTurno.jsp"
-						class="btn btn-default btn-sm btnVerde" >Modificar</a> <a href="#"
-						class="btn btn-default btn-sm btnVerde" >Eliminar</a>
-					</td>
+						class="btn btn-default btn-sm btnVerde">Modificar</a> <a href="#"
+						class="btn btn-default btn-sm btnVerde">Eliminar</a></td>
 				</tr>
 			</table>
 		</div>
