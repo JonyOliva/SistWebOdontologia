@@ -20,7 +20,8 @@
 			</div>
 
 			<div>
-				<a href="fichaOdontologo.jsp" class="btn btn-primary">Agregar nuevo odontologo</a>
+				<a href="fichaOdontologo.jsp" class="btn btn-primary">Agregar
+					nuevo odontologo</a>
 			</div>
 			<br>
 			<table border=1>
@@ -38,11 +39,12 @@
 					<td>20685423</td>
 					<td>3680/1</td>
 					<td style="text-align: center;">
-						<button style="font-size: 15px;">Ver horarios</button>
+						<a href="horariosOdon.jsp"
+						class="btn btn-info btn-sm">Ver horarios</a>
 					</td>
-					<td style="text-align: center;">
-						<button style="font-size: 13px;">Modificar</button>
-						<button style="font-size: 13px;">Eliminar</button>
+					<td style="text-align: center;"><a href="fichaOdontologo.jsp"
+						class="btn btn-primary btn-sm">Modificar</a> <a href="#"
+						class="btn btn-primary btn-sm">Eliminar</a>
 					</td>
 				</tr>
 			</table>

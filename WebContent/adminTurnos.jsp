@@ -7,6 +7,17 @@
 <jsp:include page="masterInclude.html"></jsp:include>
 <title>Turnos</title>
 </head>
+
+<style>
+
+.btnVerde{
+color: black;
+background: #48C9B0;
+border: grey solid 1px;
+}
+
+</style>
+
 <body>
 	<jsp:include page="masterMenuAdmin.html"></jsp:include>
 	<link rel="stylesheet" href="Resources/css/tables.css">
@@ -20,9 +31,7 @@
 					</h1>
 			</div>
 			<div>
-				<a href="registroTurno.jsp" class=" btn btn-default"
-					style="color: black; background: #48C9B0;">Agregar nuevo
-					turno</a>
+				<a href="registroTurno.jsp" class=" btn btn-default btnVerde">Agregar nuevo turno</a>
 			</div>
 			<br>
 			<table border=1>
@@ -38,9 +47,9 @@
 					<td>****</td>
 					<td>28/04/2020</td>
 					<td>activo</td>
-					<td style="text-align: center;">
-						<button style="font-size: 13px;">Modificar</button>
-						<button style="font-size: 13px;">Eliminar</button>
+					<td style="text-align: center;"><a href="registroTurno.jsp"
+						class="btn btn-default btn-sm btnVerde" >Modificar</a> <a href="#"
+						class="btn btn-default btn-sm btnVerde" >Eliminar</a>
 					</td>
 				</tr>
 			</table>

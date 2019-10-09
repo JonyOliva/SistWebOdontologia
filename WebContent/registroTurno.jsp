@@ -24,11 +24,12 @@ input {
 
 .box {
 	background: white;
-	width: 300px;
+	width: 350px;
 	border-radius: 6px;
 	margin: 3% auto 0 auto;
 	padding: 20px;
 	border: #9de2d4 1px solid;
+	text-align:center;
 }
 </style>
 
@@ -44,12 +45,18 @@ input {
 			<form class="box">
 				<table>
 					<tr>
-						<td>Paciente:</td>
-						<td><input></td>
+						<td>DNI paciente:</td>
+						<td><input type="number"></td>
 					</tr>
 					<tr>
 						<td>Odontologo:</td>
-						<td><input></td>
+						<td>
+						<select style="margin-bottom: 10px; width: 100%;">
+							<option>Fernandez</option>
+							<option>Da Costa</option>
+							<option>Gomez</option>
+						</select>
+					</td>
 					</tr>
 					<tr>
 						<td>Horario:</td>

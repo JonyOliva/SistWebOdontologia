@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="masterInclude.html"></jsp:include>
 <title>Pacientes</title>
 <link rel="stylesheet" href="Resources/css/tables.css">
@@ -30,7 +30,7 @@
 					<th>Nombre</th>
 					<th>Apellido</th>
 					<th>DNI</th>
-					<th>Teléfono</th>
+					<th>Telï¿½fono</th>
 					<th>Fecha de nacimiento</th>
 					<th>Domicilio</th>
 					<th>Extra</th>
@@ -40,15 +40,28 @@
 					<td>Claudio</td>
 					<td>Fernandez</td>
 					<td>20326495</td>
-					<td>11658243</td>
-					<td>07/5/1962</td>
+					<td>116582432</td>
+					<td>07/05/1962</td>
 					<td>Calle 123</td>
 					<td></td>
 					<td style="text-align: center;">
-						<button style="font-size: 13px;">Modificar</button>
-						<button style="font-size: 13px;">Eliminar</button>
+						<a href="fichaPaciente.jsp" class="btn btn-primary btn-sm">Modificar</a>
+						<a href="#" class="btn btn-primary btn-sm">Eliminar</a>
 					</td>
 				</tr>
+				<tr>
+						<td>Jorge</td>
+						<td>Gomez</td>
+						<td>56213024</td>
+						<td>1163548712</td>
+						<td>22/08/1970</td>
+						<td>Calle 654</td>
+						<td></td>
+						<td style="text-align: center;">
+							<a href="fichaPaciente.jsp" class="btn btn-primary btn-sm">Modificar</a>
+							<a href="#" class="btn btn-primary btn-sm">Eliminar</a>
+						</td>
+					</tr>
 			</table>
 		</div>
 

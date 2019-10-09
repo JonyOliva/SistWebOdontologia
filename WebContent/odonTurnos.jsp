@@ -19,18 +19,19 @@
 		<div>
 			<table border=1>
 				<tr>
-					<th>Paciente</th>
+					<th>DNI Paciente</th>
 					<th>Odontologo</th>
 					<th>Fecha</th>
 					<th>Hora</th>
 					<th>Acciones</th>
 				</tr>
 				<tr>
-					<td>****</td>
+					<td>52636987</td>
 					<td>****</td>
 					<td>10/05/2019</td>
 					<td>9:30hs</td>
-					<td><a href="menuPaciente.jsp" class="btn btn-info">Aceptar turno</a></td>
+					<td><a href="menuPaciente.jsp" class="btn btn-primary">Presente</a>
+					<a href="menuPaciente.jsp" class="btn btn-danger">Ausente</a></td>
 				</tr>
 			</table>
 		</div>

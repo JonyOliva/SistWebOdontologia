@@ -30,6 +30,7 @@
 					<th>Fecha de nacimiento</th>
 					<th>Domicilio</th>
 					<th>Extra</th>
+					<th>Acciones</th>
 				</tr>
 				<tr>
 					<td>Claudio</td>
@@ -38,7 +39,8 @@
 					<td>11658243</td>
 					<td>07/5/1962</td>
 					<td>Calle 123</td>
-
+					<td></td>
+					<td><a href="menuPaciente.jsp" class="btn btn-primary">Ficha paciente</a></td>
 				</tr>
 			</table>
 		</div>
