@@ -27,7 +27,7 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 	}
 
 	@Override
-	public boolean eliminar(iUsuario user) {
+	public boolean eliminar(String IDUsuario) {
 		// TODO Auto-generated method stub
 		return false;
 	}

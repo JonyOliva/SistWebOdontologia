@@ -10,16 +10,16 @@ public class Conexion {
 
 	private String host = "jdbc:mysql://localhost:3306/";
 	private String user = "root";
-	private String pass = "root";
-	private String dbName = "bdarticulos??profileSQL=true&useSSL=false";
-
+	private String pass = "admin"; 
+	private String dbName = "odontologiadb?profileSQL=true&useSSL=false&serverTimezone=UTC";
+	//una hora para configurar esta mierda
 	protected Connection connection;
 	
 	public Connection Open()
 	{
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver"); //tamara chupalña
 			this.connection = DriverManager.getConnection(host+dbName, user, pass);
 		}
 		catch(Exception e)
