@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="masterInclude.html"></jsp:include>
 <link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 <title>Ficha odontologo</title>
@@ -39,7 +39,7 @@ input {
 			<div>
 				<h5 class="titular">
 					Odontologo
-					</h1>
+					</h5>
 			</div>
 			<form class="box">
 				<table>
@@ -62,6 +62,18 @@ input {
 					<tr>
 						<td>Matricula:</td>
 						<td><input type="number"></td>
+					</tr>
+				</table>
+				<hr>
+				<p style="font-size: 18px; text-align: center; font-weight: bold;" >Usuario</p>
+				<table>
+					<tr>
+						<td>Email:</td>
+						<td><input type="email"></td>
+					</tr>
+					<tr>
+						<td>Contraseña:</td>
+						<td><input type="text"></td>
 					</tr>
 				</table>
 				<br>

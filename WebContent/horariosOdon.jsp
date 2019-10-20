@@ -31,7 +31,7 @@
 				<tr>
 					<td>Martes</td>
 					<td>08:00hs</td>
-					<td>16:00hs</td>
+					<td>16:30hs</td>
 					<td style="text-align: center;"><a href="fichaPaciente.jsp"
 						class="btn btn-primary btn-sm">Modificar</a> <a href="#"
 						class="btn btn-primary btn-sm">Eliminar</a></td>

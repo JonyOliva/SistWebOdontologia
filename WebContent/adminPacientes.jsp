@@ -18,7 +18,7 @@
 			<div>
 				<h5 class="titular">
 					Menú Pacientes
-					</h1>
+					</h5>
 			</div>
 			<br>
 			<div>
