@@ -67,6 +67,32 @@ public class PacienteDaoImpl implements IPacienteDao{
 		return false;
 	}
 
+	@Override
+	public List<Paciente> buscar(String strBusqueda) {
+		List<Paciente> listPacientes = new ArrayList<Paciente>();
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("SELECT * FROM pacientes");
+			while(rs.next()) {
+				Paciente paciente = new Paciente(rs.getInt("IDPaciente"));
+				paciente.setNombre(rs.getString("Nombre"));
+				paciente.setApellido(rs.getString("Apellido"));
+				paciente.setDni(rs.getString("DNI"));
+				paciente.setTelefono(rs.getString("Telefono"));
+				paciente.setDomicilio(rs.getString("Domicilio"));
+				paciente.setInfoExtra(rs.getString("InformacionExtra"));
+				paciente.setFechaNacimiento(rs.getObject("FechaNacimiento", LocalDate.class));
+				listPacientes.add(paciente);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
+		
+		return listPacientes;
+	}
+
 	
 		
 }

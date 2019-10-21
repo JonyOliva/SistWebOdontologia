@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import Entidad.Utilidades;
+
 public class Conexion {
 
 	private String host = "jdbc:mysql://localhost:3306/";

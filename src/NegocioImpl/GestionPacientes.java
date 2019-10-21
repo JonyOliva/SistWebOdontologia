@@ -44,4 +44,10 @@ public class GestionPacientes implements IPacienteNegocio{
 		return false;
 	}
 
+	@Override
+	public ArrayList<Paciente> buscar(String strBusqueda) {
+		
+		return null;
+	}
+
 }
