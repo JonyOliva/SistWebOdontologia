@@ -3,6 +3,7 @@
 <%@page import="Entidad.Paciente"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="Entidad.Paginador"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,10 +16,10 @@
 <body>
 	<jsp:include page="masterMenuAdmin.html"></jsp:include>
 
-	<%!List<Paciente> listPacientes = new ArrayList<Paciente>();%>
+	<%!List<Paciente> listPacientes;%>
 	<%
-		if (request.getAttribute("listaPacientes") != null) {
-			listPacientes = (List<Paciente>) request.getAttribute("listaPacientes");
+		if (request.getAttribute("Pacientes") != null) {
+			listPacientes = (List<Paciente>) request.getAttribute("Pacientes");
 		}
 	%>
 
@@ -66,24 +67,54 @@
 				</tr>
 				 -->
 				<%
-					for(Paciente p : listPacientes){
+					for (Paciente p : listPacientes) {
 				%>
-					<tr>
-						<td><%= p.getNombre() %></td>
-						<td><%= p.getApellido() %></td>
-						<td><%= p.getDni() %></td>
-						<td><%= p.getTelefono() %></td>
-						<td><%= p.getFechaNacimiento() %></td>
-						<td><%= p.getDomicilio() %></td>
-						<td><%= p.getInfoExtra() %></td>
-						<td style="text-align: center;"><a href="fichaPaciente.jsp"
-							class="btn btn-primary btn-sm">Modificar</a> <a href="#"
-							class="btn btn-primary btn-sm">Eliminar</a></td>
-					</tr>
+				<tr>
+					<td><%=p.getNombre()%></td>
+					<td><%=p.getApellido()%></td>
+					<td><%=p.getDni()%></td>
+					<td><%=p.getTelefono()%></td>
+					<td><%=p.getFechaNacimiento()%></td>
+					<td><%=p.getDomicilio()%></td>
+					<td><%=p.getInfoExtra()%></td>
+					<td style="text-align: center;"><a href="fichaPaciente.jsp"
+						class="btn btn-primary btn-sm">Modificar</a> <a href="#"
+						class="btn btn-primary btn-sm">Eliminar</a></td>
+				</tr>
 				<%
 					}
 				%>
 			</table>
+			<div>
+				<div class="row mt-2">
+					<div class="col text-right">
+						<%
+							if (request.getAttribute("Anterior") != null) {
+								int pagAnterior = (int)request.getAttribute("Anterior");
+						%>
+
+						<a href="ServletPacientes?pag=<%=pagAnterior%>"
+							class="btn btn-light">Anterior</a>
+
+						<%
+							}
+						%>
+					</div>
+					<div class="col">
+						<%
+							if (request.getAttribute("Siguiente") != null) {
+								int pagSiguiente = (int)request.getAttribute("Siguiente");
+						%>
+
+						<a href="ServletPacientes?pag=<%=pagSiguiente%>"
+							class="btn btn-light">Siguiente</a>
+
+						<%
+							}
+						%>
+					</div>
+				</div>
+			</div>
 		</div>
 
 	</div>
