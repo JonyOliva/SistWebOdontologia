@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Entidad.Paciente;
-import Entidad.Paginador;
+import Entidad.Gestor;
 import Negocio.IPacienteNegocio;
 import NegocioImpl.GestionPacientes;
 
@@ -30,34 +30,54 @@ public class ServletPacientes extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//String userType = request.getParameter("userType").toString();
+		RequestDispatcher dispatcher;
 		String action = request.getParameter("action");
-		
-		//if(userType != null) {
-			String view;
-			//if(userType.equals("admin")) ACA TENDRIA QUE CHECKEAR LA VAR DE SESION
-				view = "/adminPacientes.jsp";
-			//else
-			//	view = "/odonPacientes.jsp";
-			if(action == null) {
-				Paginador<Paciente> pagPacientes = new Paginador<Paciente>(gp.getAll(), 1);
-				String pag = request.getParameter("pag");
-				if(pag != null) {
-					int nroPagina = Integer.valueOf(pag);
-					pagPacientes.pagina(nroPagina);
+		String view;
+		//if(userType.equals("admin")) ACA TENDRIA QUE CHECKEAR LA VAR DE SESION
+			view = "/adminPacientes.jsp";
+		//else
+		//	view = "/odonPacientes.jsp";
+		if(action == null) {
+			Gestor<Paciente> pagPacientes = new Gestor<Paciente>(new GestionPacientes(), 2);
+			String buscar = request.getParameter("buscar");
+			String pag = request.getParameter("pag");			
+			int nroPagina = 1;
+			if(pag != null) {
+				nroPagina = Integer.valueOf(pag);	
+				if(buscar != null) {
+					request.setAttribute("buscar", buscar);
 				}
-				request.setAttribute("Pacientes", pagPacientes.getPaginaActual());
-				int siguiente = pagPacientes.haySiguiente();
-				int anterior = pagPacientes.hayAnterior();
-				if(siguiente != -1)
-					request.setAttribute("Siguiente", siguiente);
-				if(anterior != -1)
-					request.setAttribute("Anterior", anterior);
-				RequestDispatcher dispatcher = request.getRequestDispatcher(view);
-				dispatcher.forward(request, response);				
 			}
-		//}
+			request.setAttribute("pacientes", pagPacientes.get(buscar, nroPagina));
+			int siguiente = pagPacientes.haySiguiente();
+			int anterior = pagPacientes.hayAnterior();
+			
+			if(siguiente != -1)
+				request.setAttribute("siguiente", siguiente);
+			if(anterior != -1)
+				request.setAttribute("anterior", anterior);
+			dispatcher = request.getRequestDispatcher(view);
+			dispatcher.forward(request, response);				
+		}else if(action.equals("edit")) {
+			String id = request.getParameter("id");
+			if(id != null) {
+				int idPaciente = Integer.valueOf(id);
+				request.setAttribute("paciente", gp.get(idPaciente));
+				dispatcher = request.getRequestDispatcher("fichaPaciente.jsp");
+				dispatcher.forward(request, response);
+			}
+			
+		}else if(action.equals("delete")) {
+			String id = request.getParameter("id");
+			if(id != null) {
+				int idPaciente = Integer.valueOf(id);
+				Paciente paciente = gp.get(idPaciente);
+				if(paciente != null) {
+					paciente.setActivo(false);
+					gp.modificar(paciente);
+				}
+			}
+		}
 		
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}

@@ -1,6 +1,7 @@
 package NegocioImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Datos.IPacienteDao;
 import DatosImpl.PacienteDaoImpl;
@@ -21,33 +22,33 @@ public class GestionPacientes implements IPacienteNegocio{
 	}
 
 	@Override
-	public Paciente get(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Paciente get(int idPaciente) {
+		return pdao.get(idPaciente);
 	}
 
 	@Override
-	public boolean insertar(Paciente articulo) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean insertar(Paciente paciente) {
+		return pdao.insertar(paciente);
 	}
 
 	@Override
-	public boolean modificar(Paciente articulo) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean modificar(Paciente paciente) {
+		return pdao.modificar(paciente);
 	}
 
 	@Override
-	public boolean eliminar(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean eliminar(int idPaciente) {
+		return pdao.eliminar(idPaciente);
 	}
 
 	@Override
-	public ArrayList<Paciente> buscar(String strBusqueda) {
-		
-		return null;
+	public List<Paciente> get(int inicio, int tamPagina, String aBuscar) {
+		return pdao.get(inicio, tamPagina, aBuscar);
+	}
+
+	@Override
+	public int size(String busqueda) {
+		return pdao.size(busqueda);
 	}
 
 }

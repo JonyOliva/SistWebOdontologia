@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import Entidad.Utilidades;
-
 public class Conexion {
 
 	private String host = "jdbc:mysql://localhost:3306/";
@@ -21,7 +19,7 @@ public class Conexion {
 	{
 		try
 		{
-			Class.forName("com.mysql.cj.jdbc.Driver"); //tamara chupalña
+			Class.forName("com.mysql.cj.jdbc.Driver"); 
 			this.connection = DriverManager.getConnection(host+dbName, user, pass);
 		}
 		catch(Exception e)

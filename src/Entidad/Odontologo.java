@@ -15,6 +15,38 @@ public class Odontologo extends iUsuario{
 		DNI = _dni;
 	}
 
+	public String getNombre() {
+		return Nombre;
+	}
+
+	public void setNombre(String nombre) {
+		Nombre = nombre;
+	}
+
+	public String getApellido() {
+		return Apellido;
+	}
+
+	public void setApellido(String apellido) {
+		Apellido = apellido;
+	}
+
+	public String getMatricula() {
+		return Matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		Matricula = matricula;
+	}
+
+	public String getDNI() {
+		return DNI;
+	}
+
+	public void setDNI(String dNI) {
+		DNI = dNI;
+	}
+
 	@Override
 	public String toString() {
 		return "Odontologo []";

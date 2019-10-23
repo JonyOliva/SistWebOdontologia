@@ -2,15 +2,15 @@ package Negocio;
 
 import java.util.ArrayList;
 
+import Entidad.IGestionable;
 import Entidad.Paciente;
 
-public interface IPacienteNegocio {
+public interface IPacienteNegocio extends IGestionable<Paciente>{
 	
 	public ArrayList<Paciente> getAll();
-	public Paciente get(int id);
-	public ArrayList<Paciente> buscar(String strBusqueda);
-	public boolean insertar(Paciente articulo);
-	public boolean modificar(Paciente articulo);
-	public boolean eliminar(int id);
+	public Paciente get(int idPaciente);
+	public boolean insertar(Paciente paciente);
+	public boolean modificar(Paciente paciente);
+	public boolean eliminar(int idPaciente);
 	
 }
