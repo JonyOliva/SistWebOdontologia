@@ -71,7 +71,18 @@ public class PacienteDaoImpl implements IPacienteDao{
 
 	@Override
 	public boolean insertar(Paciente paciente) {
-		// TODO Auto-generated method stub
+		try {
+			cn.Open();
+			String query = "INSERT INTO pacientes(Nombre, Apellido, DNI, Telefono, Domicilio, FechaNacimiento, InformacionExtra, Activo) ";
+			String data = "SELECT '"+paciente.getNombre()+"', '"+paciente.getApellido()+"', '"+paciente.getDni()+"','"+paciente.getTelefono()+"', "
+					+ "'"+paciente.getDomicilio()+"', '"+paciente.getFechaNacimiento()+"', '"+paciente.getInfoExtra()+"', '"+paciente.isActivo()+"'";
+			
+			return cn.execute(query+data);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
 		return false;
 	}
 
