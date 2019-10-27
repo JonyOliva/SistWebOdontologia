@@ -92,8 +92,8 @@ public class Paciente {
 		InfoExtra = infoExtra;
 	}
 
-	public boolean isActivo() {
-		return activo;
+	public int isActivo() {
+		return activo ? 1 : 0;
 	}
 
 	public void setActivo(boolean activo) {
