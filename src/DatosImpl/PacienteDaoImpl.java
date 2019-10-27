@@ -51,6 +51,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 			ResultSet rs = cn.query("SELECT * FROM pacientes");
 			while(rs.next()) {
 				Paciente paciente = new Paciente(rs.getInt("IDPaciente"));
+				paciente.setActivo(rs.getBoolean("Activo"));
 				paciente.setNombre(rs.getString("Nombre"));
 				paciente.setApellido(rs.getString("Apellido"));
 				paciente.setDni(rs.getString("DNI"));
@@ -88,13 +89,32 @@ public class PacienteDaoImpl implements IPacienteDao{
 
 	@Override
 	public boolean modificar(Paciente paciente) {
-		// TODO Auto-generated method stub
+		try {
+			cn.Open();
+			String query = "UPDATE pacientes SET ";
+			String data = "Nombre='"+paciente.getNombre()+"', Apellido='"+paciente.getApellido()+"', DNI='"+paciente.getDni()+"', Telefono='"+paciente.getTelefono()
+			+"', Domicilio='"+paciente.getDomicilio()+"', FechaNacimiento='"+paciente.getFechaNacimiento()+"', InformacionExtra='"+paciente.getInfoExtra()
+			+"' WHERE IDPaciente=" + paciente.getIDPaciente();
+			return cn.execute(query+data);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
 		return false;
 	}
 
 	@Override
 	public boolean eliminar(int IDPaciente) {
-		// TODO Auto-generated method stub
+		try {
+			cn.Open();
+			String query = "UPDATE pacientes SET Activo=0 WHERE IDPaciente=" + IDPaciente;
+			return cn.execute(query);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
 		return false;
 	}
 
@@ -102,10 +122,10 @@ public class PacienteDaoImpl implements IPacienteDao{
 	public int size(String busqueda) {
 		try {
 			cn.Open();
-			String query = "SELECT COUNT(IDPaciente) AS Cantidad FROM pacientes ";
+			String query = "SELECT COUNT(IDPaciente) AS Cantidad FROM pacientes WHERE Activo=1 ";
 			if(busqueda != null) {
 				if(!busqueda.isEmpty()) {
-					query += "WHERE Nombre LIKE '%"+busqueda+"%' OR Apellido LIKE '%"+busqueda+"%' OR DNI LIKE '%"+busqueda+"%' ";
+					query += "AND (Nombre LIKE '%"+busqueda+"%' OR Apellido LIKE '%"+busqueda+"%' OR DNI LIKE '%"+busqueda+"%') ";
 				}
 			}
 			ResultSet rs = cn.query(query);
@@ -125,11 +145,11 @@ public class PacienteDaoImpl implements IPacienteDao{
 		List<Paciente> listPacientes = new ArrayList<Paciente>();
 		try {
 			cn.Open();
-			String query = "SELECT * FROM pacientes ";
+			String query = "SELECT * FROM pacientes WHERE Activo=1 ";
 			String pagina = "LIMIT " + inicio + ", " + cantidad;
 			if(aBuscar != null) {
 				if(!aBuscar.isEmpty()) {
-					query += "WHERE Nombre LIKE '%"+aBuscar+"%' OR Apellido LIKE '%"+aBuscar+"%' OR DNI LIKE '%"+aBuscar+"%' ";
+					query += "AND (Nombre LIKE '%"+aBuscar+"%' OR Apellido LIKE '%"+aBuscar+"%' OR DNI LIKE '%"+aBuscar+"%') ";
 				}
 			}
 			ResultSet rs = cn.query(query+pagina);

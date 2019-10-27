@@ -16,15 +16,13 @@
 <body>
 	<jsp:include page="masterMenuAdmin.html"></jsp:include>
 
-	<%!
-		List<Paciente> listPacientes;
-		String buscar = null;
-	%>
+	<%!List<Paciente> listPacientes;
+	String buscar = null;%>
 	<%
 		if (request.getAttribute("pacientes") != null) {
 			listPacientes = (List<Paciente>) request.getAttribute("pacientes");
 		}
-		if(request.getAttribute("buscar") != null){
+		if (request.getAttribute("buscar") != null) {
 			buscar = request.getAttribute("buscar").toString();
 		}
 	%>
@@ -40,14 +38,14 @@
 				<div class="row" style="margin-bottom: 10px;">
 					<div class="col-6">
 						<form action="ServletPacientes" method="GET">
-							Busqueda: <input name="buscar" 
-							<% if(request.getAttribute("buscar") != null)
-								out.print("value=\"" + request.getAttribute("buscar").toString() + "\"");
-							%> 
-							type="text" required>
-							<input name="pag" value="1" type="hidden">
+							Busqueda: <input name="buscar"
+								<%if (request.getAttribute("buscar") != null)
+				out.print("value=\"" + request.getAttribute("buscar").toString() + "\"");%>
+								type="text" required> <input name="pag" value="1"
+								type="hidden">
 							<button type="submit" class="btn btn-outline-primary">Buscar</button>
-							<a href="ServletPacientes" class="btn btn-outline-danger"> &times </a>
+							<a href="ServletPacientes" class="btn btn-outline-danger">
+								&times </a>
 						</form>
 					</div>
 					<div class="col-6" style="text-align: right;">
@@ -77,10 +75,16 @@
 					<td><%=p.getTelefono()%></td>
 					<td><%=p.getFechaNacimiento()%></td>
 					<td><%=p.getDomicilio()%></td>
-					<td><%=p.getInfoExtra()%></td>
-					<td style="text-align: center;">
-						<a href="ServletPacientes?action=edit&id=<%= p.getIDPaciente() %>" class="btn btn-primary btn-sm">Modificar</a> 
-						<a href="ServletPacientes?action=delete&id=<%= p.getIDPaciente() %>" class="btn btn-primary btn-sm">Eliminar</a></td>
+					<td>
+						<input type="button" class="btn btn-light"
+							data-toggle="tooltip" data-placement="bottom"
+							title="<%=p.getInfoExtra()%>" value="Info">
+					</td>
+					<td style="text-align: center;"><a
+						href="ServletPacientes?action=edit&id=<%=p.getIDPaciente()%>"
+						class="btn btn-primary btn-sm">Modificar</a> <a
+						href="ServletPacientes?action=delete&id=<%=p.getIDPaciente()%>"
+						class="btn btn-primary btn-sm">Eliminar</a></td>
 				</tr>
 				<%
 					}
@@ -94,14 +98,14 @@
 								String pagAnterior = request.getAttribute("anterior").toString();
 						%>
 						<form action="ServletPacientes" method="GET">
-						<%
-							if(request.getAttribute("buscar") != null){
-						%>
-							<input type="hidden" name="buscar" value="<%= buscar %>">
-						<%
-							}
-						%>
-							<input type="hidden" name="pag" value="<%= pagAnterior %>">
+							<%
+								if (request.getAttribute("buscar") != null) {
+							%>
+							<input type="hidden" name="buscar" value="<%=buscar%>">
+							<%
+								}
+							%>
+							<input type="hidden" name="pag" value="<%=pagAnterior%>">
 							<button type="submit" class="btn btn-light">Anterior</button>
 						</form>
 						<%
@@ -114,14 +118,14 @@
 								String pagSiguiente = request.getAttribute("siguiente").toString();
 						%>
 						<form action="ServletPacientes" method="GET">
-						<%
-							if(request.getAttribute("buscar") != null){
-						%>
-							<input type="hidden" name="buscar" value="<%= buscar %>">
-						<%
-							}
-						%>
-							<input type="hidden" name="pag" value="<%= pagSiguiente %>">
+							<%
+								if (request.getAttribute("buscar") != null) {
+							%>
+							<input type="hidden" name="buscar" value="<%=buscar%>">
+							<%
+								}
+							%>
+							<input type="hidden" name="pag" value="<%=pagSiguiente%>">
 							<button type="submit" class="btn btn-light">Siguiente</button>
 						</form>
 						<%

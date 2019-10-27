@@ -1,6 +1,7 @@
 package presentacion.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -71,12 +72,9 @@ public class ServletPacientes extends HttpServlet {
 			String id = request.getParameter("id");
 			if(id != null) {
 				int idPaciente = Integer.valueOf(id);
-				Paciente paciente = gp.get(idPaciente);
-				if(paciente != null) {
-					paciente.setActivo(false);
-					gp.modificar(paciente);
-				}
+				gp.eliminar(idPaciente);
 			}
+			response.sendRedirect("ServletPacientes");
 		}
 		
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -86,8 +84,35 @@ public class ServletPacientes extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action = request.getParameter("action");
+		if(action != null) {
+			if(action.equals("edit")) {
+				Paciente p = new Paciente(Integer.valueOf(request.getParameter("ID")));
+				p.setNombre(request.getParameter("Nombre"));
+				p.setApellido(request.getParameter("Apellido"));
+				p.setDni(request.getParameter("DNI"));
+				p.setTelefono(request.getParameter("Telefono"));
+				p.setDomicilio(request.getParameter("Domicilio"));
+				p.setFechaNacimiento(LocalDate.parse(request.getParameter("Fecha")));
+				p.setInfoExtra(request.getParameter("InfoExtra"));
+				p.setActivo(true);
+				
+				gp.modificar(p);
+			}else if(action.equals("new")) {
+				Paciente p = new Paciente(-1);
+				p.setNombre(request.getParameter("Nombre"));
+				p.setApellido(request.getParameter("Apellido"));
+				p.setDni(request.getParameter("DNI"));
+				p.setTelefono(request.getParameter("Telefono"));
+				p.setDomicilio(request.getParameter("Domicilio"));
+				p.setFechaNacimiento(LocalDate.parse(request.getParameter("Fecha")));
+				p.setInfoExtra(request.getParameter("InfoExtra"));
+				p.setActivo(true);
+				
+				gp.insertar(p);
+			}
+		}
+		response.sendRedirect("ServletPacientes");
 	}
 
 }

@@ -44,79 +44,94 @@ input {
 	<div class="container mt-3">
 		<div>
 			<div>
-				<h5 class="titular">
-					Paciente
-					</h5>
+				<h5 class="titular">Paciente</h5>
 			</div>
-			<form class="box">
+			<form class="box" method="POST" action="ServletPacientes">
+				
+				<%if (paciente != null) {%>
+					<input type="hidden" name="action" value="edit">
+					<input type="hidden" name="ID" value="<%= paciente.getIDPaciente() %>">
+				<%
+					} else {
+				%>
+					<input type="hidden" name="action" value="new">
+				<%
+					}
+				%>
+
 				<table>
-					<% if(paciente != null){ %>
-						<tr>
-							<td>Nombre:</td>
-							<td><input value="<%= paciente.getNombre() %>" required> </td>
-						</tr>
-						<tr>
-							<td>Apellido:</td>
-							<td><input value="<%= paciente.getApellido() %>" required></td>
-						</tr>
-						<tr>
-							<td>DNI:</td>
-							<td><input value="<%= paciente.getDni() %>" type="number" required></td>
-						</tr>
-						<tr>
-							<td>Teléfono:</td>
-							<td><input value="<%= paciente.getTelefono() %>" type="tel"></td>
-						</tr>
-						<tr>
-							<td>Domicilio:</td>
-							<td><input value="<%= paciente.getDomicilio() %>" type="text"></td>
-						</tr>
-						<tr>
-							<td>Fecha de nacimiento:</td>
-							<td><input value="<%= paciente.getFechaNacimiento() %>" type="date" required></td>
-						</tr>
-						<tr>
-							<td>Anotacion:</td>
-							<td><input type="text" value="<%= paciente.getInfoExtra() %>"></td>
-						</tr>
 					<%
-					}else{
+						if (paciente != null) {
 					%>
 					<tr>
-							<td>Nombre:</td>
-							<td><input value="<%= paciente.getNombre() %>" required> </td>
-						</tr>
-						<tr>
-							<td>Apellido:</td>
-							<td><input value="<%= paciente.getApellido() %>" required></td>
-						</tr>
-						<tr>
-							<td>DNI:</td>
-							<td><input value="<%= paciente.getDni() %>" type="number" required></td>
-						</tr>
-						<tr>
-							<td>Teléfono:</td>
-							<td><input type="tel"></td>
-						</tr>
-						<tr>
-							<td>Domicilio:</td>
-							<td><input type="text"></td>
-						</tr>
-						<tr>
-							<td>Fecha de nacimiento:</td>
-							<td><input value="<%= paciente.getFechaNacimiento() %>" type="date" required></td>
-						</tr>
-						<tr>
-							<td>Anotacion:</td>
-							<td><input type="text" value="<%= paciente.getInfoExtra() %>"></td>
-						</tr>
+						<td>Nombre:</td>
+						<td><input name="Nombre" value="<%=paciente.getNombre()%>" required>
+						</td>
+					</tr>
+					<tr>
+						<td>Apellido:</td>
+						<td><input name="Apellido" value="<%=paciente.getApellido()%>" required></td>
+					</tr>
+					<tr>
+						<td>DNI:</td>
+						<td><input name="DNI" value="<%=paciente.getDni()%>" type="number"
+							required></td>
+					</tr>
+					<tr>
+						<td>Teléfono:</td>
+						<td><input name="Telefono" value="<%=paciente.getTelefono()%>" type="tel"></td>
+					</tr>
+					<tr>
+						<td>Domicilio:</td>
+						<td><input name="Domicilio" value="<%=paciente.getDomicilio()%>" type="text"></td>
+					</tr>
+					<tr>
+						<td>Fecha de nacimiento:</td>
+						<td><input name="Fecha" value="<%=paciente.getFechaNacimiento()%>"
+							type="date" required></td>
+					</tr>
+					<tr>
+						<td>Anotacion:</td>
+						<td><input name="InfoExtra" type="text" value="<%=paciente.getInfoExtra()%>"></td>
+					</tr>
 					<%
-					}
+						} else {
+					%>
+					<tr>
+						<td>Nombre:</td>
+						<td><input name="Nombre" required></td>
+					</tr>
+					<tr>
+						<td>Apellido:</td>
+						<td><input name="Apellido" required></td>
+					</tr>
+					<tr>
+						<td>DNI:</td>
+						<td><input name="DNI" type="number" required></td>
+					</tr>
+					<tr>
+						<td>Teléfono:</td>
+						<td><input name="Telefono" type="tel"></td>
+					</tr>
+					<tr>
+						<td>Domicilio:</td>
+						<td><input name="Domicilio" type="text"></td>
+					</tr>
+					<tr>
+						<td>Fecha de nacimiento:</td>
+						<td><input name="Fecha" type="date" required></td>
+					</tr>
+					<tr>
+						<td>Anotacion:</td>
+						<td><input name="InfoExtra" type="text"></td>
+					</tr>
+					<%
+						}
 					%>
 				</table>
 				<br>
 				<div style="text-align: center">
-					<button>Guardar</button>
+					<input value="Guardar" type="submit" class="btn btn-primary">
 				</div>
 			</form>
 		</div>
