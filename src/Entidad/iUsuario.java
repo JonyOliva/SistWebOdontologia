@@ -20,6 +20,13 @@ public abstract class iUsuario {
 		Email = user.getEmail();
 		Password = user.getPassword();
 	}
+	
+	
+
+	public iUsuario(String iDUsuario) {
+		super();
+		IDUsuario = iDUsuario;
+	}
 
 	public String getIDUsuario() {
 		return IDUsuario;
@@ -36,6 +43,19 @@ public abstract class iUsuario {
 	public String getPassword() {
 		return Password;
 	}
+
+	public void setTipoUsuario(boolean tipoUsuario) {
+		TipoUsuario = tipoUsuario;
+	}
+
+	public void setEmail(String email) {
+		Email = email;
+	}
+
+	public void setPassword(String password) {
+		Password = password;
+	}
+
 	
 		
 	

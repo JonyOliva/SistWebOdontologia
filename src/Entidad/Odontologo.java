@@ -15,6 +15,17 @@ public class Odontologo extends iUsuario{
 		DNI = _dni;
 	}
 
+	
+	public Odontologo(String iDUsuario) {
+		super(iDUsuario);
+	}
+
+
+	public Odontologo(iUsuario user) {
+		super(user);
+	}
+
+
 	public String getNombre() {
 		return Nombre;
 	}
