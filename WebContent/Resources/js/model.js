@@ -230,7 +230,7 @@ function guardarOdontograma(maxilar, mandibular){
         }
         id++;
     }
-    console.log(odontograma);
+    enviarServidor(odontograma);
 }
 
 function dibujarLinea(color,xinicial,yinicial,xfinal,yfinal)
@@ -248,4 +248,18 @@ function cambiarEstadoSelect(input){
     estadoSelect.url = Estados[index];
     estadoSelect.Str = Estados[index+1];
     estadoSelect.tipo = (index > ESTPARCIAL) ? 1 : 0;
+}
+
+function enviarServidor(odontograma){
+	$.ajax({
+		type: "POST",
+		url: "ServletHistoriales",
+		data: { odontograma: JSON.stringify(odontograma)},
+		success: (resp)=>{
+			console.log("enviado " + resp);
+		},
+		error: (resp)=>{
+			console.log("error" + resp);
+		}
+	});
 }

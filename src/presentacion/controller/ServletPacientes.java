@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Entidad.Paciente;
+import Entidad.Utilidades;
 import Entidad.Gestor;
 import Negocio.IPacienteNegocio;
 import NegocioImpl.GestionPacientes;
@@ -88,11 +89,11 @@ public class ServletPacientes extends HttpServlet {
 		if(action != null) {
 			if(action.equals("edit")) {
 				Paciente p = new Paciente(Integer.valueOf(request.getParameter("ID")));
-				p.setNombre(request.getParameter("Nombre"));
-				p.setApellido(request.getParameter("Apellido"));
+				p.setNombre(Utilidades.cleanString(request.getParameter("Nombre"), true));
+				p.setApellido(Utilidades.cleanString(request.getParameter("Apellido"), true));
 				p.setDni(request.getParameter("DNI"));
 				p.setTelefono(request.getParameter("Telefono"));
-				p.setDomicilio(request.getParameter("Domicilio"));
+				p.setDomicilio(Utilidades.cleanString(request.getParameter("Domicilio"), true));
 				p.setFechaNacimiento(LocalDate.parse(request.getParameter("Fecha")));
 				p.setInfoExtra(request.getParameter("InfoExtra"));
 				p.setActivo(true);
@@ -100,11 +101,11 @@ public class ServletPacientes extends HttpServlet {
 				gp.modificar(p);
 			}else if(action.equals("new")) {
 				Paciente p = new Paciente(-1);
-				p.setNombre(request.getParameter("Nombre"));
-				p.setApellido(request.getParameter("Apellido"));
+				p.setNombre(Utilidades.cleanString(request.getParameter("Nombre"), true));
+				p.setApellido(Utilidades.cleanString(request.getParameter("Apellido"), true));
 				p.setDni(request.getParameter("DNI"));
 				p.setTelefono(request.getParameter("Telefono"));
-				p.setDomicilio(request.getParameter("Domicilio"));
+				p.setDomicilio(Utilidades.cleanString(request.getParameter("Domicilio"), true));
 				p.setFechaNacimiento(LocalDate.parse(request.getParameter("Fecha")));
 				p.setInfoExtra(request.getParameter("InfoExtra"));
 				p.setActivo(true);

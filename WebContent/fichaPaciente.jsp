@@ -79,7 +79,7 @@ input {
 					</tr>
 					<tr>
 						<td>Teléfono:</td>
-						<td><input name="Telefono" value="<%=paciente.getTelefono()%>" type="tel"></td>
+						<td><input name="Telefono" value="<%=paciente.getTelefono()%>" type="number"></td>
 					</tr>
 					<tr>
 						<td>Domicilio:</td>
@@ -111,7 +111,7 @@ input {
 					</tr>
 					<tr>
 						<td>Teléfono:</td>
-						<td><input name="Telefono" type="tel"></td>
+						<td><input name="Telefono" type="number"></td>
 					</tr>
 					<tr>
 						<td>Domicilio:</td>

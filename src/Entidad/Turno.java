@@ -37,8 +37,8 @@ public class Turno {
 	public void setFecha(LocalDateTime fecha) {
 		Fecha = fecha;
 	}
-	public boolean isActivo() {
-		return activo;
+	public int isActivo() { 
+		return activo ? 1 : 0;	//en la base de datos se inserta 1 ó 0
 	}
 	public void setActivo(boolean activo) {
 		this.activo = activo;
