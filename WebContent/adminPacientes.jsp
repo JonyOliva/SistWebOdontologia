@@ -76,9 +76,13 @@
 					<td><%=p.getFechaNacimiento()%></td>
 					<td><%=p.getDomicilio()%></td>
 					<td>
+					<% if(p.hayExtra()){ %>
 						<input type="button" class="btn btn-light"
 							data-toggle="tooltip" data-placement="bottom"
 							title="<%=p.getInfoExtra()%>" value="Info">
+					<%
+					}
+					%>
 					</td>
 					<td style="text-align: center;"><a
 						href="ServletPacientes?action=edit&id=<%=p.getIDPaciente()%>"

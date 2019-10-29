@@ -90,10 +90,14 @@ input {
 						<td><input name="Fecha" value="<%=paciente.getFechaNacimiento()%>"
 							type="date" required></td>
 					</tr>
+					<% if(paciente.hayExtra()){ %>
 					<tr>
 						<td>Anotacion:</td>
 						<td><input name="InfoExtra" type="text" value="<%=paciente.getInfoExtra()%>"></td>
 					</tr>
+					<%
+					}
+					%>
 					<%
 						} else {
 					%>

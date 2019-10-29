@@ -16,7 +16,7 @@
 			<div>
 				<h5 class="titular">
 					Menú Odontologos
-					</h1>
+					</h5>
 			</div>
 
 			<div>

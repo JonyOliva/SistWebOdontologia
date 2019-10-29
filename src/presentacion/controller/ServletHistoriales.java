@@ -36,9 +36,16 @@ public class ServletHistoriales extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		if(request.getParameter("odontograma") != null) {
-			Gson gson = new Gson();
-			Object odontograma = gson.fromJson(request.getParameter("odontograma"), Object.class);
+			JsonParser gson = new JsonParser();
+			JsonArray odontograma = gson.parse(request.getParameter("odontograma")).getAsJsonArray();
 			System.out.print(odontograma);
+			for (JsonElement element : odontograma) {
+				JsonObject diente = element.getAsJsonObject();
+				System.out.print("\n id:" + diente.get("id") + "\n");
+				System.out.print(diente.get("estado"));
+
+			}
+			
 			doGet(request, response);
 		}
 	}

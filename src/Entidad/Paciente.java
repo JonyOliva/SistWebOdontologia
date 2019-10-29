@@ -96,6 +96,14 @@ public class Paciente {
 		return activo ? 1 : 0;
 	}
 
+	public boolean hayExtra() {
+		if(InfoExtra != null) {
+			return !InfoExtra.isEmpty();
+		}else {
+			return false;
+		}
+	}
+	
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
