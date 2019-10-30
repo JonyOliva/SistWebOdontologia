@@ -10,7 +10,8 @@ public class Conexion {
 
 	private String host = "jdbc:mysql://localhost:3306/";
 	private String user = "root";
-	private String pass = "admin"; //"123456";
+	private String pass = "admin";
+	//private String pass = "123456";
 	private String dbName = "odontologiadb?profileSQL=true&useSSL=false&serverTimezone=UTC";
 	//una hora para configurar esta mierda
 	protected Connection connection;

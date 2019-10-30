@@ -29,17 +29,20 @@
 </style>
 
 <body>
+	<%
+		
+	 %>
 	<div class="container">
 	
 		<div>
-			<form action="adminTurnos.jsp" class="box">
+			<form method="post" action="ServletUsuarios" class="box">
 				<table>
 				<tr>
 					<td>
 						Email:
 					</td>
 					<td>
-						<input type="email">
+						<input type="email" required name="txtEmail">
 					</td>
 				</tr>
 				<tr>
@@ -47,14 +50,13 @@
 						Contraseña:
 					</td>
 					<td>
-						<input type="password">
+						<input type="password" required name="txtPassword">
 					</td>
 				</tr>
 				</table>
 				<br>
 				<div style="text-align: center">
-					<button > Iniciar sesión</button>
-				</div >
+					<input type="submit" name="btnIniciarSesion" value="Iniciar Sesión" required name="btnIniciarSesion"></input>
 			</form>
 		</div>
 	
