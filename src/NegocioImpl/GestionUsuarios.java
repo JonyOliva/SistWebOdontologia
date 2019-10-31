@@ -54,13 +54,7 @@ public class GestionUsuarios implements iUsuarioNegocio{
 	@Override
 	public iUsuario login(String email, String password) {
 		iUsuarioDao userDao = new UsuarioDaoImpl();
-		iUsuario user = null;
-		try {
-			user = userDao.login(email, password);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		iUsuario user = userDao.login(email, password);
 		return user;
 	}
 

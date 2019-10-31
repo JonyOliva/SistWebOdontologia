@@ -9,7 +9,7 @@ import Entidad.iUsuario;
 
 public interface iUsuarioDao {
 
-	public iUsuario login(String email, String password) throws SQLException;
+	public iUsuario login(String email, String password);
 	public boolean insertar(iUsuario user);
 	public boolean modificar(iUsuario user);
 	public boolean eliminar(String IDUsuario);

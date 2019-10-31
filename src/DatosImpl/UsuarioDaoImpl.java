@@ -10,24 +10,35 @@ import Entidad.Odontologo;
 import Entidad.iUsuario;
 
 public class UsuarioDaoImpl implements iUsuarioDao {
+	Conexion cn;
+	
+	public UsuarioDaoImpl()
+	{
+		super();
+		this.cn = new Conexion();
+	}
+	
 
 	@Override
-	public iUsuario login(String email, String password) throws SQLException {
-		iUsuario usuario;
-		Conexion cn = new Conexion();
-		ResultSet rs;
-		cn.Open();
-		
-		rs = cn.query("Select * from usuarios where usuarios.Email ="+email+ "and usuarios.password="+password+";");
-		usuario = new Odontologo(rs.getString("usuarios.IDUsuario"));
-		usuario.setEmail(rs.getString("usuarios.Email"));
-		usuario.setPassword(rs.getString("usuarios.Password"));
-		usuario.setTipoUsuario(rs.getBoolean("usuarios.TipoUsuario"));
-		
-		cn.close();
-		return usuario;
-		//return new Odontologo(usuario);
-		//return new Administrador();
+	public iUsuario login(String email, String password){;
+		try{
+				cn.Open();
+				ResultSet rs = cn.query("Select * from usuarios where Email ='" +email+ "' and password='" +password+ "'");
+				if(rs.next()) {	
+				iUsuario usuario = new Odontologo(rs.getString("usuarios.IDUsuario"));
+				usuario.setEmail(rs.getString("usuarios.Email"));
+				usuario.setPassword(rs.getString("usuarios.Password"));
+				usuario.setTipoUsuario(1 == rs.getInt("usuarios.TipoUsuario"));
+				cn.close();
+				return usuario;
+		}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
+		return null;
 	}
 
 	@Override
@@ -81,43 +92,46 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 	@Override
 	public Administrador getAdmin(Administrador admin) {
 		Administrador adm = new Administrador(admin);
-		Conexion cn = new Conexion();
-		ResultSet rs;
-		cn.Open();
-		
-		rs = cn.query("Select * from administradores where administradores.IDAdministrador="+adm.getIDUsuario()+";");
 		
 		try {
+			cn.Open();
+			ResultSet rs = cn.query("Select * from administradores where IDAdministrador='"+adm.getIDUsuario()+"'");
+			if(rs.next()) {
 			adm.setNombre(rs.getString("administradores.nombre"));
 			adm.setApellido(rs.getString("administradores.apellido"));
 			adm.setDni(rs.getString("administradores.dni"));
+			cn.close();
+			return adm;
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			cn.close();
 		}
-		cn.close();
 		return adm;
 	}
 
 	@Override
 	public Odontologo getOdont(Odontologo odont) {
 		Odontologo odo = new Odontologo(odont);
-		Conexion cn = new Conexion();
-		ResultSet rs;
-		cn.Open();
-		
-		rs = cn.query("Select * from odontologos where odontologos.IDOdontologo="+odo.getIDUsuario()+";");
 		
 		try {
+			cn.Open();
+			ResultSet rs = cn.query("Select * from odontologos where IDOdontologo='"+odo.getIDUsuario()+"'");
+			if(rs.next()) {
 			odo.setNombre(rs.getString("odontologos.nombre"));
 			odo.setApellido(rs.getString("odontologos.apellido"));
 			odo.setDNI(rs.getString("odontologos.dni"));
 			odo.setMatricula(rs.getString("odontologos.matricula"));
+			cn.close();
+			return odo;
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			cn.close();
 		}
-		cn.close();
+		
 		return odo;
 	}
 

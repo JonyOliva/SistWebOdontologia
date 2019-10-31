@@ -47,7 +47,7 @@ public class ServletUsuarios extends HttpServlet {
 			mail = request.getParameter("txtEmail").toString();
 			pass = request.getParameter("txtPassword").toString();
 			iUsuario user= gu.login(mail,pass);
-			if(user.isTipoUsuario())
+			if(!(user.isTipoUsuario()))
 			{
 				user = gu.getOdo(user);
 				miDispacher = request.getRequestDispatcher("/odonTurnos.jsp");
