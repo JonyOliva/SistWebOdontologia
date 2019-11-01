@@ -37,7 +37,7 @@ public class ServletUsuarios extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println("hrhrjrj");
 		if(request.getParameter("btnIniciarSesion")!=null)
 		{
 			HttpSession session = request.getSession();
@@ -46,19 +46,30 @@ public class ServletUsuarios extends HttpServlet {
 			String mail, pass;
 			mail = request.getParameter("txtEmail").toString();
 			pass = request.getParameter("txtPassword").toString();
-			iUsuario user= gu.login(mail,pass);
-			if(!(user.isTipoUsuario()))
+			System.out.println("aca esta el cartel");
+			iUsuario user = gu.login(mail,pass);
+			System.out.println("asdasdsadsdsasadsadsa");
+			if(user == null)
+			{
+				request.setAttribute("ErrorSesion", true);
+				miDispacher.forward(request, response);
+			}
+			else {
+			if(user.isTipoUsuario() == true)
 			{
 				user = gu.getOdo(user);
+				session.setAttribute("usuario", user);
 				miDispacher = request.getRequestDispatcher("/odonTurnos.jsp");
 			}
-			else
+			else if(user.isTipoUsuario() == false)
 			{
 				user = gu.getAdm(user);
+				session.setAttribute("usuario", user);
 				miDispacher = request.getRequestDispatcher("/adminTurnos.jsp");
 			}
-			session.setAttribute("usuario", user);
+			
 			miDispacher.forward(request, response);
+			}
 			
 		}
 	}

@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import Datos.iUsuarioDao;
 import Entidad.Administrador;
 import Entidad.Odontologo;
@@ -24,14 +26,16 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 		try{
 				cn.Open();
 				ResultSet rs = cn.query("Select * from usuarios where Email ='" +email+ "' and password='" +password+ "'");
-				if(rs.next()) {	
-				iUsuario usuario = new Odontologo(rs.getString("usuarios.IDUsuario"));
-				usuario.setEmail(rs.getString("usuarios.Email"));
-				usuario.setPassword(rs.getString("usuarios.Password"));
-				usuario.setTipoUsuario(1 == rs.getInt("usuarios.TipoUsuario"));
-				cn.close();
-				return usuario;
-		}
+				if(rs!=null) {
+					if(rs.next()) {
+						iUsuario usuario = new Odontologo(rs.getString("usuarios.IDUsuario"));
+						usuario.setEmail(rs.getString("usuarios.Email"));
+						usuario.setPassword(rs.getString("usuarios.Password"));
+						usuario.setTipoUsuario(1 == rs.getInt("usuarios.TipoUsuario"));
+						cn.close();
+						return usuario;
+					}
+				}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -90,8 +94,9 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 	}
 
 	@Override
-	public Administrador getAdmin(Administrador admin) {
-		Administrador adm = new Administrador(admin);
+	public iUsuario getPerfil(iUsuario user) {
+		if(user.isTipoUsuario()) {
+		Administrador adm = new Administrador(user);
 		
 		try {
 			cn.Open();
@@ -109,18 +114,56 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 			cn.close();
 		}
 		return adm;
+		}
+		
+		else
+		{
+			Odontologo odon = new Odontologo(user);
+			
+			try {
+				cn.Open();
+				ResultSet rs = cn.query("Select * from odontologos where IDAdministrador='"+odon.getIDUsuario()+"'");
+				if(rs.next()) {
+				odon.setNombre(rs.getString("odontologos.nombre"));
+				odon.setApellido(rs.getString("odontologos.apellido"));
+				odon.setDNI(rs.getString("odontologos.dni"));
+				odon.setEmail("odontologos.email");
+				odon.setMatricula("odontologos.matricula");
+				cn.close();
+				return odon;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				cn.close();
+			}
+			return odon;
+		}
 	}
+	
 
 	@Override
 	public iUsuario get(String id) {
+		iUsuario usuario = null;
 			try{
 				cn.Open();
 				ResultSet rs = cn.query("Select * from usuarios where IDUsuario='" +id+ "'");
 				if(rs.next()) {	
-				iUsuario usuario = new Odontologo(rs.getString("usuarios.IDUsuario"));
-				usuario.setEmail(rs.getString("usuarios.Email"));
-				usuario.setPassword(rs.getString("usuarios.Password"));
-				usuario.setTipoUsuario(1 == rs.getInt("usuarios.TipoUsuario"));
+				if(1 == rs.getInt("usuarios.TipoUsuario")) {
+					usuario = new Administrador(rs.getString("usuarios.IDUsuario"));
+					usuario.setEmail(rs.getString("usuarios.Email"));
+					usuario.setPassword(rs.getString("usuarios.Password"));
+					usuario.setTipoUsuario(1 == rs.getInt("usuarios.TipoUsuario"));
+					usuario = getPerfil(usuario);
+				}
+				else
+				{
+					usuario = new Odontologo(rs.getString("usuarios.IDUsuario"));
+					usuario.setEmail(rs.getString("usuarios.Email"));
+					usuario.setPassword(rs.getString("usuarios.Password"));
+					usuario.setTipoUsuario(1 == rs.getInt("usuarios.TipoUsuario"));
+					usuario = getPerfil(usuario);
+				}
 				cn.close();
 				return usuario;
 		}

@@ -2,6 +2,8 @@ package Negocio;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import Entidad.Administrador;
 import Entidad.Odontologo;
 import Entidad.iUsuario;

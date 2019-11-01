@@ -10,6 +10,9 @@ public class Administrador extends iUsuario{
 		// TODO Auto-generated constructor stub
 	}
 
+	public Administrador(String iDUsuario) {
+		super(iDUsuario);
+	}
 	public String getNombre() {
 		return nombre;
 	}

@@ -56,8 +56,16 @@
 				</table>
 				<br>
 				<div style="text-align: center">
-					<input type="submit" name="btnIniciarSesion" value="Iniciar Sesión" required name="btnIniciarSesion"></input>
+					<input type="submit" name="btnIniciarSesion" value="Iniciar Sesión" required name="btnIniciarSesion"></input><br>
+				<div><%if(request.getAttribute("ErrorSesion")!= null)
+							if(((boolean)request.getAttribute("ErrorSesion")) == true)
+							{
+								out.println("Los datos ingresados son incorrectos.");
+							}
+			 			%>
+			 
 			</form>
+			
 		</div>
 	
 	</div>

@@ -3,6 +3,8 @@ package NegocioImpl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import Datos.iUsuarioDao;
 import DatosImpl.UsuarioDaoImpl;
 import Entidad.Administrador;
@@ -28,26 +30,29 @@ public class GestionUsuarios implements iUsuarioNegocio{
 	@Override
 	public Administrador getAdm(iUsuario user) {
 		iUsuarioDao userDao = new UsuarioDaoImpl();
-		Administrador admin = new Administrador(user);
-		admin = userDao.getAdmin(admin);
-		return admin;
+		iUsuario admin = userDao.getPerfil(user);
+		return (Administrador) admin;
+	}
+	
+	@Override
+	public Odontologo getOdo(iUsuario user) {
+		iUsuarioDao userDao = new UsuarioDaoImpl();
+		iUsuario odon = userDao.getPerfil(user);
+		return (Odontologo) odon;
 	}
 
 	@Override
 	public boolean insertar(iUsuario odontologo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean modificar(iUsuario odontologo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean eliminar(String idUsuario) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -58,12 +63,6 @@ public class GestionUsuarios implements iUsuarioNegocio{
 		return user;
 	}
 
-	@Override
-	public Odontologo getOdo(iUsuario user) {
-		iUsuarioDao userDao = new UsuarioDaoImpl();
-		Odontologo odon = new Odontologo(user);
-		//odon = userDao.getOdont(odon); 
-		return odon;
-	}
+
 
 }
