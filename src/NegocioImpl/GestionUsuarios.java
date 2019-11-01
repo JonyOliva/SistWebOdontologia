@@ -34,13 +34,13 @@ public class GestionUsuarios implements iUsuarioNegocio{
 	}
 
 	@Override
-	public boolean insertar(Odontologo odontologo) {
+	public boolean insertar(iUsuario odontologo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean modificar(Odontologo odontologo) {
+	public boolean modificar(iUsuario odontologo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -62,7 +62,7 @@ public class GestionUsuarios implements iUsuarioNegocio{
 	public Odontologo getOdo(iUsuario user) {
 		iUsuarioDao userDao = new UsuarioDaoImpl();
 		Odontologo odon = new Odontologo(user);
-		odon = userDao.getOdont(odon);
+		//odon = userDao.getOdont(odon); 
 		return odon;
 	}
 

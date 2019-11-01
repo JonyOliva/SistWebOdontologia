@@ -57,23 +57,25 @@ input {
 				<%
 					if (odont != null) {
 				%>
+				<input type="hidden" name="action" value="edit">
+				<input type="hidden" name="ID" value="<%= odont.getIDUsuario() %>">
 				<p class="text-imp">Datos personales</p>
 				<table>
 					<tr>
 						<td>Nombre:</td>
-						<td><input value="<%= odont.getNombre() %>" required></td>
+						<td><input name="Nombre" value="<%= odont.getNombre() %>" required></td>
 					</tr>
 					<tr>
 						<td>Apellido:</td>
-						<td><input value="<%= odont.getApellido() %>" required></td>
+						<td><input name="Apellido" value="<%= odont.getApellido() %>" required></td>
 					</tr>
 					<tr>
 						<td>DNI:</td>
-						<td><input value="<%= odont.getDNI() %>" type="number" required></td>
+						<td><input name="DNI" value="<%= odont.getDNI() %>" type="number" required></td>
 					</tr>
 					<tr>
 						<td>Matricula:</td>
-						<td><input value="<%= odont.getMatricula() %>" required></td>
+						<td><input name="Matricula" value="<%= odont.getMatricula() %>" required></td>
 					</tr>
 				</table>
 				<hr>
@@ -81,37 +83,34 @@ input {
 				<table>
 					<tr>
 						<td>Email:</td>
-						<td><input value="<%= odont.getEmail() %>" type="email" required></td>
+						<td><input name="Email" value="<%= odont.getEmail() %>" type="email" required></td>
 					</tr>
 					<tr>
 						<td>Contraseña:</td>
-						<td><input value="<%= odont.getPassword() %>" required></td>
+						<td><input name="Password" value="<%= odont.getPassword() %>" required></td>
 					</tr>
 				</table>
-				<br>
-				<div class="text-center">
-					<button class="btn btn-primary">Guardar</button>
-				</div>
 				<%
 					} else {
 				%>
+				<input type="hidden" name="action" value="new">
 				<p class="text-imp">Datos personales</p>
 				<table>
 					<tr>
 						<td>Nombre:</td>
-						<td><input required></td>
+						<td><input name="Nombre" required></td>
 					</tr>
 					<tr>
 						<td>Apellido:</td>
-						<td><input required></td>
+						<td><input name="Apellido" required></td>
 					</tr>
 					<tr>
 						<td>DNI:</td>
-						<td><input type="number" required></td>
+						<td><input name="DNI" type="number" required></td>
 					</tr>
 					<tr>
 						<td>Matricula:</td>
-						<td><input required></td>
+						<td><input name="Matricula" required></td>
 					</tr>
 				</table>
 				<hr>
@@ -119,20 +118,20 @@ input {
 				<table>
 					<tr>
 						<td>Email:</td>
-						<td><input type="email" required></td>
+						<td><input name="Email" type="email" required></td>
 					</tr>
 					<tr>
 						<td>Contraseña:</td>
-						<td><input required></td>
+						<td><input name="Password" required></td>
 					</tr>
 				</table>
+				<%
+					}
+				%>
 				<br>
 				<div class="text-center">
 					<button class="btn btn-primary">Guardar</button>
 				</div>
-				<%
-					}
-				%>
 			</form>
 		</div>
 	</div>

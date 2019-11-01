@@ -1,6 +1,7 @@
 package presentacion.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -10,8 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Entidad.Odontologo;
+import Entidad.Paciente;
+import Entidad.Utilidades;
 import Negocio.IOdontologoNegocio;
+import Negocio.iUsuarioNegocio;
 import NegocioImpl.GestionOdontologos;
+import NegocioImpl.GestionUsuarios;
 
 /**
  * Servlet implementation class ServletOdontologos
@@ -20,13 +25,14 @@ import NegocioImpl.GestionOdontologos;
 public class ServletOdontologos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	IOdontologoNegocio go;
-       
+    iUsuarioNegocio un;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ServletOdontologos() {
         super();
         go = new GestionOdontologos();
+        un = new GestionUsuarios();
     }
 
 	/**
@@ -40,7 +46,6 @@ public class ServletOdontologos extends HttpServlet {
 			dispatcher = request.getRequestDispatcher("adminOdontologos.jsp");
 			dispatcher.forward(request, response);				
 		}else if(action.equals("edit")) {
-			System.out.print("PAPAU´P");
 			String id = request.getParameter("id");
 			if(id != null) {
 				
@@ -68,8 +73,27 @@ public class ServletOdontologos extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action = request.getParameter("action");
+		if(action != null) {
+			Odontologo od;
+			if(request.getParameter("ID") != null)
+				 od = new Odontologo(request.getParameter("ID"));
+			else 
+				od = new Odontologo("-1");
+			od.setNombre(Utilidades.cleanString(request.getParameter("Nombre"), true));
+			od.setApellido(Utilidades.cleanString(request.getParameter("Apellido"), true));
+			od.setDNI(request.getParameter("DNI"));
+			od.setMatricula(request.getParameter("Matricula"));
+			od.setEmail(request.getParameter("Email"));
+			od.setPassword(request.getParameter("Password"));
+			od.setTipoUsuario(true); //odontologo
+			if(action.equals("edit")) {
+				go.modificar(od);
+			}else if(action.equals("new")) {
+				go.insertar(od);
+			}
+		}
+		response.sendRedirect("ServletOdontologos");
 	}
 
 }

@@ -11,8 +11,8 @@ public interface iUsuarioNegocio {
 	public ArrayList<iUsuario> getAll();
 	public Administrador getAdm(iUsuario user );
 	public Odontologo getOdo(iUsuario user);
-	public boolean insertar(Odontologo odontologo);
-	public boolean modificar(Odontologo odontologo);
+	public boolean insertar(iUsuario odontologo);
+	public boolean modificar(iUsuario odontologo);
 	public boolean eliminar(String idUsuario);
 	public iUsuario login(String email, String password);
 }
