@@ -1,6 +1,7 @@
 package DatosImpl;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import Datos.IOdontologoDao;
@@ -16,10 +17,10 @@ public class OdontologoDaoImpl implements IOdontologoDao{
 	}
 
 	@Override
-	public Odontologo get(int IDOdontologo) {
+	public Odontologo get(String IDOdont) {
 		try {
 			cn.Open();
-			ResultSet rs = cn.query("SELECT * FROM Odontologos WHERE IDOdontologo='" + IDOdontologo + "'");
+			ResultSet rs = cn.query("SELECT * FROM Odontologos WHERE IDOdontologo='" + IDOdont + "'");
 			if(rs.next()) {
 				Odontologo odont = new Odontologo(rs.getString("IDOdontologo"));
 				odont.setNombre(rs.getString("Nombre"));
@@ -40,24 +41,65 @@ public class OdontologoDaoImpl implements IOdontologoDao{
 
 	@Override
 	public List<Odontologo> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Odontologo> listOdonts = new ArrayList<Odontologo>();
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("SELECT * FROM odontologos");
+			while(rs.next()) {
+				Odontologo odont = new Odontologo(rs.getString("IDOdontologo"));
+				odont.setNombre(rs.getString("Nombre"));
+				odont.setApellido(rs.getString("Apellido"));
+				odont.setDNI(rs.getString("DNI"));
+				odont.setMatricula(rs.getString("Matricula"));
+				//odont.setActivo(rs.getBoolean("Activo"));
+				listOdonts.add(odont);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
+		return listOdonts;
 	}
 
 	@Override
-	public boolean insertar(Odontologo paciente) {
-		// TODO Auto-generated method stub
+	public boolean insertar(Odontologo odont) {
+		try {
+			cn.Open();
+			String query = "INSERT INTO Odontologos(IDOdontologo, Nombre, Apellido, DNI, Matricula) ";
+			String data = "SELECT '"+odont.getIDUsuario()+"', '"+odont.getNombre()+"', '"+odont.getApellido()
+			+"','"+odont.getDNI()+"', "+ "'"+odont.getMatricula()+"'";
+			boolean res = cn.execute(query+data);
+			cn.close();
+			return res;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
 		return false;
 	}
 
 	@Override
-	public boolean modificar(Odontologo paciente) {
-		// TODO Auto-generated method stub
+	public boolean modificar(Odontologo odont) {
+		try {
+			cn.Open();
+			String query = "UPDATE Odontologos SET ";
+			String data = "Nombre='"+odont.getNombre()+"', Apellido='"+odont.getApellido()+"', DNI='"+odont.getDNI()+
+					"', Matricula='"+odont.getMatricula()+"' WHERE IDPaciente=" + odont.getIDUsuario();
+			boolean res = cn.execute(query+data);
+			cn.close();
+			return res;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
 		return false;
 	}
 
 	@Override
-	public boolean eliminar(int IDPaciente) {
+	public boolean eliminar(String IDOdont) {
 		// TODO Auto-generated method stub
 		return false;
 	}

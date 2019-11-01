@@ -112,27 +112,25 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 	}
 
 	@Override
-	public Odontologo getOdont(Odontologo odont) {
-		Odontologo odo = new Odontologo(odont);
-		
-		try {
-			cn.Open();
-			ResultSet rs = cn.query("Select * from odontologos where IDOdontologo='"+odo.getIDUsuario()+"'");
-			if(rs.next()) {
-			odo.setNombre(rs.getString("odontologos.nombre"));
-			odo.setApellido(rs.getString("odontologos.apellido"));
-			odo.setDNI(rs.getString("odontologos.dni"));
-			odo.setMatricula(rs.getString("odontologos.matricula"));
-			cn.close();
-			return odo;
-			}
-		} catch (SQLException e) {
+	public iUsuario get(String id) {
+			try{
+				cn.Open();
+				ResultSet rs = cn.query("Select * from usuarios where IDUsuario='" +id+ "'");
+				if(rs.next()) {	
+				iUsuario usuario = new Odontologo(rs.getString("usuarios.IDUsuario"));
+				usuario.setEmail(rs.getString("usuarios.Email"));
+				usuario.setPassword(rs.getString("usuarios.Password"));
+				usuario.setTipoUsuario(1 == rs.getInt("usuarios.TipoUsuario"));
+				cn.close();
+				return usuario;
+		}
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			cn.close();
 		}
-		
-		return odo;
+		return null;
 	}
 
 

@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Entidad.Administrador;
-import Entidad.Odontologo;
 import Entidad.iUsuario;
 
 public interface iUsuarioDao {
@@ -15,6 +14,6 @@ public interface iUsuarioDao {
 	public boolean eliminar(String IDUsuario);
 	public ArrayList<iUsuario> getAll() throws SQLException;
 	public Administrador getAdmin(Administrador admin);
-	public Odontologo getOdont(Odontologo odont);
+	public iUsuario get(String id);
 	
 }

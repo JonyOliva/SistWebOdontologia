@@ -57,11 +57,5 @@ public class Odontologo extends iUsuario{
 	public void setDNI(String dNI) {
 		DNI = dNI;
 	}
-
-	@Override
-	public String toString() {
-		return "Odontologo []";
-	}
-
 	
 }
