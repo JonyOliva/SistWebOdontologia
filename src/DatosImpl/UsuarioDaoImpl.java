@@ -122,7 +122,7 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 			
 			try {
 				cn.Open();
-				ResultSet rs = cn.query("Select * from odontologos where IDAdministrador='"+odon.getIDUsuario()+"'");
+				ResultSet rs = cn.query("Select * from odontologos where IDOdontologo='"+odon.getIDUsuario()+"'");
 				if(rs.next()) {
 				odon.setNombre(rs.getString("odontologos.nombre"));
 				odon.setApellido(rs.getString("odontologos.apellido"));

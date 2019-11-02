@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="masterInclude.html"></jsp:include>
 <%
-	iUsuario user =null;
+	/*iUsuario user =null;
 	if(session.getAttribute("usuarios") != null)
 	{
 		user = (iUsuario)session.getAttribute("usuario");
@@ -15,7 +15,8 @@
 	else
 	{
 		response.sendRedirect("index.jsp");
-	}
+	}*/
+	if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");
 
  %>
 <title>Turnos</title>
@@ -23,7 +24,7 @@
 <link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 </head>
 <body>
-	<jsp:include page="masterMenuOdont.html"></jsp:include>
+	<jsp:include page="masterMenuOdont.jsp"></jsp:include>
 	<div class="container mt-3">
 		<h5 class="titular">
 			Turnos próximos
