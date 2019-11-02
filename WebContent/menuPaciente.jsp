@@ -63,6 +63,7 @@
 		</div>
 		<br />
 		<div>
+			<input type="hidden" id="idpaciente" value="<%= paciente.getIDPaciente() %>">
 			<jsp:include page="odontograma.html"></jsp:include>
 		</div>
 		<br>

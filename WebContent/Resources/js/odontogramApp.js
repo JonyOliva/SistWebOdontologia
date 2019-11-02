@@ -11,10 +11,10 @@ const distEntreDientes = 52; //min 45 (OFFSET*3)
 var maxilarImg = new Image();
 maxilarImg.src = "images/maxilar.png";
 maxilarImg.onload = () => {
-    lienzo.drawImage(maxilarImg, 150, 25);
+    lienzo.drawImage(maxilarImg, 0, 40);
 }
 const OFFSETX = 4;
-const yMaxilar = 150;
+const yMaxilar = 160;
 var dientesMaxilar = new Array();
 for (let i = 0; i < cantDientes/2; i++) {
     dientesMaxilar.push(new Diente(distEntreDientes * i + OFFSETX, yMaxilar));
@@ -27,9 +27,9 @@ for (let i = cantDientes/2; i < cantDientes; i++) {
 var mandibularImg = new Image();
 mandibularImg.src = "images/mandibular.png";
 mandibularImg.onload = () => {
-    lienzo.drawImage(mandibularImg, 150, 360);
+    lienzo.drawImage(mandibularImg, 0, 360);
 }
-const yMandibular = 285;
+const yMandibular = 290;
 var dientesMandibular = new Array();
 for (let i = 0; i < cantDientes/2; i++) {
     dientesMandibular.push(new Diente(distEntreDientes * i + OFFSETX, yMandibular));
@@ -40,7 +40,8 @@ for (let i = cantDientes/2; i < cantDientes; i++) {
     dientesMandibular[i].draw(lienzo);
 }
 
-document.getElementById("save").addEventListener("click", () => {
+document.getElementById("saveOdont").addEventListener("click", () => {
+	$("#saveOdont").attr("disabled", true);
     guardarOdontograma(dientesMaxilar, dientesMandibular);
 })
 

@@ -36,9 +36,9 @@ public class ServletPacientes extends HttpServlet {
 		String action = request.getParameter("action");
 		String view;
 		//if(userType.equals("admin")) ACA TENDRIA QUE CHECKEAR LA VAR DE SESION
-			view = "/adminPacientes.jsp";
+			//view = "/adminPacientes.jsp";
 		//else
-			//view = "/odonPacientes.jsp";
+			view = "/odonPacientes.jsp";
 		if(action == null) {
 			Gestor<Paciente> pagPacientes = new Gestor<Paciente>(new GestionPacientes(), 2);
 			String buscar = request.getParameter("buscar");

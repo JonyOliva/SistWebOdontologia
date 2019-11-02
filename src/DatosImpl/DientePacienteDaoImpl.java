@@ -1,9 +1,9 @@
 package DatosImpl;
-import Datos.IDientePaciente;
+import Datos.IDientePacienteDao;
 import Entidad.DientePaciente;
 import Entidad.Paciente;
 
-public class DientePacienteDaoImpl implements IDientePaciente{
+public class DientePacienteDaoImpl implements IDientePacienteDao{
 
 	Conexion cn;
 	
@@ -15,10 +15,11 @@ public class DientePacienteDaoImpl implements IDientePaciente{
 	public boolean insertar(DientePaciente dPaciente) {
 		try {
 			cn.Open();
-			String query = "INSERT INTO Dientes_x_Paciente(IDPaciente_DxP, IDDiente, Parte, IDEstado_DxP, IDTurno_DxP) ";
-			String data = "SELECT '"+dPaciente.getIDPaciente()+"', '"+dPaciente.getIDDiente()+"', '"+dPaciente.getParte()+"','"
-							+dPaciente.getIDEstado()+"', '"+dPaciente.getIDTurno();
+			String query = "INSERT INTO dientes_x_paciente(IDPaciente_DxP, IDDiente, Parte, IDEstado_DxP, IDTurno_DxP) ";
+			String data = "SELECT "+dPaciente.getIDPaciente()+", "+dPaciente.getIDDiente()+", '"+dPaciente.getParte()+"',"
+							+dPaciente.getIDEstado()+", "+dPaciente.getIDTurno();
 			boolean r = cn.execute(query+data);
+
 			cn.close();
 			return r;
 		}catch(Exception e) {

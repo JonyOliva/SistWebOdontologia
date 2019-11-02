@@ -8,9 +8,9 @@ const Estados = [
     "images/dEmpty.png",
     "-",
     "images/dAusente.png",
-    "X",
+    "3",
     "images/dCorona.png",
-    "O"
+    "4"
 ];
 
 const D_NORMAL = 0;
@@ -82,21 +82,28 @@ class Diente{
         return x>=this.posX && x<=width && y>=this.posY && y<=height;
     }
 
-    getEstadoStr(){
-        if(this.estadoStr[0] != VACIO ||
-            this.estadoStr[1] != VACIO ||
-            this.estadoStr[2] != VACIO ||
-            this.estadoStr[3] != VACIO ||
-            this.estadoStr[4] != VACIO)
-        {
-            return {
-                left: this.estadoStr[0],
-                up: this.estadoStr[1],
-                right: this.estadoStr[2],
-                bottom: this.estadoStr[3],
-                center: this.estadoStr[4]
-            }
-        }
+    isNotEmpty(){
+        return (this.estadoStr[0] != VACIO ||
+                this.estadoStr[1] != VACIO ||
+                this.estadoStr[2] != VACIO ||
+                this.estadoStr[3] != VACIO ||
+                this.estadoStr[4] != VACIO)
+    }
+
+    getEstadoLeft(){
+    	return (this.isTotal) ? 0 : this.estadoStr[0];
+    }
+    getEstadoUp(){
+    	return (this.isTotal) ? 0 : this.estadoStr[1];
+    }
+    getEstadoRight(){
+    	return (this.isTotal) ? 0 : this.estadoStr[2];
+    }
+    getEstadoBot(){
+    	return (this.isTotal) ? 0 : this.estadoStr[3];
+    }
+    getEstadoCenter(){
+        return this.estadoStr[4];
     }
 
     setEstado(estado) {
@@ -176,7 +183,7 @@ function getMousePos(canvas, evt) {
 }
 
 function obtenerDienteSeleccionado(mousePos, array){
-    console.log("Mouse: " + mousePos.x + " , " + mousePos.y);
+    //console.log("Mouse: " + mousePos.x + " , " + mousePos.y);
     for (let i = 0; i < array.length; i++) {
         if(array[i].Contains(mousePos.x, mousePos.y)){
             return array[i];
@@ -188,44 +195,56 @@ function guardarOdontograma(maxilar, mandibular){
     var odontograma = new Array();
     let id = 18;
     for (let i = 0; i < maxilar.length/2; i++) {
-        let data = maxilar[i].getEstadoStr();
-        if(data){
+        if(maxilar[i].isNotEmpty()){
             odontograma.push({
                 id: id,
-                estado: maxilar[i].getEstadoStr()
+                left: maxilar[i].getEstadoLeft(),
+                up: maxilar[i].getEstadoUp(),
+                right: maxilar[i].getEstadoRight(),
+                bottom: maxilar[i].getEstadoBot(),
+                center: maxilar[i].getEstadoCenter()
             })
         }
         id--;
     }
     id = 21;
     for (let i = maxilar.length/2; i < maxilar.length; i++) {
-        let data = maxilar[i].getEstadoStr();
-        if(data){
+        if(maxilar[i].isNotEmpty()){
             odontograma.push({
                 id: id,
-                estado: maxilar[i].getEstadoStr()
+                left: maxilar[i].getEstadoLeft(),
+                up: maxilar[i].getEstadoUp(),
+                right: maxilar[i].getEstadoRight(),
+                bottom: maxilar[i].getEstadoBot(),
+                center: maxilar[i].getEstadoCenter()
             })
         }
         id++;
     }
     id = 48;
     for (let i = 0; i < mandibular.length/2; i++) {
-        let data = mandibular[i].getEstadoStr();
-        if(data){
+        if(mandibular[i].isNotEmpty()){
             odontograma.push({
                 id: id,
-                estado: mandibular[i].getEstadoStr()
+                left: mandibular[i].getEstadoLeft(),
+                up: mandibular[i].getEstadoUp(),
+                right: mandibular[i].getEstadoRight(),
+                bottom: mandibular[i].getEstadoBot(),
+                center: mandibular[i].getEstadoCenter()
             })
         }
         id--;
     }
     id = 31;
     for (let i = mandibular.length/2; i < mandibular.length; i++) {
-        let data = mandibular[i].getEstadoStr();
-        if(data){
+        if(mandibular[i].isNotEmpty()){
             odontograma.push({
                 id: id,
-                estado: mandibular[i].getEstadoStr()
+                left: mandibular[i].getEstadoLeft(),
+                up: mandibular[i].getEstadoUp(),
+                right: mandibular[i].getEstadoRight(),
+                bottom: mandibular[i].getEstadoBot(),
+                center: mandibular[i].getEstadoCenter()
             })
         }
         id++;
@@ -254,7 +273,7 @@ function enviarServidor(odontograma){
 	$.ajax({
 		type: "POST",
 		url: "ServletHistoriales",
-		data: { odontograma: JSON.stringify(odontograma)},
+		data: { odontograma: JSON.stringify(odontograma), idpaciente: $("#idpaciente").val()},
 		success: (resp)=>{
 			console.log("enviado " + resp);
 		},

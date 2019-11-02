@@ -1,61 +1,53 @@
-<!DOCTYPE html>
-<html>
-<body>
-    <div style="display: flex;">
-        <div style="flex: 10%; margin-right: 1%;">
-            <br>
-            <fieldset>
-                <legend>Parcial</legend>
-                <div> 
-                    <img src="images/dNormal.png" alt="">
-                    Normal
-                    <input type="radio" name="estado" id="0" onclick="cambiarEstadoSelect(this)" checked>
-                </div>
-                <br>
-                <div> 
-                    <img src="images/dCarie.png" alt="">
-                    Carie
-                    <input type="radio" name="estado" id="2" onclick="cambiarEstadoSelect(this)">
-                </div>
-                <br>
-                <div> 
-                    <img src="images/dEmpaste.png" alt="">
-                    Empaste
-                    <input type="radio" name="estado" id="4" onclick="cambiarEstadoSelect(this)">
-                </div>
-            </fieldset>
-            <br>
-            <br>
-            <fieldset>
-                <legend>Total</legend>
-                <div> 
-                    <img src="images/dAusente.png" alt="" width="16">
-                    Ausente
-                    <input type="radio" name="estado" id="8" onclick="cambiarEstadoSelect(this)">
-                </div>
-                <br>
-                <div> 
-                    <img src="images/dCorona.png" alt="" width="16">
-                    Corona
-                    <input type="radio" name="estado" id="10" onclick="cambiarEstadoSelect(this)">
-                </div>
-            </fieldset>
-            <br>
-            <br>
-            <div>
-                <button class="btn btn-success" id="save">Guardar</button>
+<div class="row container-fluid">
+    <div class="col-2">
+        <br>
+        <fieldset>
+            <legend>Parcial</legend>
+            <div> 
+                <img src="images/dNormal.png" alt="">
+                Normal
+                <input type="radio" name="estado" id="0" onclick="cambiarEstadoSelect(this)" checked>
             </div>
-        </div>
-        
-        <div style="flex: 90%;">
-                <canvas width="860" height="480" id="odontogram" style=" border: 1px solid;">
-                </canvas>
+            <br>
+            <div> 
+                <img src="images/dCarie.png" alt="">
+                Carie
+                <input type="radio" name="estado" id="2" onclick="cambiarEstadoSelect(this)">
+            </div>
+            <br>
+            <div> 
+                <img src="images/dEmpaste.png" alt="">
+                Empaste
+                <input type="radio" name="estado" id="4" onclick="cambiarEstadoSelect(this)">
+            </div>
+        </fieldset>
+        <br>
+        <br>
+        <fieldset>
+            <legend>Total</legend>
+            <div> 
+                <img src="images/dAusente.png" alt="" width="16">
+                Ausente
+                <input type="radio" name="estado" id="8" onclick="cambiarEstadoSelect(this)">
+            </div>
+            <br>
+            <div> 
+                <img src="images/dCorona.png" alt="" width="16">
+                Corona
+                <input type="radio" name="estado" id="10" onclick="cambiarEstadoSelect(this)">
+            </div>
+        </fieldset>
+        <br>
+        <br>
+        <div>
+            <button class="btn btn-success" id="saveOdont">Guardar ficha</button>
         </div>
     </div>
-
-
-
-</body>
+    
+    <div class="col-10">
+            <canvas width="860" height="480" id="odontogram" style=" border: 1px solid;">
+            </canvas>
+    </div>
+</div>
 <script src="Resources/js/model.js"></script>
 <script src="Resources/js/odontogramApp.js"></script>
-</html>

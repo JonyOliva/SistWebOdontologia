@@ -48,8 +48,6 @@
 						</form>
 					</div>
 					<div class="col-6" style="text-align: right;">
-						<a href="fichaPaciente.jsp" class="btn btn-primary">Agregar
-							nuevo paciente</a>
 					</div>
 				</div>
 			</div>
