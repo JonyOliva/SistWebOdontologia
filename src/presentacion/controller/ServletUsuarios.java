@@ -55,13 +55,13 @@ public class ServletUsuarios extends HttpServlet {
 				miDispacher.forward(request, response);
 			}
 			else {
-			if(user.isTipoUsuario() == true)
+			if(user.isTipoUsuario() == false)
 			{
 				user = gu.getOdo(user);
 				session.setAttribute("usuario", user);
 				miDispacher = request.getRequestDispatcher("/odonTurnos.jsp");
 			}
-			else if(user.isTipoUsuario() == false)
+			else if(user.isTipoUsuario() == true)
 			{
 				user = gu.getAdm(user);
 				session.setAttribute("usuario", user);
