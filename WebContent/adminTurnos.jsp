@@ -17,10 +17,11 @@
 </style>
 
 <body>
-	<jsp:include page="masterMenuAdmin.html"></jsp:include>
+	<jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 	<link rel="stylesheet" href="Resources/css/tables.css">
 	<link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 	<div class="container mt-3">
+	<% if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp"); %>
 
 		<div>
 			<div>

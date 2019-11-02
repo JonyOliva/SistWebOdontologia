@@ -37,7 +37,8 @@ public class ServletUsuarios extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("hrhrjrj");
+		
+		///Iniciar Sesion
 		if(request.getParameter("btnIniciarSesion")!=null)
 		{
 			HttpSession session = request.getSession();
@@ -46,9 +47,7 @@ public class ServletUsuarios extends HttpServlet {
 			String mail, pass;
 			mail = request.getParameter("txtEmail").toString();
 			pass = request.getParameter("txtPassword").toString();
-			System.out.println("aca esta el cartel");
 			iUsuario user = gu.login(mail,pass);
-			System.out.println("asdasdsadsdsasadsadsa");
 			if(user == null)
 			{
 				request.setAttribute("ErrorSesion", true);
@@ -71,6 +70,16 @@ public class ServletUsuarios extends HttpServlet {
 			miDispacher.forward(request, response);
 			}
 			
+		}
+		
+		///Cerrar Sesion
+		if(request.getParameter("btnCerrarSesion")!=null)
+		{
+			HttpSession session = request.getSession();
+			session.removeAttribute("usuario");
+			RequestDispatcher miDispacher = request.getRequestDispatcher("/index.jsp");
+			miDispacher.forward(request, response);
+			//response.sendRedirect("index.jsp");
 		}
 	}
 
