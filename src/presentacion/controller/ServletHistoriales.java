@@ -33,8 +33,13 @@ public class ServletHistoriales extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		if(request.getParameter("id") != null) {
+			Gson gson = new Gson();
+			int idPaciente = Integer.valueOf(request.getParameter("id"));
+			String pData = gson.toJson(dp.getAll(idPaciente));
+			//response.getWriter().append("Served at: ").append(request.getContextPath());
+			response.getWriter().append(pData);
+		}
 	}
 
 	/**
@@ -53,7 +58,7 @@ public class ServletHistoriales extends HttpServlet {
 				DientePaciente newd = new DientePaciente();
 				newd.setIDDiente(d.id);
 				newd.setIDPaciente(Integer.valueOf(request.getParameter("idpaciente")));
-				newd.setIDTurno(1);
+				newd.setIDTurno(4);
 
 				int estado = Integer.valueOf(d.left);
 				if(estado != 0) {
@@ -88,9 +93,7 @@ public class ServletHistoriales extends HttpServlet {
 				
 				
 			}
-			
-			
-			doGet(request, response);
+
 		}
 	}
 

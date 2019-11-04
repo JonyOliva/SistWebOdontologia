@@ -1,12 +1,13 @@
 package Datos;
 
+import java.util.List;
+
+import Entidad.Diente;
 import Entidad.DientePaciente;
-import Entidad.Paciente;
 
 public interface IDientePacienteDao {
 
 	public boolean insertar(DientePaciente dienteP);
-	public boolean getAll(Paciente paciente);
-	public DientePaciente get(int id);
+	public List<Diente> getAll(int idPaciente);
 	
 }
