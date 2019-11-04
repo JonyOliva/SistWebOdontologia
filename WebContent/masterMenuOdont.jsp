@@ -37,8 +37,7 @@
 			</a></li>
 			<li class="nav-item">
 			<form method="post" action="ServletUsuarios">
-			<input class="nav-link" type="submit" name="btnCerrarSesion" value="Cerrar Sesión"><span class="sr-only">(current)</span>
-			</input>
+			<button style="background-color: #48C9B0;" type="submit" name="btnCerrarSesion"><img src="images/CerrarSesion3.png" alt="30" width="30" ></button>
 			</form>
 		</li>
 	  </ul>

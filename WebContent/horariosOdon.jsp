@@ -23,7 +23,7 @@
 			<br>
 			<table border=1>
 				<tr>
-					<th>Dï¿½a</th>
+					<th>Día</th>
 					<th>Inicio de la jornada</th>
 					<th>Fin de la jornada</th>
 					<th>Acciones</th>

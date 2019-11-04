@@ -49,7 +49,7 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 	public boolean insertar(iUsuario user) {
 		Conexion cn = new Conexion();
 		cn.Open();
-		boolean state= cn.execute("Insert into Usuarios(IDUsuario, TipoUsuario, Email, Password) VALUES"+user.getIDUsuario()+","+1+user.getEmail()+user.getPassword()+";");
+		boolean state= cn.execute("Insert into Usuarios(IDUsuario, TipoUsuario, Email, Password) VALUES '"+user.getIDUsuario()+"',"+0+",'"+user.getEmail()+"','"+user.getPassword()+"';");
 		cn.close();
 		return state;
 	}
@@ -58,7 +58,7 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 	public boolean modificar(iUsuario user) {
 		Conexion cn = new Conexion();
 		cn.Open();
-		boolean state= cn.execute("Update usuarios set Email="+user.getEmail()+",Password="+user.getPassword()+"where IDUsuario = "+user.getIDUsuario()+";");
+		boolean state= cn.execute("Update usuarios set Email='"+user.getEmail()+"', Password='"+user.getPassword()+"' where IDUsuario = '"+user.getIDUsuario()+"';");
 		cn.close();
 		return state;
 	}

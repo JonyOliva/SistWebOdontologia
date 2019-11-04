@@ -86,11 +86,13 @@ public class ServletOdontologos extends HttpServlet {
 			od.setMatricula(request.getParameter("Matricula"));
 			od.setEmail(request.getParameter("Email"));
 			od.setPassword(request.getParameter("Password"));
-			od.setTipoUsuario(true); //odontologo
+			od.setTipoUsuario(false); //odontologo
 			if(action.equals("edit")) {
 				go.modificar(od);
+				un.modificar(od);
 			}else if(action.equals("new")) {
 				go.insertar(od);
+				un.insertar(od);
 			}
 		}
 		response.sendRedirect("ServletOdontologos");

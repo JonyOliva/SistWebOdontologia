@@ -43,12 +43,14 @@ public class GestionUsuarios implements iUsuarioNegocio{
 
 	@Override
 	public boolean insertar(iUsuario odontologo) {
-		return false;
+		iUsuarioDao userdao = new UsuarioDaoImpl();
+		return userdao.insertar(odontologo);
 	}
 
 	@Override
 	public boolean modificar(iUsuario odontologo) {
-		return false;
+		iUsuarioDao userdao = new UsuarioDaoImpl();
+		return userdao.modificar(odontologo);
 	}
 
 	@Override

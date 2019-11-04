@@ -4,7 +4,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<nav class="navbar navbar-expand-lg navbar-light" style="background: #48C9B0;">
+ <nav class="navbar navbar-expand-lg navbar-light" style="background: #48C9B0;">
     <a class="navbar-brand" href="#">Menu Administrador</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -34,7 +34,7 @@
         </li>
         <li class="nav-item">
         <form method="post" action="ServletUsuarios">
-          <input class="nav-link" type="submit" name="btnCerrarSesion" value="Cerrar Sesión"> <span class="sr-only">(current)</span></input>
+          <button style="background-color: #48C9B0;" type="submit" name="btnCerrarSesion"><img src="images/CerrarSesion3.png" alt="30" width="30" ></button>
           </form>
         </li>
       </ul>
