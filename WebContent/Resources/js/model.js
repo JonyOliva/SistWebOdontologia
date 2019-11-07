@@ -8,7 +8,9 @@ const Estados = [
     "images/dAusente.png",
     "3",
     "images/dCorona.png",
-    "4"
+    "4",
+    "images/dPuente.png",
+    "5"
 ];
 
 const D_NORMAL = 0;
@@ -93,10 +95,10 @@ class Diente{
     getData(){
         return{
             id: this.id,
-            left: (this.isTotal) ? 0 : this.estadoStr[0],
-            up: (this.isTotal) ? 0 : this.estadoStr[1],
-            right: (this.isTotal) ? 0 : this.estadoStr[2],
-            bottom: (this.isTotal) ? 0 : this.estadoStr[3],
+            left: this.estadoStr[0],
+            up: this.estadoStr[1],
+            right: this.estadoStr[2],
+            bottom: this.estadoStr[3],
             center: this.estadoStr[4]
         }
     }
@@ -110,30 +112,31 @@ class Diente{
     }
 
     inicializar(context, dLeft, dUp, dRight, dBottom, dCenter){
-        if(dCenter > 2){
-            this.total = new Image();
+        const cEstados = 3;
+        if(dCenter > cEstados && (dCenter == dLeft && dCenter == dUp && dCenter == dRight && dCenter == dBottom)){
+        	this.total = new Image();
             this.total.src = Estados[dCenter*2];
             this.total.onload = () => {
                 context.drawImage(this.total, this.posX, this.posY);
             }
         }else{
-            if(dLeft){
+            if(dLeft && dLeft < cEstados){
                 this.left.src = Estados[dLeft*2];
                 this.estadoStr[0] = dLeft;
             }
-            if(dUp){
+            if(dUp && dUp < cEstados){
                 this.up.src = Estados[dUp*2];
                 this.estadoStr[1] = dUp;
             }
-            if(dRight){
+            if(dRight && dRight < cEstados){
                 this.right.src = Estados[dRight*2];
                 this.estadoStr[2] = dRight;
             }
-            if(dBottom){
+            if(dBottom && dBottom < cEstados){
                 this.bottom.src = Estados[dBottom*2];
                 this.estadoStr[3] = dBottom;
             }
-            if(dCenter){
+            if(dCenter && dCenter < cEstados){
                 this.center.src = Estados[dCenter*2];
                 this.estadoStr[4] = dCenter;
             }

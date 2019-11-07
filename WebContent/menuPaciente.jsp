@@ -1,6 +1,10 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1"%>
-		<%@page import="Entidad.Paciente"%>
+<%@page import="Entidad.Paciente"%>
+<%@page import="Entidad.Tratamiento"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,57 +17,62 @@
 	<jsp:include page="masterMenuOdont.html"></jsp:include>
 	<%
 		Paciente paciente = null;
+		List<Tratamiento> listTrats = null;
 		if (request.getAttribute("paciente") != null) {
-			paciente = (Paciente)request.getAttribute("paciente");
+			paciente = (Paciente) request.getAttribute("paciente");
+			listTrats = (ArrayList<Tratamiento>)request.getAttribute("tratamientos");
 		} else {
 			response.sendRedirect("ServletPacientes");
 		}
 	%>
 	<div class="container mt-3">
 		<h5 class="titular">Ficha paciente</h5>
-		<br/>
+		<br />
 		<div class="row justify-content-center" style="text-align: center;">
 			<div class="rounded col-8" style="border: #9de2d4 1px solid;">
 				<div class="subtitular">Datos del paciente</div>
 				<table class="table table-sm mt-3">
 					<tr>
-						<th>Nombre: </th>
-						<td><%= paciente.getNombre() %></td>
+						<th>Nombre:</th>
+						<td><%=paciente.getNombre()%></td>
 					</tr>
 					<tr>
-						<td>Apellido: </td>
-						<td><%= paciente.getApellido() %></td>
+						<td>Apellido:</td>
+						<td><%=paciente.getApellido()%></td>
 					</tr>
 					<tr>
-						<td>DNI: </td>
-						<td><%= paciente.getDni() %></td>
+						<td>DNI:</td>
+						<td><%=paciente.getDni()%></td>
 					</tr>
 					<tr>
-						<td>Teléfono: </td>
-						<td><%= paciente.getTelefono() %></td>
+						<td>Teléfono:</td>
+						<td><%=paciente.getTelefono()%></td>
 					</tr>
 					<tr>
-						<td>Domicilio: </td>
-						<td><%= paciente.getDomicilio() %></td>
+						<td>Domicilio:</td>
+						<td><%=paciente.getDomicilio()%></td>
 					</tr>
 					<tr>
-						<td>Fecha de nacimiento: </td>
-						<td><%= paciente.getFechaNacimiento() %></td>
-					</tr>
-					<% if(paciente.hayExtra()){ %>
-					<tr>
-						<td>Información extra: </td>
-						<td><%= paciente.getInfoExtra() %></td>
+						<td>Fecha de nacimiento:</td>
+						<td><%=paciente.getFechaNacimiento()%></td>
 					</tr>
 					<%
-					}
+						if (paciente.hayExtra()) {
+					%>
+					<tr>
+						<td>Información extra:</td>
+						<td><%=paciente.getInfoExtra()%></td>
+					</tr>
+					<%
+						}
 					%>
 				</table>
 			</div>
 		</div>
 		<br />
 		<div>
-			<input type="hidden" id="idpaciente" value="<%= paciente.getIDPaciente() %>">
+			<input type="hidden" id="idpaciente"
+				value="<%=paciente.getIDPaciente()%>">
 			<jsp:include page="odontograma.html"></jsp:include>
 		</div>
 		<br>
@@ -75,34 +84,45 @@
 						<th>Odontologo</th>
 						<th>Tratamiento</th>
 						<th>Fecha</th>
+						<th>Detalle</th>
 					</tr>
 					<tr>
 						<td>Pepito</td>
 						<td>Conducto</td>
 						<td>06/10/2019</td>
+						<td><button class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
 					</tr>
 					<tr>
 						<td>Cachito</td>
 						<td>Corona</td>
 						<td>19/05/2019</td>
+						<td><button class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
 					</tr>
 				</table>
 			</div>
 			<div class="col-6 rounded" style="border: #9de2d4 1px solid;">
 				<div class="subtitular">Registrar nueva consulta</div>
-				<table class="table mt-3">
-					<tr>
-						<th>Tratamiento</th>
-						<th>Anotacion extra:</th>
-					</tr>
-					<tr>
-						<td><select>
-								<option value="">empaste</option>
-								<option value="">mas empaste</option>
-						</select></td>
-						<td><textarea style="width: 100%" rows="1"></textarea></td>
-					</tr>
-				</table>
+				<form method="POST" action="ServletHistoriales">
+					<table class="table mt-3">
+						<tr>
+							<th>Tratamiento</th>
+							<th>Anotacion extra:</th>
+						</tr>
+						<tr>
+							<td><select name="Tratamiento">
+									<%
+										for(Tratamiento trat : listTrats){
+									%>
+									<option value="<%= trat.getNombreID() %>"><%= trat.getNombreID() %></option>
+									<%
+										}
+									%>
+									
+							</select></td>
+							<td><textarea name="Anotacion" style="width: 100%" rows="1"></textarea></td>
+						</tr>
+					</table>
+				</form>
 				<a class="btn btn-success m-2" href="#">Guardar consulta</a>
 			</div>
 

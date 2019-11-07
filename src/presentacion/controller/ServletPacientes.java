@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import Entidad.Paciente;
 import Entidad.Utilidades;
 import Entidad.Gestor;
+import Negocio.IConsultaNegocio;
 import Negocio.IPacienteNegocio;
+import NegocioImpl.GestionConsultas;
 import NegocioImpl.GestionPacientes;
 
 
@@ -21,6 +23,7 @@ import NegocioImpl.GestionPacientes;
 public class ServletPacientes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     IPacienteNegocio gp = new GestionPacientes();
+    IConsultaNegocio gc = new GestionConsultas();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -81,6 +84,8 @@ public class ServletPacientes extends HttpServlet {
 			if(id != null) {
 				int idPaciente = Integer.valueOf(id);
 				request.setAttribute("paciente", gp.get(idPaciente));
+				request.setAttribute("tratamientos", gc.getAll());
+				
 				dispatcher = request.getRequestDispatcher("menuPaciente.jsp");
 				dispatcher.forward(request, response);
 			}
