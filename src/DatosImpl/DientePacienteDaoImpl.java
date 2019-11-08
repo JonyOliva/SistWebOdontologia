@@ -35,7 +35,7 @@ public class DientePacienteDaoImpl implements IDientePacienteDao{
 	}
 
 	@Override
-	public List<Diente> getAll(int idPaciente) {
+	public List<Diente> getOdontograma(int idPaciente) {
 		List<Diente> listDientes = new ArrayList<Diente>();
 		try {
 			cn.Open();
@@ -74,6 +74,49 @@ public class DientePacienteDaoImpl implements IDientePacienteDao{
 							actual.center = dres.getString("IDEstado_DxP");
 						break;
 				}
+			}
+			cn.close();
+			return listDientes;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
+		return null;
+	}
+
+	@Override
+	public List<String> getAll(int idPaciente, int idTurno) {
+		List<String> listDientes = new ArrayList<String>();
+		try {
+			cn.Open();
+			String query = "SELECT IDDiente_DxP, Parte, IDEstado_DxP, Descripcion FROM dientes_x_paciente INNER JOIN estadosdientes " + 
+					"ON IDEstado_DxP=IDEstado WHERE IDPaciente_DxP="+idPaciente+" AND IDTurno_DxP="+idTurno;
+			ResultSet ds = cn.query(query);
+			while(ds.next()){
+				String registro = "Diente: " + ds.getInt("IDDiente_DxP") + ", arreglo: " + ds.getString("Descripcion");
+				if(ds.getInt("IDEstado_DxP") < 3) {
+					registro += ", parte ";
+					switch(ds.getString("Parte")) {
+						case "L":
+							registro += "izquierda";
+							break;
+						case "U":
+							registro += "superior";
+							break;
+						case "R":
+							registro += "derecha";
+							break;
+						case "B":
+							registro += "inferior";
+							break;
+						case "C":
+							registro += "central";
+							break;
+					}
+				}
+				if(!listDientes.contains(registro))
+					listDientes.add(registro);
 			}
 			cn.close();
 			return listDientes;

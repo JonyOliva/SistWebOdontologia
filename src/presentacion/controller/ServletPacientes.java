@@ -85,6 +85,7 @@ public class ServletPacientes extends HttpServlet {
 				int idPaciente = Integer.valueOf(id);
 				request.setAttribute("paciente", gp.get(idPaciente));
 				request.setAttribute("tratamientos", gc.getAll());
+				request.setAttribute("consultas", gc.getAll(idPaciente));
 				
 				dispatcher = request.getRequestDispatcher("menuPaciente.jsp");
 				dispatcher.forward(request, response);

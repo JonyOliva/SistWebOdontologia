@@ -1,9 +1,6 @@
 package presentacion.controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Entidad.Odontologo;
-import Entidad.Paciente;
 import Entidad.Utilidades;
 import Negocio.IOdontologoNegocio;
 import Negocio.iUsuarioNegocio;

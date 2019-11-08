@@ -3,18 +3,23 @@ package NegocioImpl;
 import java.util.ArrayList;
 
 import Datos.IConsultaDao;
+import Datos.IDientePacienteDao;
 import DatosImpl.ConsultaDaoImpl;
+import DatosImpl.DientePacienteDaoImpl;
 import Entidad.Consulta;
+import Entidad.ConsultaData;
 import Entidad.Tratamiento;
 import Negocio.IConsultaNegocio;
 
 public class GestionConsultas implements IConsultaNegocio{
 
 	IConsultaDao cd;
+	IDientePacienteDao dpd;
 	
 	public GestionConsultas() {
 		super();
 		this.cd = new ConsultaDaoImpl();
+		this.dpd = new DientePacienteDaoImpl();
 	}
 
 	@Override
@@ -24,11 +29,15 @@ public class GestionConsultas implements IConsultaNegocio{
 
 	@Override
 	public ArrayList<Consulta> getAll(int idPaciente) {
-		return (ArrayList<Consulta>) cd.getAll(idPaciente);
+		ArrayList<Consulta> consultas = (ArrayList<Consulta>) cd.getAll(idPaciente);
+		for (Consulta con : consultas) {
+			con.setPiezasArregladas(dpd.getAll(idPaciente, con.getIDTurno()));
+		}
+		return consultas;
 	}
 
 	@Override
-	public boolean insertar(Consulta consulta) {
+	public boolean insertar(ConsultaData consulta) {
 		return cd.insertar(consulta);
 	}
 

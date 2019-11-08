@@ -1,11 +1,12 @@
 package DatosImpl;
 
 import java.sql.ResultSet;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import Datos.IConsultaDao;
+import Entidad.ConsultaData;
 import Entidad.Consulta;
 import Entidad.Tratamiento;
 
@@ -20,8 +21,28 @@ public class ConsultaDaoImpl implements IConsultaDao{
 
 	@Override
 	public List<Consulta> getAll(int idPaciente) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Consulta> listCons = new ArrayList<Consulta>();
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("SELECT IDTurno_CON, odontologos.nombre AS NombreOdontologo, IDTratamiento_CON, Fecha, AnotacionExtra  FROM consultas " + 
+					"INNER JOIN odontologos ON IDOdontologo_CON=IDOdontologo " + 
+					"INNER JOIN turnos ON IDTurno_CON=IDTurno WHERE IDPaciente_CON ="+idPaciente);
+			while(rs.next()) {
+				Consulta Con = new Consulta();
+				Con.setIDTurno(rs.getInt("IDTurno_CON"));
+				Con.setNombreOdontologo(rs.getString("NombreOdontologo"));
+				Con.setIdTratamiento(rs.getString("IDTratamiento_CON"));
+				Con.setFecha(rs.getObject("Fecha", LocalDateTime.class));
+				Con.setAnotacion(rs.getString("AnotacionExtra"));
+				listCons.add(Con);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
+		
+		return listCons;
 	}
 
 	@Override
@@ -47,7 +68,7 @@ public class ConsultaDaoImpl implements IConsultaDao{
 	}
 
 	@Override
-	public boolean insertar(Consulta paciente) {
+	public boolean insertar(ConsultaData consulta) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -1,62 +1,56 @@
 package Entidad;
 
-public class Consulta {
+import java.time.LocalDateTime;
+import java.util.List;
 
-	private final int IDConsulta;
-	private int IDTurno;
-	private String IDOdontologo;
-	private String IDTratamiento;
-	private int IDPaciente;
-	private String Anotacion;
-		
-	public Consulta(int iDConsulta, int iDTurno, String iDOdontologo, String iDTratamiento, int iDPaciente,
-			String anotacion) {
+public class Consulta {
+	
+	int IDTurno;
+	String nombreOdontologo;
+	String idTratamiento;
+	LocalDateTime fecha;
+	String anotacion;
+	List<String> piezasArregladas;
+	
+	public Consulta() {
 		super();
-		IDConsulta = iDConsulta;
-		IDTurno = iDTurno;
-		IDOdontologo = iDOdontologo;
-		IDTratamiento = iDTratamiento;
-		IDPaciente = iDPaciente;
-		Anotacion = anotacion;
 	}
 	
-	public Consulta(int iDConsulta) {
-		super();
-		IDConsulta = iDConsulta;
-	}
-
 	public int getIDTurno() {
 		return IDTurno;
 	}
 	public void setIDTurno(int iDTurno) {
 		IDTurno = iDTurno;
 	}
-	public String getIDOdontologo() {
-		return IDOdontologo;
+	public String getNombreOdontologo() {
+		return nombreOdontologo;
 	}
-	public void setIDOdontologo(String iDOdontologo) {
-		IDOdontologo = iDOdontologo;
+	public void setNombreOdontologo(String nombreOdontologo) {
+		this.nombreOdontologo = nombreOdontologo;
 	}
-	public String getIDTratamiento() {
-		return IDTratamiento;
+	public String getIdTratamiento() {
+		return idTratamiento;
 	}
-	public void setIDTratamiento(String iDTratamiento) {
-		IDTratamiento = iDTratamiento;
+	public void setIdTratamiento(String idTratamiento) {
+		this.idTratamiento = idTratamiento;
 	}
-	public int getIDPaciente() {
-		return IDPaciente;
+	public LocalDateTime getFecha() {
+		return fecha;
 	}
-	public void setIDPaciente(int iDPaciente) {
-		IDPaciente = iDPaciente;
+	public void setFecha(LocalDateTime fecha) {
+		this.fecha = fecha;
 	}
 	public String getAnotacion() {
-		return Anotacion;
+		return anotacion;
 	}
 	public void setAnotacion(String anotacion) {
-		Anotacion = anotacion;
+		this.anotacion = anotacion;
 	}
-	public int getIDConsulta() {
-		return IDConsulta;
+	public List<String> getPiezasArregladas() {
+		return piezasArregladas;
+	}
+	public void setPiezasArregladas(List<String> piezasArregladas) {
+		this.piezasArregladas = piezasArregladas;
 	}
 	
 }

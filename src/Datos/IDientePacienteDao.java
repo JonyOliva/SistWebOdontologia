@@ -8,6 +8,7 @@ import Entidad.DientePaciente;
 public interface IDientePacienteDao {
 
 	public boolean insertar(DientePaciente dienteP);
-	public List<Diente> getAll(int idPaciente);
+	public List<String> getAll(int idPaciente, int idTurno);
+	public List<Diente> getOdontograma(int idPaciente);
 	
 }

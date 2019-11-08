@@ -8,24 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.*;
 
-import Datos.IDientePacienteDao;
-import DatosImpl.DientePacienteDaoImpl;
 import Entidad.Diente;
 import Entidad.DientePaciente;
+import Negocio.IDientePacienteNegocio;
+import NegocioImpl.GestionDientes;
 /**
  * Servlet implementation class ServletHistoriales
  */
 @WebServlet("/ServletHistoriales")
 public class ServletHistoriales extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	IDientePacienteDao dp;
+	IDientePacienteNegocio dp;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ServletHistoriales() {
         super();
-        dp = new DientePacienteDaoImpl();
+        dp = new GestionDientes();
         // TODO Auto-generated constructor stub
     }
 
@@ -36,7 +36,7 @@ public class ServletHistoriales extends HttpServlet {
 		if(request.getParameter("id") != null) {
 			Gson gson = new Gson();
 			int idPaciente = Integer.valueOf(request.getParameter("id"));
-			String pData = gson.toJson(dp.getAll(idPaciente));
+			String pData = gson.toJson(dp.getOdontograma(idPaciente));
 			//response.getWriter().append("Served at: ").append(request.getContextPath());
 			response.getWriter().append(pData);
 		}
@@ -58,7 +58,7 @@ public class ServletHistoriales extends HttpServlet {
 				DientePaciente newd = new DientePaciente();
 				newd.setIDDiente(d.id);
 				newd.setIDPaciente(Integer.valueOf(request.getParameter("idpaciente")));
-				newd.setIDTurno(4);
+				newd.setIDTurno(2);
 
 				int estado = Integer.valueOf(d.left);
 				if(estado != 0) {

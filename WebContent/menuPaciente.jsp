@@ -3,6 +3,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page import="Entidad.Paciente"%>
 <%@page import="Entidad.Tratamiento"%>
+<%@page import="Entidad.Consulta"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,9 +19,11 @@
 	<%
 		Paciente paciente = null;
 		List<Tratamiento> listTrats = null;
+		List<Consulta> listCons = null;
 		if (request.getAttribute("paciente") != null) {
 			paciente = (Paciente) request.getAttribute("paciente");
 			listTrats = (ArrayList<Tratamiento>)request.getAttribute("tratamientos");
+			listCons = (ArrayList<Consulta>)request.getAttribute("consultas");
 		} else {
 			response.sendRedirect("ServletPacientes");
 		}
@@ -77,30 +80,46 @@
 		</div>
 		<br>
 		<div class="row mt-3" style="text-align: center;">
-			<div class="col-6 rounded" style="border: #9de2d4 1px solid;">
+			<div class="col-7 rounded" style="border: #9de2d4 1px solid;">
 				<div class="subtitular">Historial clínico</div>
 				<table class="table mt-3">
 					<tr>
+						<th>Turno</th>
 						<th>Odontologo</th>
 						<th>Tratamiento</th>
 						<th>Fecha</th>
 						<th>Detalle</th>
 					</tr>
-					<tr>
+					<!-- <tr>
 						<td>Pepito</td>
 						<td>Conducto</td>
 						<td>06/10/2019</td>
 						<td><button class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
-					</tr>
+					</tr> -->
+					<%
+						for(Consulta con : listCons){
+							String det = "";
+							if(con.getAnotacion() != null)
+								det += "<b>Anotacion</b></br>"+con.getAnotacion()+"</br></br>";
+							det += "<b>Piezas</b></br>";
+							for(String p :con.getPiezasArregladas()){
+								det += p+"</br>";
+							}
+					%>
+					<input type="hidden" id="<%= con.getIDTurno()+99 %>" value="<%= det %>">
 					<tr>
-						<td>Cachito</td>
-						<td>Corona</td>
-						<td>19/05/2019</td>
-						<td><button class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
+						<td><%= con.getIDTurno() %></td>
+						<td><%= con.getNombreOdontologo() %></td>
+						<td><%= con.getIdTratamiento() %></td>
+						<td><%= con.getFecha() %></td>
+						<td><button onclick="verDetalles(<%= con.getIDTurno()+99 %>)" class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
 					</tr>
+					<%
+						}
+					%>
 				</table>
 			</div>
-			<div class="col-6 rounded" style="border: #9de2d4 1px solid;">
+			<div class="col-5 rounded" style="border: #9de2d4 1px solid;">
 				<div class="subtitular">Registrar nueva consulta</div>
 				<form method="POST" action="ServletHistoriales">
 					<table class="table mt-3">
@@ -128,6 +147,31 @@
 
 		</div>
 		<br> <br>
+		
+<div class="modal fade" id="detModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <h6 class="modal-title col-11 text-center" id="tModal"></h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id=detContent> </p>
+      </div>
+    </div>
+  </div>
+</div>
+		
 	</div>
+	<script type="text/javascript">
+		function verDetalles(id){
+			//console.log(id + " " + $("#h"+id).val())
+			$("#detContent").html($("#"+id).val());
+			$("#tModal").html("Arreglos hechos en el turno "+(id-99));
+			$("#detModal").modal("show");
+		}
+	</script>
 </body>
 </html>
