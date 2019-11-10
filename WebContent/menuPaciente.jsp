@@ -90,29 +90,25 @@
 						<th>Fecha</th>
 						<th>Detalle</th>
 					</tr>
-					<!-- <tr>
-						<td>Pepito</td>
-						<td>Conducto</td>
-						<td>06/10/2019</td>
-						<td><button class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
-					</tr> -->
 					<%
 						for(Consulta con : listCons){
 							String det = "";
 							if(con.getAnotacion() != null)
-								det += "<b>Anotacion</b></br>"+con.getAnotacion()+"</br></br>";
+								det += "<b>Anotacion:</b> "+con.getAnotacion()+"</br></br>";
 							det += "<b>Piezas</b></br>";
 							for(String p :con.getPiezasArregladas()){
 								det += p+"</br>";
 							}
 					%>
-					<input type="hidden" id="<%= con.getIDTurno()+99 %>" value="<%= det %>">
-					<tr>
+					<tr> 
 						<td><%= con.getIDTurno() %></td>
 						<td><%= con.getNombreOdontologo() %></td>
 						<td><%= con.getIdTratamiento() %></td>
 						<td><%= con.getFecha() %></td>
-						<td><button onclick="verDetalles(<%= con.getIDTurno()+99 %>)" class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
+						<td><button onclick="verDetalles(this, <%= con.getIDTurno()+99 %>)" class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
+					</tr>
+					<tr id="<%= con.getIDTurno()+99 %>" style="display:none;">
+						<td colspan="5"> <%= det %></td>
 					</tr>
 					<%
 						}
@@ -147,30 +143,16 @@
 
 		</div>
 		<br> <br>
-		
-<div class="modal fade" id="detModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header ">
-        <h6 class="modal-title col-11 text-center" id="tModal"></h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p id=detContent> </p>
-      </div>
-    </div>
-  </div>
-</div>
-		
 	</div>
 	<script type="text/javascript">
-		function verDetalles(id){
-			//console.log(id + " " + $("#h"+id).val())
-			$("#detContent").html($("#"+id).val());
-			$("#tModal").html("Arreglos hechos en el turno "+(id-99));
-			$("#detModal").modal("show");
+		function verDetalles(btn, id){
+			if(btn.textContent == "Cerrar"){
+				btn.textContent = "Ver detalle";
+				$("#"+id).hide();
+			}else{
+				btn.textContent = "Cerrar";
+				$("#"+id).show();
+			}
 		}
 	</script>
 </body>
