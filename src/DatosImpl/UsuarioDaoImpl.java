@@ -25,7 +25,7 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 	public iUsuario login(String email, String password){;
 		try{
 				cn.Open();
-				ResultSet rs = cn.query("Select * from usuarios where Email ='" +email+ "' and password='" +password+ "'");
+				ResultSet rs = cn.query("Select * from usuarios where Email ='" +email+ "' and Password='" +password+ "'");
 				if(rs!=null) {
 					if(rs.next()) {
 						iUsuario usuario = new Odontologo(rs.getString("usuarios.IDUsuario"));

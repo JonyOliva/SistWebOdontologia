@@ -19,6 +19,10 @@ public class Turno {
 		this.activo = activo;
 	}
 	
+	public Turno(int idTurno) {
+		IDTurno = idTurno;
+	}
+	
 	public int getIDPaciente() {
 		return IDPaciente;
 	}

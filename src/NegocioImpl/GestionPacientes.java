@@ -51,4 +51,9 @@ public class GestionPacientes implements IPacienteNegocio{
 		return pdao.size(busqueda);
 	}
 
+	@Override
+	public Paciente get(String dniPaciente) {
+		return pdao.get(dniPaciente);
+	}
+
 }

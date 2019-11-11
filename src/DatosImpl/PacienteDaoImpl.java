@@ -172,6 +172,31 @@ public class PacienteDaoImpl implements IPacienteDao{
 		return listPacientes;
 	}
 
+	@Override
+	public Paciente get(String dni) {
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("SELECT * FROM pacientes WHERE DNI = '" +dni+ "'");
+			if(rs.next()) {
+				Paciente paciente = new Paciente(rs.getInt("IDPaciente"));
+				paciente.setNombre(rs.getString("Nombre"));
+				paciente.setApellido(rs.getString("Apellido"));
+				paciente.setDni(rs.getString("DNI"));
+				paciente.setTelefono(rs.getString("Telefono"));
+				paciente.setDomicilio(rs.getString("Domicilio"));
+				paciente.setInfoExtra(rs.getString("InformacionExtra"));
+				paciente.setFechaNacimiento(rs.getObject("FechaNacimiento", LocalDate.class));
+				
+				return paciente;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
+		return null;
+	}
+
 	
 		
 }
