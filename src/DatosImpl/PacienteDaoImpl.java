@@ -186,7 +186,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 				paciente.setDomicilio(rs.getString("Domicilio"));
 				paciente.setInfoExtra(rs.getString("InformacionExtra"));
 				paciente.setFechaNacimiento(rs.getObject("FechaNacimiento", LocalDate.class));
-				
+				cn.close();
 				return paciente;
 			}
 		}catch(Exception e) {

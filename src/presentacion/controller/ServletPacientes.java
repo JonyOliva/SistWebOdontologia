@@ -17,6 +17,7 @@ import Negocio.IConsultaNegocio;
 import Negocio.IPacienteNegocio;
 import NegocioImpl.GestionConsultas;
 import NegocioImpl.GestionPacientes;
+import com.google.gson.*;
 
 
 @WebServlet("/ServletPacientes")
@@ -89,6 +90,13 @@ public class ServletPacientes extends HttpServlet {
 				
 				dispatcher = request.getRequestDispatcher("menuPaciente.jsp");
 				dispatcher.forward(request, response);
+			}
+		}else if(action.equals("get")) {
+			String dni = request.getParameter("dni");
+			if(dni != null) {
+				Paciente paciente = gp.get(dni);
+				Gson gson = new Gson();
+				response.getWriter().append(gson.toJson(paciente));
 			}
 		}
 		
