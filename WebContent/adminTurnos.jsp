@@ -12,21 +12,12 @@
 <jsp:include page="masterInclude.html"></jsp:include>
 <title>Turnos</title>
 </head>
-
-<style>
-.btnVerde {
-	color: black;
-	background: #48C9B0;
-	border: grey solid 1px;
-}
-</style>
-
 <body>
 	<jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 	<link rel="stylesheet" href="Resources/css/tables.css">
 	<link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 <form action="ServletTurnos" class="container mt-3">
-	<% if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp"); %>
+	<%-- <% if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp"); %> --%>
 	<%!List<TurnosVista> listaTurnos;%>
 
 		<div>
