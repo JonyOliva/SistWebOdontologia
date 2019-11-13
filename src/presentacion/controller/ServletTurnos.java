@@ -47,7 +47,24 @@ public class ServletTurnos extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//  response.getWriter().append("Served at: ").append(request.getContextPath());
-		doPost(request, response);
+		
+		RequestDispatcher dispachero;
+		
+		String operacion = request.getParameter("operacion");
+		if(operacion != null)
+		{
+			if(operacion.equals("operacion"))
+			{
+				GestionTurno gt = new GestionTurno();
+				int id = Integer.parseInt(request.getParameter("id"));
+				gt.borrarTurno(id);
+			}
+		}
+		if(request.getParameter("txtBuscar")!= null)
+			doPost(request, response);
+		
+		dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
+		dispachero.forward(request, response);
 	}
 
 	/**
@@ -55,20 +72,14 @@ public class ServletTurnos extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		RequestDispatcher dispachero= request.getRequestDispatcher("/registroTurno.jsp");
+		RequestDispatcher dispachero;//= request.getRequestDispatcher("/registroTurno.jsp");
 		
 		//CARGAR LA LISTA DE TURNOS
 		String action = request.getParameter("txtBuscar");
 		if(action == null)
 		{
 			request.setAttribute("turnos", gt.listTurnovista());
-			List<TurnosVista> lista = gt.listTurnovista();
-			for(TurnosVista t : lista)
-			{
-				System.out.println(t.getApellidoPac());
-				System.out.println(t.getNombrePac());
-				System.out.println(t.getNombreOd());
-			}
+			
 		}
 		
 		//CARGAR LISTA ODONTOLOGOS

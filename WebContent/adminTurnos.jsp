@@ -25,7 +25,7 @@
 	<jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 	<link rel="stylesheet" href="Resources/css/tables.css">
 	<link rel="stylesheet" href="Resources/css/stylesheetMain.css">
-<form action="ServletTurnos" class="container mt-3">
+<form action="ServletTurnos" method="GET" class="container mt-3">
 	<% if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp"); %>
 	<%!List<TurnosVista> listaTurnos;%>
 
@@ -51,8 +51,7 @@
 			<br>
 			<table border=1>
 				<tr>
-					<th>Nombre paciente</th>
-					<th>Apellido paciente</th>
+					<th>Paciente</th>
 					<th>Odontologo</th>
 					<th>Fecha y hora</th>
 					<th>Estado</th>
@@ -64,12 +63,13 @@
 					listaTurnos =(List<TurnosVista>)request.getAttribute("turnos");
 				
 				for(TurnosVista t : listaTurnos){ %>
-					<td><%=t.getNombrePac() %></td>
-					<td><%=t.getNombreOd()%></td>
+					<td><%=t.getApellidoPac()+", "+t.getNombrePac() %></td>
+					<td><%=t.getApellidoOd()+", "+t.getNombreOd()%></td>
 					<td><%=t.getTurno().getFecha() %></td>
 					<td><%=t.getTurno().getEstado() %></td>
 					<td style="text-align: center;"><a href="registroTurno.jsp"
-						class="btn btn-default btn-sm btnVerde">Modificar</a> <a href="#"
+						class="btn btn-default btn-sm btnVerde">Modificar</a> 
+						<a href="ServletTurnos?operacion=borrar&id=<%=t.getTurno().getIDTurno() %>"
 						class="btn btn-default btn-sm btnVerde">Eliminar</a></td>
 				
 				</tr>

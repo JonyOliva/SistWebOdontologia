@@ -108,8 +108,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 					"pacientes.DNI,odontologos.Nombre,odontologos.Apellido FROM Turnos INNER JOIN " + 
 					"pacientes ON pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T");
 			//DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm") ;
-			rs.next();
-			System.out.println(rs.getString("Pacientes.Nombre"));
+
 			while(rs.next())
 			{
 				TurnosVista TurnoVista= new TurnosVista();
@@ -121,8 +120,8 @@ public class TurnosDaoImpl implements ITurnosDao{
 				TurnoVista.setTurno(turno);
 				TurnoVista.setApellidoPac(rs.getString("Pacientes.Apellido"));
 				TurnoVista.setNombrePac(rs.getString("Pacientes.Nombre"));
-				TurnoVista.setNombreOd(rs.getString("Odontologo.Nombre"));
-				TurnoVista.setApellidoOd(rs.getString("Odontologo.Apellido"));
+				TurnoVista.setNombreOd(rs.getString("Odontologos.Nombre"));
+				TurnoVista.setApellidoOd(rs.getString("Odontologos.Apellido"));
 				
 				lista.add(TurnoVista);
 			}
