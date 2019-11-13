@@ -9,6 +9,7 @@ import DatosImpl.PacienteDaoImpl;
 import DatosImpl.TurnosDaoImpl;
 import Entidad.Paciente;
 import Entidad.Turno;
+import Entidad.TurnosVista;
 import Negocio.ITurnoNegocio;
 
 public class GestionTurno implements ITurnoNegocio{
@@ -29,6 +30,16 @@ public class GestionTurno implements ITurnoNegocio{
 		
 		return lista;
 	}
+	
+	public List<TurnosVista> listTurnovista() {
+		
+		List<TurnosVista> lista = new ArrayList<TurnosVista>();
+		TurnosDaoImpl datosTurno= new TurnosDaoImpl();
+		
+		lista = datosTurno.obtenerTurnovista();
+		
+		return lista;
+	}
 
 	@Override
 	public boolean guardarTurno(String dni,String idOdon,String fecha,String hora) {
@@ -44,7 +55,7 @@ public class GestionTurno implements ITurnoNegocio{
 			turno.setIDPaciente(pd.get(dni).getIDPaciente());
 			turno.setIDOdontologo(idOdon);
 			turno.setFecha(fechaTurno);
-			turno.setActivo(true);
+			turno.setEstado("Activo");
 			
 			return datosTurno.insertar(turno);
 		}

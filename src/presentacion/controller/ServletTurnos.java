@@ -18,6 +18,7 @@ import com.mysql.cj.Session;
 import Entidad.Odontologo;
 import Entidad.Paciente;
 import Entidad.Turno;
+import Entidad.TurnosVista;
 import Negocio.IOdontologoNegocio;
 import Negocio.ITurnoNegocio;
 import NegocioImpl.GestionOdontologos;
@@ -60,9 +61,14 @@ public class ServletTurnos extends HttpServlet {
 		String action = request.getParameter("txtBuscar");
 		if(action == null)
 		{
-			request.setAttribute("turnos", gt.listTurno());
-			List<Turno> lista = gt.listTurno();
-
+			request.setAttribute("turnos", gt.listTurnovista());
+			List<TurnosVista> lista = gt.listTurnovista();
+			for(TurnosVista t : lista)
+			{
+				System.out.println(t.getApellidoPac());
+				System.out.println(t.getNombrePac());
+				System.out.println(t.getNombreOd());
+			}
 		}
 		
 		//CARGAR LISTA ODONTOLOGOS

@@ -104,10 +104,12 @@ public class TurnosDaoImpl implements ITurnosDao{
 		
 		try {
 			cn.Open();
-			ResultSet rs = cn.query("SELECT IDTurno,IDPaciente_T,Fecha,IDOdontologo_T,Estado,Pacientes.Nombre,Pacientes.Apellido"
-					+ "Pacientes.DNI,Odontologo.Nombre,Odontologo.Apellido,Odontologo.DNI FROM Turnos INNER JOIN"
-					+ " Pacientes ON Pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T");
+			ResultSet rs = cn.query("SELECT IDTurno,IDPaciente_T,Fecha,IDOdontologo_T,Estado,Pacientes.Nombre,pacientes.Apellido," + 
+					"pacientes.DNI,odontologos.Nombre,odontologos.Apellido FROM Turnos INNER JOIN " + 
+					"pacientes ON pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T");
 			//DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm") ;
+			rs.next();
+			System.out.println(rs.getString("Pacientes.Nombre"));
 			while(rs.next())
 			{
 				TurnosVista TurnoVista= new TurnosVista();
