@@ -9,6 +9,7 @@ import java.util.List;
 
 import Datos.ITurnosDao;
 import Entidad.Turno;
+import Entidad.TurnosVista;
 
 public class TurnosDaoImpl implements ITurnosDao{
 
@@ -56,7 +57,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 				turno.setIDPaciente(rs.getInt("IDPaciente_T"));
 				turno.setFecha(rs.getDate("Fecha").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
 				turno.setIDOdontologo(rs.getString("IDOdontologo_T"));
-				turno.setActivo(rs.getBoolean("Activo"));
+				turno.setEstado(rs.getString("Activo"));
 				
 				lista.add(turno);
 			}
@@ -95,6 +96,49 @@ public class TurnosDaoImpl implements ITurnosDao{
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public List<TurnosVista> obtenerTurnovista() {
+		List<TurnosVista> lista = new ArrayList<TurnosVista>();
+		
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("SELECT IDTurno,IDPaciente_T,Fecha,IDOdontologo_T,Estado,Pacientes.Nombre,Pacientes.Apellido"
+					+ "Pacientes.DNI,Odontologo.Nombre,Odontologo.Apellido,Odontologo.DNI FROM Turnos INNER JOIN"
+					+ " Pacientes ON Pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T");
+			//DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm") ;
+			while(rs.next())
+			{
+				TurnosVista TurnoVista= new TurnosVista();
+				Turno turno = new Turno(rs.getInt("IDTurno"));
+				turno.setIDPaciente(rs.getInt("IDPaciente_T"));
+				turno.setFecha(rs.getObject("Fecha", LocalDateTime.class));
+				turno.setIDOdontologo(rs.getString("IDOdontologo_T"));
+				turno.setEstado(rs.getString("Estado"));
+				TurnoVista.setTurno(turno);
+				TurnoVista.setApellidoPac(rs.getString("Pacientes.Apellido"));
+				TurnoVista.setNombrePac(rs.getString("Pacientes.Nombre"));
+				TurnoVista.setNombreOd(rs.getString("Odontologo.Nombre"));
+				TurnoVista.setApellidoOd(rs.getString("Odontologo.Apellido"));
+				
+				lista.add(TurnoVista);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally
+		{
+			cn.close();
+		}
+		
+
+		return lista;
+	}
+
+	@Override
+	public List<TurnosVista> turnosPacienteVista() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

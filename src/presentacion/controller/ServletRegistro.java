@@ -1,10 +1,6 @@
 package presentacion.controller;
 
-
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,29 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mysql.cj.Session;
-
-import Entidad.Odontologo;
 import Entidad.Paciente;
-import Entidad.Turno;
-import Negocio.IOdontologoNegocio;
-import Negocio.ITurnoNegocio;
-import NegocioImpl.GestionOdontologos;
 import NegocioImpl.GestionPacientes;
 import NegocioImpl.GestionTurno;
 
 /**
- * Servlet implementation class ServletTurnos
+ * Servlet implementation class ServletRegistro
  */
-@WebServlet("/ServletTurnos")
-public class ServletTurnos extends HttpServlet {
+@WebServlet("/ServletRegistro")
+public class ServletRegistro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ITurnoNegocio gt = new GestionTurno();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletTurnos() {
+    public ServletRegistro() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,7 +33,7 @@ public class ServletTurnos extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//  response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		doPost(request, response);
 	}
 
@@ -53,32 +41,46 @@ public class ServletTurnos extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		// TODO Auto-generated method stub
 		RequestDispatcher dispachero= request.getRequestDispatcher("/registroTurno.jsp");
 		
-		//CARGAR LA LISTA DE TURNOS
-		String action = request.getParameter("txtBuscar");
-		if(action == null)
-		{
-			request.setAttribute("turnos", gt.listTurno());
-			List<Turno> lista = gt.listTurno();
-
-		}
 		
-		//CARGAR LISTA ODONTOLOGOS
-		/*List<Odontologo> listaOd = new ArrayList<Odontologo>();
-		IOdontologoNegocio go = new GestionOdontologos();
-		listaOd = go.getAll();
-		request.setAttribute("listaodontologos", listaOd);*/
+//		String asd;
+//		if(asd != null) {
+//			GestionPacientes gp = new GestionPacientes();
+//			Paciente pac = gp.get(request.getParameter("txtDnipaciente"));
+//			request.setAttribute("paciente", pac);
+//			request.setAttribute("dni", request.getParameter("txtDnipaciente"));
+//
+//			
+//		}
 		
 		if(request.getParameter("btnGuardar") != null)
 		{
-
+			//Guardar los valores para registrar turno
+			GestionTurno gt = new GestionTurno();
+			String dni;
+			String idOdontologo;
+			String fecha;
+			String hora;
 			
-
+			dni = request.getParameter("txtDnipaciente");
+			idOdontologo = request.getParameter("ddlOdontologo");
+			hora = request.getParameter("ddlHorario").toString();
+			fecha = request.getParameter("txtFecha").toString();
+			System.out.println(dni);
+			System.out.println(idOdontologo);
+			System.out.println(hora);
+			System.out.println(fecha );
 			
+			//Aviso de exito
+			if(gt.guardarTurno(dni, idOdontologo, fecha, hora))
+			{
+				request.setAttribute("Correcto", true);
+			}
 		}
-		dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
+		
+		dispachero = request.getRequestDispatcher("/registroTurno.jsp");
 		dispachero.forward(request, response);
 		//doGet(request, response);
 	}

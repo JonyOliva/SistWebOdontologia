@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="Entidad.Turno"%>
+<%@page import="Entidad.TurnosVista"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -26,7 +27,7 @@
 	<link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 <form action="ServletTurnos" class="container mt-3">
 	<% if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp"); %>
-	<%!List<Turno> listaTurnos;%>
+	<%!List<TurnosVista> listaTurnos;%>
 
 		<div>
 			<div>
@@ -50,7 +51,8 @@
 			<br>
 			<table border=1>
 				<tr>
-					<th>Paciente</th>
+					<th>Nombre paciente</th>
+					<th>Apellido paciente</th>
 					<th>Odontologo</th>
 					<th>Fecha y hora</th>
 					<th>Estado</th>
@@ -59,13 +61,13 @@
 				<tr>
 				<%if(request.getAttribute("turnos") != null)
 				{
-					listaTurnos =(List<Turno>)request.getAttribute("turnos");
+					listaTurnos =(List<TurnosVista>)request.getAttribute("turnos");
 				
-				for(Turno t : listaTurnos){ %>
-					<td><%=t.getIDPaciente() %></td>
-					<td><%=t.getIDOdontologo()%></td>
-					<td><%=t.getFecha() %></td>
-					<td><%=t.isActivo() %></td>
+				for(TurnosVista t : listaTurnos){ %>
+					<td><%=t.getNombrePac() %></td>
+					<td><%=t.getNombreOd()%></td>
+					<td><%=t.getTurno().getFecha() %></td>
+					<td><%=t.getTurno().getEstado() %></td>
 					<td style="text-align: center;"><a href="registroTurno.jsp"
 						class="btn btn-default btn-sm btnVerde">Modificar</a> <a href="#"
 						class="btn btn-default btn-sm btnVerde">Eliminar</a></td>

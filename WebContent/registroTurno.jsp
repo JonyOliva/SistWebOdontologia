@@ -54,7 +54,7 @@ input {
 					</h1>
 			</div>
 			
-			<form class="box" action="ServletTurnos">
+			<form class="box" method="post" action="ServletRegistro">
 			<div class="box" style="width: 250px; float:rigth ">
 			<%if(pac != null){ %>
 					<table>
@@ -73,13 +73,13 @@ input {
 				<table>
 					<tr>
 						<td>DNI paciente:</td>
-						<td><input name ="txtDnipaciente" onmouseout="ServletTurnos" required type="number"></td>
+						<td><input ID="dnipac" name ="txtDnipaciente" onblur="callServlet(this);" value="<%=request.getAttribute("dni") %>" required type="number"></td>
 					</tr>
 					<br>
 					<tr>
 						<td>Odontologo:</td>
 						<td>
-						<select name="ddlOdontologo" onChange="Horarios();" style="margin-bottom: 10px; width: 100%;">
+						<select id="ddlOdontologo" name="ddlOdontologo" onChange="Horarios();" style="margin-bottom: 10px; width: 100%;">
 						
 						<%for (Odontologo odon : listaOdontologo) { %>
 							<option value="<%odon.getIDUsuario();%>"><%=odon.getApellido()%>, <%=odon.getNombre() %></option>
@@ -113,4 +113,19 @@ input {
 		</div>
 	</div>
 </body>
+
+<script type="text/javascript">
+function callServlet(txt)
+{
+	//var dni = document.getElementById("dnipac");
+	//document.location.href="ServletRegistro";
+}
+$(document).ready(function()
+		{$("input[name = txtDnipaciente]").change(function()
+				{
+					$.ajax(request.open("POST","ServletTurnos",true));
+				})
+	
+		});
+</script>
 </html>

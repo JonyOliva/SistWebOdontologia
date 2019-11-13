@@ -8,15 +8,15 @@ public class Turno {
 	private int IDPaciente;
 	private String IDOdontologo;
 	private LocalDateTime Fecha;
-	private boolean activo;
+	private String estado;
 		
-	public Turno(int iDTurno, int iDPaciente, String iDOdontologo, LocalDateTime fecha, boolean activo) {
+	public Turno(int iDTurno, int iDPaciente, String iDOdontologo, LocalDateTime fecha, String estado) {
 		super();
 		IDTurno = iDTurno;
 		IDPaciente = iDPaciente;
 		IDOdontologo = iDOdontologo;
 		Fecha = fecha;
-		this.activo = activo;
+		this.estado = estado;
 	}
 	
 	public Turno(int idTurno) {
@@ -41,12 +41,15 @@ public class Turno {
 	public void setFecha(LocalDateTime fecha) {
 		Fecha = fecha;
 	}
-	public int isActivo() { 
-		return activo ? 1 : 0;	//en la base de datos se inserta 1 ó 0
+	
+	public String getEstado() {
+		return estado;
 	}
-	public void setActivo(boolean activo) {
-		this.activo = activo;
+	
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
+	
 	public int getIDTurno() {
 		return IDTurno;
 	}
