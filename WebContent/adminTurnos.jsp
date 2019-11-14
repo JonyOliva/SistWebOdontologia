@@ -56,12 +56,12 @@
 				for(TurnosVista t : listaTurnos){ %>
 					<td><%=t.getApellidoPac()+", "+t.getNombrePac() %></td>
 					<td><%=t.getApellidoOd()+", "+t.getNombreOd()%></td>
-					<td><%=t.getTurno().getFecha() %></td>
+					<td><%=t.getTurno().getFecha().toString().replace("T", " ") %></td>
 					<td><%=t.getTurno().getEstado() %></td>
 					<td style="text-align: center;"><a href="registroTurno.jsp"
-						class="btn btn-default btn-sm btnVerde">Modificar</a> 
+						class="btn btn-default btnVerde">Modificar</a> 
 						<a href="ServletTurnos?operacion=borrar&id=<%=t.getTurno().getIDTurno() %>"
-						class="btn btn-default btn-sm btnVerde">Eliminar</a></td>
+						class="btn btn-default btnVerde">Eliminar</a></td>
 				
 				</tr>
 			<%		}

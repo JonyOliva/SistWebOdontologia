@@ -10,6 +10,7 @@ public interface ITurnosDao {
 	List<TurnosVista> obtenerTurnovista();
 	List<Turno> turnosPaciente(int idPaciente);
 	List<TurnosVista> turnosPacienteVista();
+	public boolean existe(Turno turno);
 	public boolean insertar(Turno turno);
 	public boolean eliminar(int idTurno);
 	

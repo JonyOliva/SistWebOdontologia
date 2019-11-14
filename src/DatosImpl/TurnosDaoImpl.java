@@ -57,7 +57,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 				turno.setIDPaciente(rs.getInt("IDPaciente_T"));
 				turno.setFecha(rs.getDate("Fecha").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
 				turno.setIDOdontologo(rs.getString("IDOdontologo_T"));
-				turno.setEstado(rs.getString("Activo"));
+				turno.setEstado(rs.getString("Estado"));
 				
 				lista.add(turno);
 			}
@@ -73,11 +73,12 @@ public class TurnosDaoImpl implements ITurnosDao{
 
 	@Override
 	public boolean insertar(Turno turno) {
-		String query = "INSERT INTO Turnos (IDOdontologo_T,IDPaciente_T,Fecha,Activo) "
-				+ "SELECT("+turno.getIDOdontologo()+","+turno.getIDPaciente()+","+turno.getFecha()+","+1+")";
+		String query = "INSERT INTO Turnos (IDOdontologo_T,IDPaciente_T,Fecha,Estado) "
+				+ "SELECT '"+turno.getIDOdontologo()+"',"+turno.getIDPaciente()+",'"+turno.getFecha().toString().replace('T', ' ')+"', '"+turno.getEstado()+"'";
 		try {
 			cn.Open();
-			return cn.execute(query);
+			boolean asd = cn.execute(query);
+			return asd;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,7 +88,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 
 	@Override
 	public boolean eliminar(int idTurno) {
-		String query = "UPDATE Turnos SET Activo = 0 WHERE IDTurno = "+idTurno;
+		String query = "UPDATE Turnos SET Estado = 'Cancelado' WHERE IDTurno = "+idTurno;
 		try {
 			cn.Open();
 			return cn.execute(query);
@@ -140,6 +141,17 @@ public class TurnosDaoImpl implements ITurnosDao{
 	public List<TurnosVista> turnosPacienteVista() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean existe(Turno turno) {
+		cn.Open();
+		ResultSet rs = cn.query("SELECT * FROM Turnos WHERE IDOdontologo_T = '"+turno.getIDOdontologo()+"' "
+				+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"'");
+		if(rs != null)
+			return true;
+		else
+			return false;
 	}
 	
 

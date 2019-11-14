@@ -71,9 +71,26 @@ public class GestionTurno implements ITurnoNegocio{
 
 	@Override
 	public boolean borrarTurno(int idTurno) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		
+		return tdao.eliminar(idTurno);
 	}
+
+	@Override
+	public boolean existe(String idOdon,String fechahora) {
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		Turno turno = new Turno(1);
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime fechaTurno = LocalDateTime.parse(fechahora, df);
+		
+		turno.setIDOdontologo(idOdon);
+		turno.setFecha(fechaTurno);
+		boolean existe = tdao.existe(turno);
+		return existe;
+	}
+	
+	
 
 	
 }

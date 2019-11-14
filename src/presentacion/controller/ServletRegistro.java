@@ -45,16 +45,6 @@ public class ServletRegistro extends HttpServlet {
 		RequestDispatcher dispachero= request.getRequestDispatcher("/registroTurno.jsp");
 		
 		
-//		String asd;
-//		if(asd != null) {
-//			GestionPacientes gp = new GestionPacientes();
-//			Paciente pac = gp.get(request.getParameter("txtDnipaciente"));
-//			request.setAttribute("paciente", pac);
-//			request.setAttribute("dni", request.getParameter("txtDnipaciente"));
-//
-//			
-//		}
-		
 		if(request.getParameter("btnGuardar") != null)
 		{
 			//Guardar los valores para registrar turno

@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="NegocioImpl.GestionOdontologos"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -55,13 +56,37 @@ input {
 			</div>
 
 			<form class="box" method="post" action="ServletRegistro">
+			
+			
+			<%	
+				if(request.getAttribute("Correcto")!= null)
+				{
+					if( (boolean)request.getAttribute("Correcto")== true)
+					{
+						%>
+						<dir class="box">
+							Turno agregado correctamente.
+						</dir>
+						<%
+						request.setAttribute("Correcto",null);
+					}else
+					{
+			%>
+						<dir class="box">
+						Hubo un error, no se agrego el turno.
+						</dir>
+						<%
+					}
+				}
+			%>
+			
 				<div class="row justify-content-center" style="font-size: 18px;">
 					Agregar nuevo turno</div>
 					<br>
 				<table>
 					<tr>
 						<td>DNI paciente:</td>
-						<td><input id="dni" type="number" required></td>
+						<td><input id="dni" name="txtDnipaciente" type="number" required></td>
 					</tr>
 					<tr>
 						<td><button id="btnReset" type="button" class="btn btn-danger btn-sm m-2">Limpiar</button></td>
@@ -85,13 +110,12 @@ input {
 					
 					<tr>
 						<td>Odontologo:</td>
-						<td><select id="ddlOdontologo" name="ddlOdontologo"
-							onChange="Horarios();" style="margin-bottom: 10px; width: 100%;">
+						<td><select id="ddlOdontologo" name="ddlOdontologo" style="margin-bottom: 10px; width: 100%;">
 
 								<%
 									for (Odontologo odon : listaOdontologo) {
 								%>
-								<option value="<%odon.getIDUsuario();%>"><%=odon.getApellido()%>,
+								<option value="<%=odon.getIDUsuario()%>"><%=odon.getApellido()%>,
 									<%=odon.getNombre()%></option>
 								<%
 									}
@@ -110,7 +134,7 @@ input {
 					</tr>
 					<tr>
 						<td>Fecha:</td>
-						<td><input name="txtFecha" required type="date"></td>
+						<td><input name="txtFecha" required min="<%=LocalDateTime.now().toLocalDate().toString() %>" type="date"></td>
 					</tr>
 				</table>
 				<br>

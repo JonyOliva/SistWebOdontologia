@@ -13,5 +13,6 @@ public interface ITurnoNegocio {
 	public boolean guardarTurno(String dni,String idOdon,String fecha, String hora);
 	public boolean modificarTurno(Turno turno);
 	public boolean borrarTurno(int idTurno);
+	public boolean existe(String idOdon,String fechahora);
 	
 }
