@@ -13,6 +13,7 @@ public class Conexion {
 	//private String pass = "admin";
 	//private String pass = "123456";
 	private String pass = "root";
+
 	private String dbName = "odontologiadb?profileSQL=true&useSSL=false&serverTimezone=UTC";
 	//una hora para configurar esta mierda
 	protected Connection connection;

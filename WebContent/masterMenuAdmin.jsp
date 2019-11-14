@@ -20,6 +20,14 @@
 		<li class="nav-item">
           <a class="nav-link" href="ServletTurnos">Turnos</a>
         </li>
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Reportes</a>
+          	<div class="dropdown-menu">
+        		<a class="dropdown-item" href="#">Inasistencias</a>
+        		<a class="dropdown-item" href="#">Tratamientos</a>
+        		<a class="dropdown-item" href="#">Turnos por Médico</a>
+      		</div>
+        </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
