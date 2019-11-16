@@ -19,97 +19,110 @@ import NegocioImpl.GestionConsultas;
 import NegocioImpl.GestionPacientes;
 import com.google.gson.*;
 
-
 @WebServlet("/ServletPacientes")
 public class ServletPacientes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    IPacienteNegocio gp = new GestionPacientes();
-    IConsultaNegocio gc = new GestionConsultas();
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletPacientes() {
-        super();
-    }
+	IPacienteNegocio gp = new GestionPacientes();
+	IConsultaNegocio gc = new GestionConsultas();
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ServletPacientes() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void getAllPacientes(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Gestor<Paciente> pagPacientes = new Gestor<Paciente>(new GestionPacientes(), 2);
+		String buscar = request.getParameter("buscar");
+		String pag = request.getParameter("pag");
+		int nroPagina = 1;
+		if (pag != null) {
+			nroPagina = Integer.valueOf(pag);
+			if (buscar != null) {
+				request.setAttribute("buscar", buscar);
+			}
+		}
+		request.setAttribute("pacientes", pagPacientes.get(buscar, nroPagina));
+		int siguiente = pagPacientes.haySiguiente();
+		int anterior = pagPacientes.hayAnterior();
+
+		if (siguiente != -1)
+			request.setAttribute("siguiente", siguiente);
+		if (anterior != -1)
+			request.setAttribute("anterior", anterior);
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		RequestDispatcher dispatcher;
 		String action = request.getParameter("action");
 		String view;
-		//if(userType.equals("admin")) ACA TENDRIA QUE CHECKEAR LA VAR DE SESION
-			//view = "/adminPacientes.jsp";
-		//else
-			view = "/odonPacientes.jsp";
-		if(action == null) {
-			Gestor<Paciente> pagPacientes = new Gestor<Paciente>(new GestionPacientes(), 2);
-			String buscar = request.getParameter("buscar");
-			String pag = request.getParameter("pag");			
-			int nroPagina = 1;
-			if(pag != null) {
-				nroPagina = Integer.valueOf(pag);	
-				if(buscar != null) {
-					request.setAttribute("buscar", buscar);
-				}
-			}
-			request.setAttribute("pacientes", pagPacientes.get(buscar, nroPagina));
-			int siguiente = pagPacientes.haySiguiente();
-			int anterior = pagPacientes.hayAnterior();
-			
-			if(siguiente != -1)
-				request.setAttribute("siguiente", siguiente);
-			if(anterior != -1)
-				request.setAttribute("anterior", anterior);
+		// if(userType.equals("admin")) ACA TENDRIA QUE CHECKEAR LA VAR DE SESION
+		//view = "/adminPacientes.jsp";
+		// else
+		 view = "/odonPacientes.jsp";
+		if (action == null) {
+			getAllPacientes(request, response);
 			dispatcher = request.getRequestDispatcher(view);
-			dispatcher.forward(request, response);				
-		}else if(action.equals("edit")) {
+			dispatcher.forward(request, response);
+		} else if (action.equals("edit")) {
 			String id = request.getParameter("id");
-			if(id != null) {
+			if (id != null) {
 				int idPaciente = Integer.valueOf(id);
 				request.setAttribute("paciente", gp.get(idPaciente));
 				dispatcher = request.getRequestDispatcher("fichaPaciente.jsp");
 				dispatcher.forward(request, response);
 			}
-			
-		}else if(action.equals("delete")) {
+
+		} else if (action.equals("delete")) {
 			String id = request.getParameter("id");
-			if(id != null) {
+			if (id != null) {
 				int idPaciente = Integer.valueOf(id);
-				gp.eliminar(idPaciente);
+				request.setAttribute("resultado", gp.eliminar(idPaciente));
+				getAllPacientes(request, response);
+				dispatcher = request.getRequestDispatcher(view);
+				dispatcher.forward(request, response);
 			}
 			response.sendRedirect("ServletPacientes");
-		}else if(action.equals("ficha")) {
+		} else if (action.equals("ficha")) {
 			String id = request.getParameter("id");
-			if(id != null) {
+			if (id != null) {
 				int idPaciente = Integer.valueOf(id);
 				request.setAttribute("paciente", gp.get(idPaciente));
 				request.setAttribute("tratamientos", gc.getAll());
 				request.setAttribute("consultas", gc.getAll(idPaciente));
-				
+
 				dispatcher = request.getRequestDispatcher("menuPaciente.jsp");
 				dispatcher.forward(request, response);
 			}
-		}else if(action.equals("get")) {
+		} else if (action.equals("get")) {
 			String dni = request.getParameter("dni");
-			if(dni != null) {
+			if (dni != null) {
 				Paciente paciente = gp.get(dni);
 				Gson gson = new Gson();
 				response.getWriter().append(gson.toJson(paciente));
 			}
 		}
-		
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String action = request.getParameter("action");
-		if(action != null) {
-			if(action.equals("edit")) {
+		if (action != null) {
+			if (action.equals("edit")) {
 				Paciente p = new Paciente(Integer.valueOf(request.getParameter("ID")));
 				p.setNombre(Utilidades.cleanString(request.getParameter("Nombre"), true));
 				p.setApellido(Utilidades.cleanString(request.getParameter("Apellido"), true));
@@ -119,9 +132,12 @@ public class ServletPacientes extends HttpServlet {
 				p.setFechaNacimiento(LocalDate.parse(request.getParameter("Fecha")));
 				p.setInfoExtra(request.getParameter("InfoExtra"));
 				p.setActivo(true);
+
+				request.setAttribute("resultado", gp.modificar(p));
+				getAllPacientes(request, response);
+				request.getRequestDispatcher("/adminPacientes.jsp").forward(request, response);
 				
-				gp.modificar(p);
-			}else if(action.equals("new")) {
+			} else if (action.equals("new")) {
 				Paciente p = new Paciente(-1);
 				p.setNombre(Utilidades.cleanString(request.getParameter("Nombre"), true));
 				p.setApellido(Utilidades.cleanString(request.getParameter("Apellido"), true));
@@ -131,11 +147,13 @@ public class ServletPacientes extends HttpServlet {
 				p.setFechaNacimiento(LocalDate.parse(request.getParameter("Fecha")));
 				p.setInfoExtra(request.getParameter("InfoExtra"));
 				p.setActivo(true);
-				
-				gp.insertar(p);
+
+				request.setAttribute("resultado", gp.insertar(p));
+				getAllPacientes(request, response);
+				request.getRequestDispatcher("/adminPacientes.jsp").forward(request, response);
 			}
 		}
-		response.sendRedirect("ServletPacientes");
+		doGet(request, response);
 	}
 
 }

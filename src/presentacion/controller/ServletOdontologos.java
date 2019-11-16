@@ -34,6 +34,7 @@ public class ServletOdontologos extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher;
 		String action = request.getParameter("action");
@@ -75,7 +76,7 @@ public class ServletOdontologos extends HttpServlet {
 			if(request.getParameter("ID") != null)
 				 od = new Odontologo(request.getParameter("ID"));
 			else 
-				od = new Odontologo("-1");
+				od = new Odontologo(un.getNextID(false));
 			od.setNombre(Utilidades.cleanString(request.getParameter("Nombre"), true));
 			od.setApellido(Utilidades.cleanString(request.getParameter("Apellido"), true));
 			od.setDNI(request.getParameter("DNI"));
@@ -83,15 +84,18 @@ public class ServletOdontologos extends HttpServlet {
 			od.setEmail(request.getParameter("Email"));
 			od.setPassword(request.getParameter("Password"));
 			od.setTipoUsuario(false); //odontologo
+			boolean rOdon = false, rUsu = false;
 			if(action.equals("edit")) {
-				go.modificar(od);
-				un.modificar(od);
+				rUsu = un.modificar(od);
+				rOdon = go.modificar(od);
 			}else if(action.equals("new")) {
-				go.insertar(od);
-				un.insertar(od);
+				rUsu = un.insertar(od);
+				rOdon = go.insertar(od);
 			}
+			request.setAttribute("resultado", rUsu && rOdon);
+			request.setAttribute("odontologos", go.getAll());
+			request.getRequestDispatcher("adminOdontologos.jsp").forward(request, response);
 		}
-		response.sendRedirect("ServletOdontologos");
 	}
 
 }

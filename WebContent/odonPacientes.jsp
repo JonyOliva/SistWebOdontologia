@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1"%>
-	<%@page import="Entidad.Paciente"%>
+<%@page import="Entidad.Paciente"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entidad.Gestor"%>
@@ -28,11 +28,13 @@
 	%>
 
 	<div class="container mt-3">
+
 		<div>
 			<div>
 				<h5 class="titular">Menú Pacientes</h5>
 			</div>
 			<br>
+			<jsp:include page="Resources/alert.jsp"></jsp:include>
 			<div>
 				<div class="row" style="margin-bottom: 10px;">
 					<div class="col-6">
@@ -47,8 +49,7 @@
 								&times </a>
 						</form>
 					</div>
-					<div class="col-6" style="text-align: right;">
-					</div>
+					<div class="col-6" style="text-align: right;"></div>
 				</div>
 			</div>
 			<table border=1>
@@ -73,16 +74,17 @@
 					<td><%=p.getFechaNacimiento()%></td>
 					<td><%=p.getDomicilio()%></td>
 					<td>
-					<% if(p.hayExtra()){ %>
-						<input type="button" class="btn btn-light"
-							data-toggle="tooltip" data-placement="bottom"
-							title="<%=p.getInfoExtra()%>" value="Info">
-					<%
-					}
-					%>
+						<%
+							if (p.hayExtra()) {
+						%> <input type="button" class="btn btn-light"
+						data-toggle="tooltip" data-placement="bottom"
+						title="<%=p.getInfoExtra()%>" value="Info"> <%
+ 	}
+ %>
 					</td>
-					<td><a href="ServletPacientes?action=ficha&id=<%=p.getIDPaciente()%>" class="btn btn-primary">Ficha
-							paciente</a></td>
+					<td><a
+						href="ServletPacientes?action=ficha&id=<%=p.getIDPaciente()%>"
+						class="btn btn-primary">Ficha paciente</a></td>
 				</tr>
 				<%
 					}
@@ -135,6 +137,5 @@
 		</div>
 
 	</div>
-
 </body>
 </html>

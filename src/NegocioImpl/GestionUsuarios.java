@@ -3,8 +3,6 @@ package NegocioImpl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-
 import Datos.iUsuarioDao;
 import DatosImpl.UsuarioDaoImpl;
 import Entidad.Administrador;
@@ -14,7 +12,6 @@ import Negocio.iUsuarioNegocio;
 
 public class GestionUsuarios implements iUsuarioNegocio{
 
-	@Override
 	public ArrayList<iUsuario> getAll() {
 		iUsuarioDao userDAO = new UsuarioDaoImpl();
 		ArrayList<iUsuario>ListUsers = new ArrayList<>();
@@ -63,6 +60,12 @@ public class GestionUsuarios implements iUsuarioNegocio{
 		iUsuarioDao userDao = new UsuarioDaoImpl();
 		iUsuario user = userDao.login(email, password);
 		return user;
+	}
+
+	@Override
+	public String getNextID(boolean tipoUsuario) {
+		iUsuarioDao ud = new UsuarioDaoImpl();
+		return ud.getNextID(tipoUsuario);
 	}
 
 

@@ -3,9 +3,6 @@ package Datos;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-
-import Entidad.Administrador;
 import Entidad.iUsuario;
 
 public interface iUsuarioDao {
@@ -17,5 +14,6 @@ public interface iUsuarioDao {
 	public ArrayList<iUsuario> getAll() throws SQLException;
 	public iUsuario getPerfil(iUsuario user);
 	public iUsuario get(String id);
+	public String getNextID(boolean tipoUsuario);
 	
 }

@@ -28,12 +28,12 @@
 	%>
 
 	<div class="container mt-3">
-
 		<div>
 			<div>
 				<h5 class="titular">Menú Pacientes</h5>
 			</div>
 			<br>
+			<jsp:include page="Resources/alert.jsp"></jsp:include>
 			<div>
 				<div class="row" style="margin-bottom: 10px;">
 					<div class="col-6">
@@ -76,13 +76,13 @@
 					<td><%=p.getFechaNacimiento()%></td>
 					<td><%=p.getDomicilio()%></td>
 					<td>
-					<% if(p.hayExtra()){ %>
-						<input type="button" class="btn btn-light"
-							data-toggle="tooltip" data-placement="bottom"
-							title="<%=p.getInfoExtra()%>" value="Info">
-					<%
-					}
-					%>
+						<%
+							if (p.hayExtra()) {
+						%> <input type="button" class="btn btn-light"
+						data-toggle="tooltip" data-placement="bottom"
+						title="<%=p.getInfoExtra()%>" value="Info"> <%
+ 	}
+ %>
 					</td>
 					<td style="text-align: center;"><a
 						href="ServletPacientes?action=edit&id=<%=p.getIDPaciente()%>"

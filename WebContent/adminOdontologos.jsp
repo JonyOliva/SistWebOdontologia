@@ -26,6 +26,7 @@
 				<h5 class="titular">Menú Odontologos</h5>
 			</div>
 			<br />
+			<jsp:include page="Resources/alert.jsp"></jsp:include>
 			<div>
 				<div class="row" style="margin-bottom: 10px;">
 					<div class="col-6"></div>
@@ -54,7 +55,8 @@
 					<td><%=odont.getMatricula()%></td>
 					<td style="text-align: center;"><a href="horariosOdon.jsp"
 						class="btn btn-info btn-sm">Ver horarios</a></td>
-					<td style="text-align: center;"><a href="ServletOdontologos?action=edit&id=<%= odont.getIDUsuario() %>"
+					<td style="text-align: center;"><a
+						href="ServletOdontologos?action=edit&id=<%=odont.getIDUsuario()%>"
 						class="btn btn-primary btn-sm">Modificar</a> <a href="#"
 						class="btn btn-primary btn-sm">Eliminar</a></td>
 				</tr>

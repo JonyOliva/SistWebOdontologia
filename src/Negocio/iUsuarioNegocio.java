@@ -17,4 +17,5 @@ public interface iUsuarioNegocio {
 	public boolean modificar(iUsuario odontologo);
 	public boolean eliminar(String idUsuario);
 	public iUsuario login(String email, String password);
+	public String getNextID(boolean tipoUsuario);
 }

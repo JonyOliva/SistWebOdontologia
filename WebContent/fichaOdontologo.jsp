@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="masterInclude.html"></jsp:include>
 <link rel="stylesheet" href="Resources/css/stylesheetMain.css">
+<script type="text/javascript" src="Resources/js/validar.js"></script>
 <title>Ficha odontologo</title>
 </head>
 <style>
@@ -53,7 +54,7 @@ input {
 			<div>
 				<h5 class="titular">Odontologo</h5>
 			</div>
-			<form class="box" method="POST" action="ServletOdontologos">
+			<form class="box" method="POST" action="ServletOdontologos" onsubmit="return validarCampoText()">
 				<%
 					if (odont != null) {
 				%>
@@ -63,11 +64,11 @@ input {
 				<table>
 					<tr>
 						<td>Nombre:</td>
-						<td><input name="Nombre" value="<%= odont.getNombre() %>" required></td>
+						<td><input name="Nombre" type="text" onkeypress="validarTecla(event)" value="<%= odont.getNombre() %>" required></td>
 					</tr>
 					<tr>
 						<td>Apellido:</td>
-						<td><input name="Apellido" value="<%= odont.getApellido() %>" required></td>
+						<td><input name="Apellido" type="text" onkeypress="validarTecla(event)" value="<%= odont.getApellido() %>" required></td>
 					</tr>
 					<tr>
 						<td>DNI:</td>
@@ -87,7 +88,7 @@ input {
 					</tr>
 					<tr>
 						<td>Contraseña:</td>
-						<td><input name="Password" value="<%= odont.getPassword() %>" required></td>
+						<td><input name="Password" type="password" value="<%= odont.getPassword() %>" required></td>
 					</tr>
 				</table>
 				<%
@@ -98,11 +99,11 @@ input {
 				<table>
 					<tr>
 						<td>Nombre:</td>
-						<td><input name="Nombre" required></td>
+						<td><input name="Nombre" type="text" onkeypress="validarTecla(event)" required></td>
 					</tr>
 					<tr>
 						<td>Apellido:</td>
-						<td><input name="Apellido" required></td>
+						<td><input name="Apellido" type="text" onkeypress="validarTecla(event)" required></td>
 					</tr>
 					<tr>
 						<td>DNI:</td>
@@ -122,7 +123,7 @@ input {
 					</tr>
 					<tr>
 						<td>Contraseña:</td>
-						<td><input name="Password" required></td>
+						<td><input name="Password" type="password" required></td>
 					</tr>
 				</table>
 				<%

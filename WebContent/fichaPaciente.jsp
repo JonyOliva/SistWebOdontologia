@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="Entidad.Paciente"%>
@@ -6,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="masterInclude.html"></jsp:include>
+<script type="text/javascript" src="Resources/js/validar.js"></script>
 <link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 <title>Ficha paciente</title>
 </head>
@@ -46,7 +48,7 @@ input {
 			<div>
 				<h5 class="titular">Paciente</h5>
 			</div>
-			<form class="box" method="POST" action="ServletPacientes">
+			<form class="box" method="POST" action="ServletPacientes" onsubmit="return validarCampoText()">
 				
 				<%if (paciente != null) {%>
 					<input type="hidden" name="action" value="edit">
@@ -65,12 +67,12 @@ input {
 					%>
 					<tr>
 						<td>Nombre:</td>
-						<td><input name="Nombre" value="<%=paciente.getNombre()%>" required>
+						<td><input name="Nombre" type="text" onkeypress="validarTecla(event)" value="<%=paciente.getNombre()%>" required>
 						</td>
 					</tr>
 					<tr>
 						<td>Apellido:</td>
-						<td><input name="Apellido" value="<%=paciente.getApellido()%>" required></td>
+						<td><input name="Apellido" type="text" onkeypress="validarTecla(event)" value="<%=paciente.getApellido()%>" required></td>
 					</tr>
 					<tr>
 						<td>DNI:</td>
@@ -93,7 +95,7 @@ input {
 					<% if(paciente.hayExtra()){ %>
 					<tr>
 						<td>Anotacion:</td>
-						<td><input name="InfoExtra" type="text" value="<%=paciente.getInfoExtra()%>"></td>
+						<td><input name="InfoExtra" value="<%=paciente.getInfoExtra()%>"></td>
 					</tr>
 					<%
 					}
@@ -103,11 +105,11 @@ input {
 					%>
 					<tr>
 						<td>Nombre:</td>
-						<td><input name="Nombre" required></td>
+						<td><input name="Nombre" type="text" onkeypress="validarTecla(event)" required></td>
 					</tr>
 					<tr>
 						<td>Apellido:</td>
-						<td><input name="Apellido" required></td>
+						<td><input name="Apellido" type="text" onkeypress="validarTecla(event)" required></td>
 					</tr>
 					<tr>
 						<td>DNI:</td>
@@ -119,15 +121,16 @@ input {
 					</tr>
 					<tr>
 						<td>Domicilio:</td>
-						<td><input name="Domicilio" type="text"></td>
+						<td><input name="Domicilio"></td>
 					</tr>
 					<tr>
 						<td>Fecha de nacimiento:</td>
-						<td><input name="Fecha" type="date" required></td>
+						<td><input name="Fecha" type="date" max="<%= LocalDate.now().minusYears(2) %>" required></td>
 					</tr>
 					<tr>
 						<td>Anotacion:</td>
-						<td><input name="InfoExtra" type="text"></td>
+						<!-- <td><input name="InfoExtra" type="text"></td> -->
+						<td><textarea name="InfoExtra" rows="2" cols="22"></textarea></td>
 					</tr>
 					<%
 						}
