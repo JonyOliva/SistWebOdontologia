@@ -6,6 +6,7 @@ import java.util.List;
 import Datos.IPacienteDao;
 import DatosImpl.PacienteDaoImpl;
 import Entidad.Inasistencias;
+import Entidad.InasistenciasDetalle;
 import Entidad.Paciente;
 import Negocio.IPacienteNegocio;
 
@@ -66,6 +67,11 @@ public class GestionPacientes implements IPacienteNegocio{
 	@Override
 	public Inasistencias getInasistencias(String dniPaciente) {
 		return pdao.getInasistencias(dniPaciente);
+	}
+
+	@Override
+	public ArrayList<InasistenciasDetalle> getInasistenciasDet(Paciente pac) {
+		return (ArrayList<InasistenciasDetalle>)pdao.getInasistenciasDetalle(pac);
 	}
 
 }

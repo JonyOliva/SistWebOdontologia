@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Entidad.Inasistencias;
+import Entidad.Paciente;
 import Negocio.IPacienteNegocio;
 import NegocioImpl.GestionPacientes;
 
@@ -49,9 +50,11 @@ public class ServletReportes extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher miDispatcher;
+		
+		//Buscar Inasistencias por Dni de Paciente
 		if(request.getParameter("btnBuscar") != null)
 		{
-			RequestDispatcher miDispatcher;
 			if(request.getParameter("txtDNI").equals("")) response.sendRedirect("ServletReportes?Param=1");
 			else
 			{
@@ -69,6 +72,19 @@ public class ServletReportes extends HttpServlet {
 					miDispatcher.forward(request, response);
 				}
 			}
+		}
+		
+		
+		//Detalle de Inasistencias de Paciente
+		if(request.getParameter("btnDetalle")!=null)
+		{
+			int id = Integer.valueOf(request.getParameter("Param").toString().trim());
+			Paciente pac = pn.get(id);
+			request.setAttribute("listaDetalleIna", pn.getInasistenciasDet(pac));
+			request.setAttribute("PacienteDetalle", pac);
+			miDispatcher = request.getRequestDispatcher("ReporteInasistenciasDetalle.jsp");
+			miDispatcher.forward(request, response);
+			
 		}
 	}
 

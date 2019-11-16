@@ -1,34 +1,61 @@
 package Entidad;
 
+import java.time.LocalDateTime;
+
 public class InasistenciasDetalle {
 
 	Paciente pac;
-	Turno turno;
-	Odontologo odon;
-	public InasistenciasDetalle(Paciente pac, Turno turno, Odontologo odon) {
+	String odontologo;
+	LocalDateTime fecha;
+	String estado;
+	int idTurno;
+	
+	public InasistenciasDetalle(Paciente pac) {
 		super();
 		this.pac = pac;
-		this.turno = turno;
-		this.odon = odon;
 	}
+
 	public Paciente getPac() {
 		return pac;
 	}
+
 	public void setPac(Paciente pac) {
 		this.pac = pac;
 	}
-	public Turno getTurno() {
-		return turno;
+
+	public String getOdontologo() {
+		return odontologo;
 	}
-	public void setTurno(Turno turno) {
-		this.turno = turno;
+
+	public void setOdontologo(String odontologo) {
+		this.odontologo = odontologo;
 	}
-	public Odontologo getOdon() {
-		return odon;
+
+	public LocalDateTime getFecha() {
+		return fecha;
 	}
-	public void setOdon(Odontologo odon) {
-		this.odon = odon;
+
+	public void setFecha(LocalDateTime fecha) {
+		this.fecha = fecha;
 	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+
+	public int getIdTurno() {
+		return idTurno;
+	}
+
+	public void setIdTurno(int idTurno) {
+		this.idTurno = idTurno;
+	}
+	
 	
 	
 }

@@ -36,6 +36,7 @@
 					<th>Apellido</th>
 					<th>DNI</th>
 					<th>Cantidad de Inasistencias</th>
+					<th>Estado</th>
 					<th>Detalle</th>
 				</tr>
 				<%
@@ -45,12 +46,13 @@
 						listaInasistencias = (List<Inasistencias>) (request.getAttribute("listaInasistencias"));
 						for (Inasistencias i : listaInasistencias) {
 				%>
-				<form method="post" action="ServletReportes">
+				<form method="post" action="ServletReportes?Param=<%=i.getPac().getIDPaciente()%>">
 				<tr>
 					<td><%out.println(i.getPac().getNombre()); %></td>
 					<td><%out.println(i.getPac().getApellido()); %></td>
 					<td><%out.println(i.getPac().getDni()); %></td>
 					<td><%out.println(i.getInasistencias()); %></td>
+					<td><%out.println(i.getEstado()); %></td>
 					<td>
 						<input type="submit" class="btn btn-light" name="btnDetalle" title="Detalle" value="Detalle">
 					</td>

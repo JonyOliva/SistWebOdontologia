@@ -4,6 +4,7 @@ import java.util.List;
 
 import Entidad.IGestionable;
 import Entidad.Inasistencias;
+import Entidad.InasistenciasDetalle;
 import Entidad.Paciente;
 
 public interface IPacienteDao extends IGestionable<Paciente>{
@@ -16,4 +17,5 @@ public interface IPacienteDao extends IGestionable<Paciente>{
 	public boolean eliminar(int IDPaciente);
 	public List<Inasistencias> getInasistencias();
 	public Inasistencias getInasistencias(String dniPaciente);
+	public List<InasistenciasDetalle> getInasistenciasDetalle(Paciente pac);
 }

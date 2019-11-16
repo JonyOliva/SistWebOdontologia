@@ -1,3 +1,7 @@
+<%@page import="Entidad.Paciente"%>
+<%@page import="Entidad.InasistenciasDetalle"%>
+<%@page import="java.util.List"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -5,23 +9,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="masterInclude.html"></jsp:include>
-<title>Insert title here</title>
+<title>Detalle de Inasistencias</title>
 </head>
 <body>
+<link rel="stylesheet" href="Resources/css/stylesheetMain.css">
+<link rel="stylesheet" href="Resources/css/tables.css">
 <jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 
 <br>
 <div align="center">
+<%if(request.getAttribute("PacienteDetalle")!=null)
+{
+	Paciente p = (Paciente)request.getAttribute("PacienteDetalle");
+ %>
 <label >
 <%
-	out.println("DNI:"+ "");
+	out.println("DNI:"+" "+ p.getDni());
  %>
-</label>
+</label>&nbsp;&nbsp;
 <label>
 <%
-	out.println("Nombre:" +"");
+	out.println("Nombre: " +p.getNombre()+" "+p.getApellido());
+	}
  %>
 </label>
+
 </div><br>
 
 <table border=1 class="col-6" style="text-align: center;" align="center">
@@ -29,23 +41,25 @@
 					<th>Fecha</th>
 					<th>Turno</th>
 					<th>Odontólogo</th>
-					<th>Tratamiento</th>
-					<th>Anotación</th>
 					<th>Estado</th>
 				</tr>
 				<%
-					//for (Inasistencias i : listaInasistencias) {
+					List<InasistenciasDetalle> listaInasistenciasDet = null;
+					if(request.getAttribute("listaDetalleIna")!= null)
+					{
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
+					listaInasistenciasDet = (List<InasistenciasDetalle>)(request.getAttribute("listaDetalleIna"));
+					for (InasistenciasDetalle i : listaInasistenciasDet) {
 				%>
 				<tr>
-					<td>23/2/3222</td>
-					<td>2323</td>
-					<td>Mario Perez</td>
-					<td>Exodoncia</td>
-					<td>Excesivo Sangrado</td>
-					<td>Ausente</td>
+					<td><%out.println(i.getFecha().format(formatter)); %></td>
+					<td><%out.println(i.getIdTurno()); %></td>
+					<td><%out.println(i.getOdontologo()); %></td>
+					<td><%out.println(i.getEstado()); %></td>
 				</tr>
 				<%
-					//}
+					}
+					}
 				%>
 			</table>
 </body>

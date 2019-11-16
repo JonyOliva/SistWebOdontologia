@@ -2,12 +2,15 @@ package DatosImpl;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import Datos.IPacienteDao;
 import Entidad.Inasistencias;
+import Entidad.InasistenciasDetalle;
 import Entidad.Paciente;
+import javafx.util.converter.LocalDateTimeStringConverter;
 
 
 public class PacienteDaoImpl implements IPacienteDao{
@@ -204,7 +207,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 		try {
 			cn.Open();
 			ResultSet rs = cn.query("SELECT pacientes.IDPaciente, pacientes.Nombre, pacientes.Apellido,"
-					+ " pacientes.DNI, count(pacientes.IDPaciente) as Inasistencias FROM odontologiadb.pacientes\r\n" + 
+					+ " pacientes.DNI, count(pacientes.IDPaciente) as Inasistencias, turnos.estado FROM odontologiadb.pacientes\r\n" + 
 					"inner join turnos on pacientes.IDPaciente = turnos.IDPaciente_T\r\n" + 
 					"where pacientes.Activo = 1 and turnos.Estado = 'Ausente'\r\n" + 
 					"group by pacientes.IDPaciente\r\n" + 
@@ -215,7 +218,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 				pac.setNombre(rs.getString("Nombre"));
 				pac.setApellido(rs.getString("Apellido"));
 				pac.setDni(rs.getString("DNI"));
-				Inasistencias ina = new Inasistencias(pac, rs.getInt("Inasistencias"));
+				Inasistencias ina = new Inasistencias(pac, rs.getInt("Inasistencias"), rs.getString("Estado"));
 				listaInasistencias.add(ina);
 			}
 		}catch (Exception e) {
@@ -232,7 +235,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 		try {
 			cn.Open();
 			ResultSet rs = cn.query("SELECT pacientes.IDPaciente, pacientes.Nombre, pacientes.Apellido,"
-					+ " pacientes.DNI, count(pacientes.IDPaciente) as Inasistencias FROM odontologiadb.pacientes\r\n" + 
+					+ " pacientes.DNI, count(pacientes.IDPaciente) as Inasistencias, turnos.estado FROM odontologiadb.pacientes\r\n" + 
 					"inner join turnos on pacientes.IDPaciente = turnos.IDPaciente_T\r\n" + 
 					"where pacientes.Activo = 1 and turnos.Estado = 'Ausente'\r\n" + "and pacientes.DNI ='"+dniPaciente+
 					"' group by pacientes.IDPaciente\r\n" + 
@@ -243,7 +246,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 				pac.setNombre(rs.getString("Nombre"));
 				pac.setApellido(rs.getString("Apellido"));
 				pac.setDni(rs.getString("DNI"));
-				ina = new Inasistencias(pac, rs.getInt("Inasistencias"));
+				ina = new Inasistencias(pac, rs.getInt("Inasistencias"), rs.getString("Estado"));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -251,6 +254,34 @@ public class PacienteDaoImpl implements IPacienteDao{
 			cn.close();
 		}
 		return ina;
+	}
+
+	@Override
+	public List<InasistenciasDetalle> getInasistenciasDetalle(Paciente pac) {
+		List<InasistenciasDetalle> listaDetalle = new ArrayList<InasistenciasDetalle>();
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("select turnos.Fecha, turnos.idturno, odontologos.Nombre as Nombre_O, odontologos.Apellido as Apellido_O, turnos.Estado " + 
+					"from turnos " + 
+					"inner join pacientes on pacientes.IDPaciente = turnos.idpaciente_T " + 
+					"inner join odontologos on odontologos.IDOdontologo = turnos.idodontologo_t " + 
+					"where turnos.idpaciente_t = "+pac.getIDPaciente() +" order by turnos.Fecha desc;");
+			while(rs.next())
+			{
+				InasistenciasDetalle inaDet = new InasistenciasDetalle(pac);
+				inaDet.setEstado(rs.getString("Estado"));
+				inaDet.setFecha(rs.getTimestamp("Fecha").toLocalDateTime());
+				inaDet.setIdTurno(rs.getInt("idturno"));
+				inaDet.setOdontologo(rs.getString("Nombre_O")+" "+rs.getString("Apellido_O"));
+				listaDetalle.add(inaDet);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
+		return listaDetalle;
 	}
 
 	

@@ -1,3 +1,6 @@
+<%@page import="Entidad.iUsuario"%>
+<%@page import="Datos.iUsuarioDao"%>
+<%@page import="DatosImpl.UsuarioDaoImpl"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -18,6 +21,7 @@
 	<link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 <form action="ServletTurnos" method="GET" class="container mt-3">
 	<% if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp"); %>
+
 	<%!List<TurnosVista> listaTurnos;%>
 
 		<div>
