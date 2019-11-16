@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="Entidad.Inasistencias"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,21 +29,26 @@
 					<th></th>
 				</tr>
 				<%
-					//for (Inasistencias i : listaInasistencias) {
+					List<Inasistencias> listaInasistencias = null;
+					if(request.getAttribute("listaInasistencias")!= null)
+					{
+						listaInasistencias = (List<Inasistencias>) (request.getAttribute("listaInasistencias"));
+					}
+					for (Inasistencias i : listaInasistencias) {
 				%>
 				<form method="post" action="ServletReportes">
 				<tr>
-					<td>Juancito</td>
-					<td>Probando</td>
-					<td>Cosas</td>
-					<td>4</td>
+					<td><%out.println(i.getPac().getNombre()); %></td>
+					<td><%out.println(i.getPac().getApellido()); %></td>
+					<td><%out.println(i.getPac().getDni()); %></td>
+					<td><%out.println(i.getInasistencias()); %></td>
 					<td>
 						<input type="submit" class="btn btn-light" name="btnDetalle" title="Detalle" value="Detalle">
 					</td>
 				</tr>
 				</form>
 				<%
-					//}
+					}
 				%>
 			</table>
 </body>

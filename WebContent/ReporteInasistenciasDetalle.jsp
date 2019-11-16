@@ -11,27 +11,37 @@
 <jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 
 <br>
+<div align="center">
+<label >
+<%
+	out.println("DNI:"+ "");
+ %>
+</label>
+<label>
+<%
+	out.println("Nombre:" +"");
+ %>
+</label>
+</div><br>
 
 <table border=1 class="col-6" style="text-align: center;" align="center">
 				<tr>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>DNI</th>
-					<th>Odontólogo</th>
-					<th>Turno</th>
 					<th>Fecha</th>
+					<th>Turno</th>
+					<th>Odontólogo</th>
+					<th>Tratamiento</th>
+					<th>Anotación</th>
 					<th>Estado</th>
 				</tr>
 				<%
 					//for (Inasistencias i : listaInasistencias) {
 				%>
 				<tr>
-					<td>Juancito</td>
-					<td>Probando</td>
-					<td>Cosas</td>
-					<td>Pepito</td>
-					<td>2323</td>
 					<td>23/2/3222</td>
+					<td>2323</td>
+					<td>Mario Perez</td>
+					<td>Exodoncia</td>
+					<td>Excesivo Sangrado</td>
 					<td>Ausente</td>
 				</tr>
 				<%

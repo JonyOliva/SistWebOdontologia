@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Datos.IPacienteDao;
+import Entidad.Inasistencias;
 import Entidad.Paciente;
 
 
@@ -195,6 +196,34 @@ public class PacienteDaoImpl implements IPacienteDao{
 			cn.close();
 		}
 		return null;
+	}
+
+	@Override
+	public List<Inasistencias> getInasistencias() {
+		List<Inasistencias> listaInasistencias = new ArrayList<Inasistencias>();
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("SELECT pacientes.IDPaciente, pacientes.Nombre, pacientes.Apellido,"
+					+ " pacientes.DNI, count(pacientes.IDPaciente) as Inasistencias FROM odontologiadb.pacientes\r\n" + 
+					"inner join turnos on pacientes.IDPaciente = turnos.IDPaciente_T\r\n" + 
+					"where pacientes.Activo = 1 and turnos.Estado = 'Ausente'\r\n" + 
+					"group by pacientes.IDPaciente\r\n" + 
+					"order by Inasistencias desc;");
+			while(rs.next())
+			{
+				Paciente pac = new Paciente(rs.getInt("IDPaciente"));
+				pac.setNombre(rs.getString("Nombre"));
+				pac.setApellido(rs.getString("Apellido"));
+				pac.setDni(rs.getString("DNI"));
+				Inasistencias ina = new Inasistencias(pac, rs.getInt("Inasistencias"));
+				listaInasistencias.add(ina);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
+		return listaInasistencias;
 	}
 
 	

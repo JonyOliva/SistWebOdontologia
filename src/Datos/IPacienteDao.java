@@ -3,6 +3,7 @@ package Datos;
 import java.util.List;
 
 import Entidad.IGestionable;
+import Entidad.Inasistencias;
 import Entidad.Paciente;
 
 public interface IPacienteDao extends IGestionable<Paciente>{
@@ -13,5 +14,6 @@ public interface IPacienteDao extends IGestionable<Paciente>{
 	public boolean insertar(Paciente paciente);
 	public boolean modificar(Paciente paciente);
 	public boolean eliminar(int IDPaciente);
+	public List<Inasistencias> getInasistencias();
 	
 }
