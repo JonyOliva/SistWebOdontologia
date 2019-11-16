@@ -226,6 +226,33 @@ public class PacienteDaoImpl implements IPacienteDao{
 		return listaInasistencias;
 	}
 
+	@Override
+	public Inasistencias getInasistencias(String dniPaciente) {
+		Inasistencias ina = null;
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("SELECT pacientes.IDPaciente, pacientes.Nombre, pacientes.Apellido,"
+					+ " pacientes.DNI, count(pacientes.IDPaciente) as Inasistencias FROM odontologiadb.pacientes\r\n" + 
+					"inner join turnos on pacientes.IDPaciente = turnos.IDPaciente_T\r\n" + 
+					"where pacientes.Activo = 1 and turnos.Estado = 'Ausente'\r\n" + "and pacientes.DNI ='"+dniPaciente+
+					"' group by pacientes.IDPaciente\r\n" + 
+					"order by Inasistencias desc;");
+			if(rs.next())
+			{
+				Paciente pac = new Paciente(rs.getInt("IDPaciente"));
+				pac.setNombre(rs.getString("Nombre"));
+				pac.setApellido(rs.getString("Apellido"));
+				pac.setDni(rs.getString("DNI"));
+				ina = new Inasistencias(pac, rs.getInt("Inasistencias"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
+		return ina;
+	}
+
 	
 		
 }

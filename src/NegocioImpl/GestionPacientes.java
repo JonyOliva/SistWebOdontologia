@@ -63,4 +63,9 @@ public class GestionPacientes implements IPacienteNegocio{
 		return (ArrayList<Inasistencias>)pdao.getInasistencias();
 	}
 
+	@Override
+	public Inasistencias getInasistencias(String dniPaciente) {
+		return pdao.getInasistencias(dniPaciente);
+	}
+
 }

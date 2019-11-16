@@ -15,5 +15,5 @@ public interface IPacienteDao extends IGestionable<Paciente>{
 	public boolean modificar(Paciente paciente);
 	public boolean eliminar(int IDPaciente);
 	public List<Inasistencias> getInasistencias();
-	
+	public Inasistencias getInasistencias(String dniPaciente);
 }

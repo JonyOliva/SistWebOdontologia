@@ -15,5 +15,6 @@ public interface IPacienteNegocio extends IGestionable<Paciente>{
 	public boolean modificar(Paciente paciente);
 	public boolean eliminar(int idPaciente);
 	public ArrayList<Inasistencias> getInasistencias();
+	public Inasistencias getInasistencias(String dniPaciente);
 	
 }

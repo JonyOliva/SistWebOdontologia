@@ -10,14 +10,24 @@
 <title>Inasistencias</title>
 </head>
 <body>
+<link rel="stylesheet" href="Resources/css/stylesheetMain.css">
+<link rel="stylesheet" href="Resources/css/tables.css">
 <jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 <br>
-<form method="get" action="ServletReportes">
+			<div align="center">
+				<h5 class="titular">
+					Reporte de Inasistencias
+					</h5>
+			</div>
+<form method="post" action="ServletReportes">
 <div align="center">
-<input type="number" >
-<input type="submit" class="btn btn-light" value="Buscar" name="btnBuscar">
+<input type="number" name="txtDNI" placeholder="DNI">
+<input type="submit" class=" btn btn-default btnVerde" value="Buscar" name="btnBuscar">
 </div>
 </form>
+<div align=center><label>
+		<% if(request.getAttribute("NoExiste")!=null)out.println(request.getAttribute("NoExiste").toString()); %>
+	</label></div>
 <br>
 
 <table border=1 class="col-6" style="text-align: center;" align="center">
@@ -26,15 +36,14 @@
 					<th>Apellido</th>
 					<th>DNI</th>
 					<th>Cantidad de Inasistencias</th>
-					<th></th>
+					<th>Detalle</th>
 				</tr>
 				<%
 					List<Inasistencias> listaInasistencias = null;
 					if(request.getAttribute("listaInasistencias")!= null)
 					{
 						listaInasistencias = (List<Inasistencias>) (request.getAttribute("listaInasistencias"));
-					}
-					for (Inasistencias i : listaInasistencias) {
+						for (Inasistencias i : listaInasistencias) {
 				%>
 				<form method="post" action="ServletReportes">
 				<tr>
@@ -48,6 +57,7 @@
 				</tr>
 				</form>
 				<%
+					}
 					}
 				%>
 			</table>
