@@ -56,8 +56,7 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 	public boolean modificar(iUsuario user) {
 		Conexion cn = new Conexion();
 		cn.Open();
-		boolean state = cn.execute("Update usuarios set Email='" + user.getEmail() + "', Password='"
-				+ user.getPassword() + "' where IDUsuario = '" + user.getIDUsuario() + "';");
+		boolean state = cn.execute("UPDATE usuarios SET `Email`= '"+user.getEmail()+"' ,`Password` = '"+user.getPassword()+"' WHERE `IDUsuario` = '+"+user.getIDUsuario()+"';");
 		cn.close();
 		return state;
 	}

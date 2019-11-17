@@ -85,8 +85,8 @@ public class OdontologoDaoImpl implements IOdontologoDao{
 		try {
 			cn.Open();
 			String query = "UPDATE Odontologos SET ";
-			String data = "Nombre='"+odont.getNombre()+"', Apellido='"+odont.getApellido()+"', DNI='"+odont.getDNI()+
-					"', Matricula='"+odont.getMatricula()+"' WHERE IDOdontologo=" + odont.getIDUsuario();
+			String data = "`Nombre`='"+odont.getNombre()+"',`Apellido`='"+odont.getApellido()+"', `DNI`='"+odont.getDNI()+
+					"', `Matricula`='"+odont.getMatricula()+"' WHERE `IDOdontologo`='" + odont.getIDUsuario()+"';";
 			boolean res = cn.execute(query+data);
 			cn.close();
 			return res;
