@@ -42,7 +42,7 @@ input {
 </style>
 
 <body>
-	<jsp:include page="masterMenuAdmin.html"></jsp:include>
+	<jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 	<%
 		Odontologo odont = null;
 		if (request.getAttribute("odontologo") != null) {
