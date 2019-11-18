@@ -69,7 +69,19 @@ public class ConsultaDaoImpl implements IConsultaDao{
 
 	@Override
 	public boolean insertar(ConsultaData consulta) {
-		// TODO Auto-generated method stub
+		try {
+			cn.Open();
+			String query = "INSERT INTO Odontologos(IDTurno_CON, IDOdontologo_CON, IDTratamiento_CON, IDPaciente_CON, AnotacionExtra) ";
+			String data = "SELECT "+consulta.getIDTurno()+", '"+consulta.getIDOdontologo()+"', '"+consulta.getIDTratamiento()
+			+"',"+consulta.getIDPaciente()+", "+ "'"+consulta.getAnotacion()+"'";
+			boolean res = cn.execute(query+data);
+			cn.close();
+			return res;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
 		return false;
 	}
 

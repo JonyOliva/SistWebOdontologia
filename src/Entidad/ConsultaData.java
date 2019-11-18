@@ -2,17 +2,15 @@ package Entidad;
 
 public class ConsultaData {
 
-	private final int IDConsulta;
 	private int IDTurno;
 	private String IDOdontologo;
 	private String IDTratamiento;
 	private int IDPaciente;
 	private String Anotacion;
 		
-	public ConsultaData(int iDConsulta, int iDTurno, String iDOdontologo, String iDTratamiento, int iDPaciente,
+	public ConsultaData(int iDTurno, String iDOdontologo, String iDTratamiento, int iDPaciente,
 			String anotacion) {
 		super();
-		IDConsulta = iDConsulta;
 		IDTurno = iDTurno;
 		IDOdontologo = iDOdontologo;
 		IDTratamiento = iDTratamiento;
@@ -20,9 +18,8 @@ public class ConsultaData {
 		Anotacion = anotacion;
 	}
 	
-	public ConsultaData(int iDConsulta) {
-		super();
-		IDConsulta = iDConsulta;
+	public ConsultaData() {
+
 	}
 
 	public int getIDTurno() {
@@ -54,9 +51,6 @@ public class ConsultaData {
 	}
 	public void setAnotacion(String anotacion) {
 		Anotacion = anotacion;
-	}
-	public int getIDConsulta() {
-		return IDConsulta;
 	}
 	
 }

@@ -11,7 +11,7 @@
 <title>Odontologos</title>
 </head>
 <body>
-	<jsp:include page="masterMenuAdmin.html"></jsp:include>
+	<jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 	<link rel="stylesheet" href="Resources/css/tables.css">
 	<link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 	<%!List<Odontologo> listOdonts;%>

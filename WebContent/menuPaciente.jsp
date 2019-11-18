@@ -22,8 +22,8 @@
 		List<Consulta> listCons = null;
 		if (request.getAttribute("paciente") != null) {
 			paciente = (Paciente) request.getAttribute("paciente");
-			listTrats = (ArrayList<Tratamiento>)request.getAttribute("tratamientos");
-			listCons = (ArrayList<Consulta>)request.getAttribute("consultas");
+			listTrats = (ArrayList<Tratamiento>) request.getAttribute("tratamientos");
+			listCons = (ArrayList<Consulta>) request.getAttribute("consultas");
 		} else {
 			response.sendRedirect("ServletPacientes");
 		}
@@ -73,14 +73,15 @@
 			</div>
 		</div>
 		<br />
-		<div>
-			<input type="hidden" id="idpaciente"
-				value="<%=paciente.getIDPaciente()%>">
-			<jsp:include page="odontograma.html"></jsp:include>
+		<div class="row bordeVerde">
+			<div class="col-12">
+			<h5 class="subtitular p-2"> Odontograma del paciente</h5>
+				<jsp:include page="odontograma.html"></jsp:include>
+			</div>
 		</div>
 		<br>
 		<div class="row mt-3" style="text-align: center;">
-			<div class="col-7 rounded" style="border: #9de2d4 1px solid;">
+			<div class="col-7 rounded bordeVerde">
 				<div class="subtitular">Historial clínico</div>
 				<table class="table mt-3">
 					<tr>
@@ -91,54 +92,66 @@
 						<th>Detalle</th>
 					</tr>
 					<%
-						for(Consulta con : listCons){
+						for (Consulta con : listCons) {
 							String det = "";
-							if(con.getAnotacion() != null)
-								det += "<b>Anotacion:</b> "+con.getAnotacion()+"</br></br>";
+							if (con.getAnotacion() != null)
+								det += "<b>Anotacion:</b> " + con.getAnotacion() + "</br></br>";
 							det += "<b>Piezas</b></br>";
-							for(String p :con.getPiezasArregladas()){
-								det += p+"</br>";
+							for (String p : con.getPiezasArregladas()) {
+								det += p + "</br>";
 							}
 					%>
-					<tr> 
-						<td><%= con.getIDTurno() %></td>
-						<td><%= con.getNombreOdontologo() %></td>
-						<td><%= con.getIdTratamiento() %></td>
-						<td><%= con.getFecha() %></td>
-						<td><button onclick="verDetalles(this, <%= con.getIDTurno()+99 %>)" class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
+					<tr>
+						<td><%=con.getIDTurno()%></td>
+						<td><%=con.getNombreOdontologo()%></td>
+						<td><%=con.getIdTratamiento()%></td>
+						<td><%=con.getFecha()%></td>
+						<td><button
+								onclick="verDetalles(this, <%=con.getIDTurno() + 99%>)"
+								class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
 					</tr>
-					<tr id="<%= con.getIDTurno()+99 %>" style="display:none;">
-						<td colspan="5"> <%= det %></td>
+					<tr id="<%=con.getIDTurno() + 99%>" style="display: none;">
+						<td colspan="5"><%=det%></td>
 					</tr>
 					<%
 						}
 					%>
 				</table>
 			</div>
-			<div class="col-5 rounded" style="border: #9de2d4 1px solid;">
+			<div class="col-5 rounded bordeVerde">
 				<div class="subtitular">Registrar nueva consulta</div>
 				<form method="POST" action="ServletHistoriales">
+				<input type="hidden" id="idpaciente" value="<%=paciente.getIDPaciente()%>">
+				<input type="hidden" id="idodontologo" value="<%=paciente.getIDPaciente()%>">
+				<input name="idturno" id="turno" type="hidden" 
+				
+				<% if(request.getParameter("idturno") != null){ %>
+					value="<%= request.getParameter("idturno") %>"
+				<%}else{ %>
+					value="<%= "3" %>"
+				<%} %>
+				>
 					<table class="table mt-3">
 						<tr>
 							<th>Tratamiento</th>
 							<th>Anotacion extra:</th>
 						</tr>
 						<tr>
-							<td><select name="Tratamiento">
+							<td><select name="tratamiento">
 									<%
-										for(Tratamiento trat : listTrats){
+										for (Tratamiento trat : listTrats) {
 									%>
-									<option value="<%= trat.getNombreID() %>"><%= trat.getNombreID() %></option>
+									<option value="<%=trat.getNombreID()%>"><%=trat.getNombreID()%></option>
 									<%
 										}
 									%>
-									
+
 							</select></td>
-							<td><textarea name="Anotacion" style="width: 100%" rows="1"></textarea></td>
+							<td><textarea name="anotacion" style="width: 100%" rows="1"></textarea></td>
 						</tr>
 					</table>
+					<button type="button" class="btn btn-success m-2" id="saveOdont">Guardar consulta</button>
 				</form>
-				<a class="btn btn-success m-2" href="#">Guardar consulta</a>
 			</div>
 
 		</div>

@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="masterInclude.html"></jsp:include>
+<link rel="stylesheet" href="Resources/css/stylesheetMain.css"> 
 <title>Inicio</title>
 </head>
 
@@ -36,6 +37,7 @@
 	
 		<div>
 			<form method="post" action="ServletUsuarios" class="box">
+			<div class="subtitular mb-4 mt-0"> <h6> Iniciar sesión </h6> </div>
 				<table>
 				<tr>
 					<td>
@@ -56,7 +58,7 @@
 				</table>
 				<br>
 				<div style="text-align: center">
-					<input type="submit" name="btnIniciarSesion" value="Iniciar Sesión" required name="btnIniciarSesion"></input><br>
+					<input type="submit" class="btn btnVerde" name="btnIniciarSesion" value="Iniciar Sesión" required name="btnIniciarSesion"></input><br>
 				<div><%if(request.getAttribute("ErrorSesion")!= null)
 							if(((boolean)request.getAttribute("ErrorSesion")) == true)
 							{

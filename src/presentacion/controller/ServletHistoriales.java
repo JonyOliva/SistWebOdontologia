@@ -8,9 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.*;
 
+import Entidad.ConsultaData;
 import Entidad.Diente;
 import Entidad.DientePaciente;
+import Negocio.IConsultaNegocio;
 import Negocio.IDientePacienteNegocio;
+import NegocioImpl.GestionConsultas;
 import NegocioImpl.GestionDientes;
 /**
  * Servlet implementation class ServletHistoriales
@@ -19,19 +22,15 @@ import NegocioImpl.GestionDientes;
 public class ServletHistoriales extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	IDientePacienteNegocio dp;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+	IConsultaNegocio consNeg;
+
     public ServletHistoriales() {
         super();
         dp = new GestionDientes();
-        // TODO Auto-generated constructor stub
+        consNeg = new GestionConsultas();
+        
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("id") != null) {
 			Gson gson = new Gson();
@@ -46,54 +45,62 @@ public class ServletHistoriales extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		if(request.getParameter("odontograma") != null && request.getParameter("idpaciente") != null) {
-			JsonParser parser = new JsonParser();
-			Gson gson = new Gson();
-			JsonArray odontograma = parser.parse(request.getParameter("odontograma")).getAsJsonArray();
-			System.out.print(odontograma+"\n");
-			for (JsonElement element : odontograma) {
-				JsonObject diente = element.getAsJsonObject();
-				Diente d = gson.fromJson(diente, Diente.class);
-				DientePaciente newd = new DientePaciente();
-				newd.setIDDiente(d.id);
-				newd.setIDPaciente(Integer.valueOf(request.getParameter("idpaciente")));
-				newd.setIDTurno(2);
+		if(request.getParameter("idturno") != null && request.getParameter("idpaciente") != null) {
+			int idturno = Integer.valueOf(request.getParameter("idturno"));
+			int idpaciente = Integer.valueOf(request.getParameter("idpaciente"));
+			if(request.getParameter("odontograma") != null) {
+				JsonParser parser = new JsonParser();
+				Gson gson = new Gson();
+				JsonArray odontograma = parser.parse(request.getParameter("odontograma")).getAsJsonArray();
+				for (JsonElement element : odontograma) {
+					JsonObject diente = element.getAsJsonObject();
+					Diente d = gson.fromJson(diente, Diente.class);
+					DientePaciente newd = new DientePaciente();
+					newd.setIDDiente(d.id);
+					newd.setIDPaciente(idpaciente);
+					newd.setIDTurno(idturno);
 
-				int estado = Integer.valueOf(d.left);
-				if(estado != 0) {
-					newd.setParte("L");
-					newd.setIDEstado(estado);
-					dp.insertar(newd);
-				}
-				estado = Integer.valueOf(d.up);
-				if(estado != 0) {
-					newd.setParte("U");
-					newd.setIDEstado(estado);
-					dp.insertar(newd);
-				}
-				estado = Integer.valueOf(d.right);
-				if(estado != 0) {
-					newd.setParte("R");
-					newd.setIDEstado(estado);
-					dp.insertar(newd);
-				}
-				estado = Integer.valueOf(d.bottom);
-				if(estado != 0) {
-					newd.setParte("B");
-					newd.setIDEstado(estado);
-					dp.insertar(newd);
-				}
-				estado = Integer.valueOf(d.center);
-				if(estado != 0) {
-					newd.setParte("C");
-					newd.setIDEstado(estado);
-					dp.insertar(newd);
-				}
-				
-				
+					int estado = Integer.valueOf(d.left);
+					if(estado != 0) {
+						newd.setParte("L");
+						newd.setIDEstado(estado);
+						dp.insertar(newd);
+					}
+					estado = Integer.valueOf(d.up);
+					if(estado != 0) {
+						newd.setParte("U");
+						newd.setIDEstado(estado);
+						dp.insertar(newd);
+					}
+					estado = Integer.valueOf(d.right);
+					if(estado != 0) {
+						newd.setParte("R");
+						newd.setIDEstado(estado);
+						dp.insertar(newd);
+					}
+					estado = Integer.valueOf(d.bottom);
+					if(estado != 0) {
+						newd.setParte("B");
+						newd.setIDEstado(estado);
+						dp.insertar(newd);
+					}
+					estado = Integer.valueOf(d.center);
+					if(estado != 0) {
+						newd.setParte("C");
+						newd.setIDEstado(estado);
+						dp.insertar(newd);
+					}				
+
+				}				
+			}else if(request.getParameter("tratamiento") != null && request.getParameter("anotacion") != null && request.getParameter("idodontologo") != null) {
+				ConsultaData consulta = new ConsultaData();
+				consulta.setIDTurno(idturno);
+				consulta.setIDPaciente(idpaciente);
+				consulta.setAnotacion(request.getParameter("anotacion"));
+				consulta.setIDTratamiento(request.getParameter("tratamiento"));
+				consulta.setIDOdontologo(request.getParameter("idodontologo"));
+				consNeg.insertar(consulta);
 			}
-
 		}
 	}
 

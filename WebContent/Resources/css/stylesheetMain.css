@@ -5,6 +5,10 @@
 	border: grey solid 1px;
 }
 
+.bordeVerde{
+	border: #9de2d4 1px solid;
+}
+
 .campo{
     border-radius: 4px;
     text-align: center;

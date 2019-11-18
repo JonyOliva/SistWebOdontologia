@@ -123,8 +123,8 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 					odon.setNombre(rs.getString("odontologos.nombre"));
 					odon.setApellido(rs.getString("odontologos.apellido"));
 					odon.setDNI(rs.getString("odontologos.dni"));
-					odon.setEmail("odontologos.email");
-					odon.setMatricula("odontologos.matricula");
+					odon.setEmail(user.getEmail());
+					odon.setMatricula(rs.getString("odontologos.matricula"));
 					cn.close();
 					return odon;
 				}
