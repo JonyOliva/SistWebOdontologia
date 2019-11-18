@@ -19,7 +19,7 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a class="nav-link" href="odonTurnos.jsp">Turnos
+			<li class="nav-item"><a class="nav-link" href="ServletTurnos">Turnos
 					<span class="sr-only">(current)</span>
 			</a></li>
 			<li class="nav-item"><a class="nav-link"

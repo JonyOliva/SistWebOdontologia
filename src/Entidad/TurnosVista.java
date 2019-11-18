@@ -7,6 +7,7 @@ public class TurnosVista{
 	String apellidoPac;
 	String nombreOd;
 	String apellidoOd;
+	String dni;
 	
 	
 	public Turno getTurno() {
@@ -40,5 +41,12 @@ public class TurnosVista{
 	
 	public void setApellidoOd(String apellidoOd) {
 		this.apellidoOd = apellidoOd;
+	}
+	
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+	public String getDni() {
+		return dni;
 	}
 }

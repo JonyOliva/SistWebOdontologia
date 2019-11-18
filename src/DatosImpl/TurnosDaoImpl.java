@@ -153,6 +153,72 @@ public class TurnosDaoImpl implements ITurnosDao{
 		else
 			return false;
 	}
+
+	@Override
+	public List<TurnosVista> turnosOdontologo(String idod) {
+		List<TurnosVista> lista = new ArrayList<TurnosVista>();
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("SELECT IDTurno,IDPaciente_T,Fecha,IDOdontologo_T,Estado,Pacientes.Nombre,pacientes.Apellido," + 
+					"pacientes.DNI,odontologos.Nombre,odontologos.Apellido FROM Turnos INNER JOIN " + 
+					"pacientes ON pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T "
+					+ "WHERE IDOdontologo_T = '"+idod+"' AND Estado = 'Activo' AND Fecha >= current_date()");
+			
+			while(rs.next())
+			{
+			
+				TurnosVista TurnoVista= new TurnosVista();
+				Turno turno = new Turno(rs.getInt("IDTurno"));
+				turno.setIDPaciente(rs.getInt("IDPaciente_T"));
+				turno.setFecha(rs.getObject("Fecha", LocalDateTime.class));
+				turno.setIDOdontologo(rs.getString("IDOdontologo_T"));
+				turno.setEstado(rs.getString("Estado"));
+				TurnoVista.setTurno(turno);
+				TurnoVista.setApellidoPac(rs.getString("Pacientes.Apellido"));
+				TurnoVista.setNombrePac(rs.getString("Pacientes.Nombre"));
+				TurnoVista.setNombreOd(rs.getString("Odontologos.Nombre"));
+				TurnoVista.setApellidoOd(rs.getString("Odontologos.Apellido"));
+				TurnoVista.setDni(rs.getString("pacientes.DNI"));
+				
+				lista.add(TurnoVista);
+				
+			}
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally{
+			cn.close();
+		}
+		
+		return lista;
+	}
+
+	@Override
+	public boolean presente(int idTurno) {
+		String query = "UPDATE Turnos SET Estado = 'Presente' WHERE IDTurno = "+idTurno;
+		try {
+			cn.Open();
+			return cn.execute(query);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean ausente(int idTurno) {
+		String query = "UPDATE Turnos SET Estado = 'Ausente' WHERE IDTurno = "+idTurno;
+		try {
+			cn.Open();
+			return cn.execute(query);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 
 	

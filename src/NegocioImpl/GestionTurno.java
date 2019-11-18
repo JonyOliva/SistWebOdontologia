@@ -89,6 +89,28 @@ public class GestionTurno implements ITurnoNegocio{
 		boolean existe = tdao.existe(turno);
 		return existe;
 	}
+
+	@Override
+	public List<TurnosVista> listaTurnoOdontologo(String idod) {
+		
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		
+		return tdao.turnosOdontologo(idod);
+	}
+
+	@Override
+	public boolean presente(int idturno) {
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		
+		return tdao.presente(idturno);
+	}
+
+	@Override
+	public boolean ausente(int idturno) {
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		return tdao.ausente(idturno);
+	}
+	
 	
 	
 

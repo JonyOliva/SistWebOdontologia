@@ -19,6 +19,7 @@ import Entidad.Odontologo;
 import Entidad.Paciente;
 import Entidad.Turno;
 import Entidad.TurnosVista;
+import Entidad.iUsuario;
 import Negocio.IOdontologoNegocio;
 import Negocio.ITurnoNegocio;
 import NegocioImpl.GestionOdontologos;
@@ -51,13 +52,47 @@ public class ServletTurnos extends HttpServlet {
 		RequestDispatcher dispachero;
 		
 		String operacion = request.getParameter("operacion");
+		
+		GestionTurno gt = new GestionTurno();
+		if(request.getSession().getAttribute("usuario") != null)
+		{
+			iUsuario us = (iUsuario)request.getSession().getAttribute("usuario");
+			request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
+			
+			dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
+			dispachero.forward(request, response);
+		}else
+		{
+			dispachero = request.getRequestDispatcher("/index.jsp");
+			dispachero.forward(request, response);
+		}
+
+		
+		
+		
 		if(operacion != null)
 		{
 			if(operacion.equals("borrar"))
 			{
-				GestionTurno gt = new GestionTurno();
+				
 				int id = Integer.parseInt(request.getParameter("id"));
 				gt.borrarTurno(id);
+			}
+			
+			if(operacion.equals("presente"))
+			{
+				int id = Integer.parseInt(request.getParameter("idtur"));
+				gt.presente(id);
+				dispachero = request.getRequestDispatcher("/menuPacientes.jsp");
+				dispachero.forward(request, response);
+			}
+			
+			if(operacion.equals("ausente"))
+			{
+				int id = Integer.parseInt(request.getParameter("idtur"));
+				gt.ausente(id);
+				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
+				dispachero.forward(request, response);
 			}
 		}
 		if(request.getParameter("txtBuscar")== null)
@@ -82,11 +117,6 @@ public class ServletTurnos extends HttpServlet {
 			
 		}
 		
-		//CARGAR LISTA ODONTOLOGOS
-		/*List<Odontologo> listaOd = new ArrayList<Odontologo>();
-		IOdontologoNegocio go = new GestionOdontologos();
-		listaOd = go.getAll();
-		request.setAttribute("listaodontologos", listaOd);*/
 		
 
 		if(request.getParameter("btnGuardar") != null)
@@ -120,7 +150,9 @@ public class ServletTurnos extends HttpServlet {
 			}
 
 		}
-			
+		action = request.getParameter("loadOdo");
+		System.out.println(action);
+
 
 		dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
 		dispachero.forward(request, response);

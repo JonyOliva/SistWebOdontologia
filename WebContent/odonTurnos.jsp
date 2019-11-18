@@ -1,6 +1,10 @@
 <%@page import="Entidad.iUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@page import="Entidad.Turno"%>
+<%@page import="Entidad.TurnosVista"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +20,7 @@
 	{
 		response.sendRedirect("index.jsp");
 	}*/
-	if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");
+	//if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");
 
  %>
 <title>Turnos</title>
@@ -25,30 +29,47 @@
 </head>
 <body>
 	<jsp:include page="masterMenuOdont.jsp"></jsp:include>
-	<div class="container mt-3">
+	
+	<form action="ServletTurnos" method="post" class="container mt-3">
 		<h5 class="titular">
 			Turnos próximos
-			</h1>
+			</h5>
 			
 		<div>
+		<%!List<TurnosVista> lista; %>
+			<input type="hidden" name="loadOdo">
 			<table border=1>
 				<tr>
 					<th>DNI Paciente</th>
+					<th>Apellido y Nombre</th>
 					<th>Odontologo</th>
-					<th>Fecha</th>
-					<th>Hora</th>
+					<th>Fecha y hora</th>
 					<th>Acciones</th>
 				</tr>
-				<tr>
-					<td>52636987</td>
-					<td>****</td>
-					<td>10/05/2019</td>
-					<td>9:30hs</td>
-					<td><a href="menuPaciente.jsp" class="btn btn-primary">Presente</a>
-					<a href="menuPaciente.jsp" class="btn btn-danger">Ausente</a></td>
-				</tr>
+				<%	
+					if(request.getAttribute("listaod")!= null) 
+					{
+						lista = (List<TurnosVista>) request.getAttribute("listaod");
+						
+						for(TurnosVista t : lista)
+						{
+				%>
+							<tr>
+							<td><%= t.getDni() %></td>
+							<td><%= t.getApellidoPac()+", "+t.getNombrePac() %></td>
+							<td><%=t.getTurno().getIDOdontologo()%></td>
+							<td><%= t.getTurno().getFecha().toString().replace('T', ' ') %></td>
+							<td><a href="ServletTurnos?operacion=presente&idtur=<%=t.getTurno().getIDTurno() %>" 
+								class="btn btn-primary">Presente</a>
+							<a href="ServletTurnos?operacion=ausente&idtur=<%=t.getTurno().getIDTurno() %>" class="btn btn-danger">Ausente</a></td>
+							</tr>
+				<%
+						}
+					}
+				%>
+				
 			</table>
 		</div>
-	</div>
+	</form>
 </body>
 </html>
