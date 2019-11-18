@@ -110,6 +110,26 @@ public class GestionTurno implements ITurnoNegocio{
 		TurnosDaoImpl tdao = new TurnosDaoImpl();
 		return tdao.ausente(idturno);
 	}
+
+	@Override
+	public boolean existePac(String dniPac, String fechahora) {
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		PacienteDaoImpl pdao = new PacienteDaoImpl();
+		Turno turno = new Turno(1);
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime fechaTurno = LocalDateTime.parse(fechahora, df);
+		Paciente pac = pdao.get(dniPac);
+		boolean existe = false;
+		
+		if(pac != null)
+		{
+			turno.setIDPaciente(pac.getIDPaciente());
+			turno.setFecha(fechaTurno);
+			existe = tdao.existePac(turno);
+		}
+
+		return existe;
+	}
 	
 	
 	

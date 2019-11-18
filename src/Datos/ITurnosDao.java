@@ -12,6 +12,7 @@ public interface ITurnosDao {
 	List<TurnosVista> turnosOdontologo(String idod);
 	List<TurnosVista> turnosPacienteVista();
 	public boolean existe(Turno turno);
+	public boolean existePac(Turno turno);
 	public boolean insertar(Turno turno);
 	public boolean eliminar(int idTurno);
 	public boolean presente(int idTurno);

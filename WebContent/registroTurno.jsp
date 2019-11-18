@@ -55,29 +55,20 @@ input {
 				<h5 class="titular">Turno</h5>
 			</div>
 
-			<form class="box" method="post" action="ServletRegistro">
+			<form class="box" method="post" action="ServletTurnos">
 			
 			
 			<%	
 				if(request.getAttribute("Correcto")!= null)
 				{
-					if( (boolean)request.getAttribute("Correcto")== true)
-					{
-						%>
-						<dir class="box">
-							Turno agregado correctamente.
-						</dir>
-						<%
-						request.setAttribute("Correcto",null);
-					}else
-					{
+					
 			%>
-						<dir class="box">
-						Hubo un error, no se agrego el turno.
+						<dir class="box" style="width:80%;">
+							<%out.print((String)request.getAttribute("Correcto"));%>
 						</dir>
-						<%
-					}
-				}
+			<%
+						request.setAttribute("Correcto",null);
+				 }
 			%>
 			
 				<div class="row justify-content-center" style="font-size: 18px;">

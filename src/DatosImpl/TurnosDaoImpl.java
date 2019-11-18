@@ -145,13 +145,29 @@ public class TurnosDaoImpl implements ITurnosDao{
 
 	@Override
 	public boolean existe(Turno turno) {
-		cn.Open();
-		ResultSet rs = cn.query("SELECT * FROM Turnos WHERE IDOdontologo_T = '"+turno.getIDOdontologo()+"' "
-				+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"'");
-		if(rs != null)
-			return true;
-		else
-			return false;
+		List<Turno> lista = new ArrayList<Turno>();
+		try {
+				cn.Open();
+				ResultSet rs = cn.query("SELECT * FROM Turnos WHERE IDOdontologo_T = '"+turno.getIDOdontologo()+"' "
+						+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"'");
+				while(rs.next())
+				{
+					Turno tur = new Turno(rs.getInt("IDTurno"));
+					tur.setIDOdontologo(rs.getString("IDOdontologo_T"));
+					
+					lista.add(tur);
+				}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}finally 
+		{
+			cn.close();
+
+		}
+		if(lista.isEmpty())return false;
+		else return true;
+				
 	}
 
 	@Override
@@ -218,6 +234,32 @@ public class TurnosDaoImpl implements ITurnosDao{
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public boolean existePac(Turno turno) {
+		List<Turno> lista = new ArrayList<Turno>();
+		try {
+				cn.Open();
+				ResultSet rs = cn.query("SELECT * FROM Turnos WHERE IPaciente_T = "+turno.getIDPaciente()+" "
+						+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"'");
+				while(rs.next())
+				{
+					Turno tur = new Turno(rs.getInt("IDTurno"));
+					tur.setIDPaciente(rs.getInt("IDPaciente_T"));
+					
+					lista.add(tur);
+				}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}finally 
+		{
+			cn.close();
+
+		}
+		if(lista.isEmpty())return false;
+		else return true;
 	}
 	
 

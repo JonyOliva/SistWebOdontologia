@@ -14,6 +14,7 @@ public interface ITurnoNegocio {
 	public boolean modificarTurno(Turno turno);
 	public boolean borrarTurno(int idTurno);
 	public boolean existe(String idOdon,String fechahora);
+	public boolean existePac(String dnipac,String fechahora);
 	public List<TurnosVista> listaTurnoOdontologo(String idod);
 	public boolean presente(int idturno);
 	public boolean ausente(int idturno);

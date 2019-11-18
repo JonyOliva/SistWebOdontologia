@@ -58,13 +58,13 @@ public class ServletUsuarios extends HttpServlet {
 			{
 				user = gu.getOdo(user);
 				session.setAttribute("usuario", user);
-				miDispacher = request.getRequestDispatcher("/odonTurnos.jsp");
+				miDispacher = request.getRequestDispatcher("/ServletTurnos");
 			}
 			else if(user.isTipoUsuario() == true)
 			{
 				user = gu.getAdm(user);
 				session.setAttribute("usuario", user);
-				miDispacher = request.getRequestDispatcher("/adminTurnos.jsp");
+				miDispacher = request.getRequestDispatcher("/ServletTurnos");
 			}
 			
 				miDispacher.forward(request, response);

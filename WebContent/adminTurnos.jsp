@@ -19,7 +19,7 @@
 	<jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 	<link rel="stylesheet" href="Resources/css/tables.css">
 	<link rel="stylesheet" href="Resources/css/stylesheetMain.css">
-<form action="ServletTurnos" method="GET" class="container mt-3">
+<form action="ServletTurnos" method="POST" class="container mt-3">
 	<% if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp"); %>
 
 	<%!List<TurnosVista> listaTurnos;%>
