@@ -7,6 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="masterInclude.html"></jsp:include>
+
+<%//if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");%>
+
 <script type="text/javascript" src="Resources/js/validar.js"></script>
 <link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 <title>Ficha paciente</title>
@@ -36,7 +39,7 @@ input {
 </style>
 
 <body>
-	<jsp:include page="masterMenuAdmin.html"></jsp:include>
+	<jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 	<%
 		Paciente paciente = null;
 		if (request.getAttribute("paciente") != null) {
