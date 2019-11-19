@@ -62,7 +62,9 @@
 					<td><%=t.getApellidoOd()+", "+t.getNombreOd()%></td>
 					<td><%=t.getTurno().getFecha().toString().replace("T", " ") %></td>
 					<td><%=t.getTurno().getEstado() %></td>
-					<td style="text-align: center;"><a href="registroTurno.jsp"
+					<td style="text-align: center;"><a 
+						href="ServletTurnos?operacion=modificar&dni=<%= t.getTurno().getIDPaciente()%>
+						&idturno=<%=t.getTurno().getIDTurno()%>"
 						class="btn btn-default btnVerde">Modificar</a> 
 						<a href="ServletTurnos?operacion=borrar&id=<%=t.getTurno().getIDTurno() %>"
 						class="btn btn-default btnVerde">Eliminar</a></td>

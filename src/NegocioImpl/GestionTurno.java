@@ -15,9 +15,9 @@ import Negocio.ITurnoNegocio;
 public class GestionTurno implements ITurnoNegocio{
 
 	@Override
-	public Turno getTurno() {
-		// TODO Auto-generated method stub
-		return null;
+	public Turno getTurno(int id) {
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		return tdao.getTurno(id);
 	}
 
 	@Override
@@ -64,8 +64,20 @@ public class GestionTurno implements ITurnoNegocio{
 	}
 
 	@Override
-	public boolean modificarTurno(Turno turno) {
-		// TODO Auto-generated method stub
+	public boolean modificarTurno(Turno turno,String dni,String fechahora) {
+		
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		PacienteDaoImpl pdao = new PacienteDaoImpl();
+		Paciente pac = pdao.get(dni);
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime fechaTurno = LocalDateTime.parse(fechahora, df);
+		if(pac != null)
+		{
+			turno.setIDPaciente(pac.getIDPaciente());
+		}
+		turno.setFecha(fechaTurno);
+		tdao.modificar(turno);
+
 		return false;
 	}
 

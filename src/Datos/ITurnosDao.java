@@ -6,6 +6,7 @@ import Entidad.Turno;
 import Entidad.TurnosVista;
 
 public interface ITurnosDao {
+	public Turno getTurno(int id);
 	List<Turno> obtenerLista();
 	List<TurnosVista> obtenerTurnovista();
 	List<Turno> turnosPaciente(int idPaciente);
@@ -17,5 +18,6 @@ public interface ITurnosDao {
 	public boolean eliminar(int idTurno);
 	public boolean presente(int idTurno);
 	public boolean ausente(int idTurno);
+	public boolean modificar(Turno turno);
 	
 }

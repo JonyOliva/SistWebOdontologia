@@ -4,6 +4,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page import="Entidad.Odontologo"%>
 <%@page import="Entidad.Paciente"%>
+<%@page import="Entidad.Turno"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -42,11 +43,16 @@ input {
 <body>
 	<jsp:include page="masterMenuAdmin.html"></jsp:include>
 
-	<%!List<Odontologo> listaOdontologo;
-	GestionOdontologos go = new GestionOdontologos();%>
+	<%!
+		
+		List<Odontologo> listaOdontologo;
+		GestionOdontologos go = new GestionOdontologos();
+		Turno tur = null;
+	%>
 	<%
 		listaOdontologo = go.getAll();
 		Paciente pac = (Paciente) request.getAttribute("paciente");
+		tur = (Turno)request.getAttribute("turnomod");
 	%>
 
 	<div class="container mt-3">
@@ -59,6 +65,13 @@ input {
 			
 			
 			<%	
+				if(tur != null)
+				{
+			%>		
+					<input type="hidden" name="operacion" value="modificar">
+					<input type="hidden" name="idtu" value="<%=tur.getIDTurno() %>">
+			<%
+				}
 				if(request.getAttribute("Correcto")!= null)
 				{
 					
@@ -77,7 +90,8 @@ input {
 				<table>
 					<tr>
 						<td>DNI paciente:</td>
-						<td><input id="dni" name="txtDnipaciente" type="number" required></td>
+						<td><input id="dni" name="txtDnipaciente" value="<%out.print(request.getAttribute("dnipac")); %>" 
+								type="number" required></td>
 					</tr>
 					<tr>
 						<td><button id="btnReset" type="button" class="btn btn-danger btn-sm m-2">Limpiar</button></td>

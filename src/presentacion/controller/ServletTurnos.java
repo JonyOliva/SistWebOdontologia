@@ -49,7 +49,7 @@ public class ServletTurnos extends HttpServlet {
 		// TODO Auto-generated method stub
 		//  response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		RequestDispatcher dispachero;
+		RequestDispatcher dispachero=request.getRequestDispatcher("ServletTurnos");
 		
 		String operacion = request.getParameter("operacion");
 		
@@ -69,7 +69,6 @@ public class ServletTurnos extends HttpServlet {
 						int id = Integer.parseInt(request.getParameter("idtur"));
 						gt.presente(id);
 						dispachero = request.getRequestDispatcher("/ServletPaciente?action=ficha&id="+id);
-						dispachero.forward(request, response);
 					}
 					
 					if(operacion.equals("ausente"))
@@ -77,14 +76,25 @@ public class ServletTurnos extends HttpServlet {
 						int id = Integer.parseInt(request.getParameter("idtur"));
 						gt.ausente(id);
 						dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
-						dispachero.forward(request, response);
 					}
 				}
+				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
+				
 			}
 			else
 			{
 				if(operacion != null)
 				{
+					if(operacion.equals("modificar"))
+					{
+						GestionPacientes gp = new GestionPacientes();
+						int id = Integer.parseInt(request.getParameter("idturno"));
+						int idpac = Integer.parseInt(request.getParameter("dni"));
+						request.setAttribute("dnipac", gp.get(idpac).getDni());
+						request.setAttribute("turnomod", gt.getTurno(id));
+						dispachero = request.getRequestDispatcher("/registroTurno.jsp");
+					}
+					
 					if(operacion.equals("borrar"))
 					{
 						int id = Integer.parseInt(request.getParameter("id"));
@@ -97,11 +107,10 @@ public class ServletTurnos extends HttpServlet {
 		else
 		{
 			dispachero = request.getRequestDispatcher("/index.jsp");
-			dispachero.forward(request, response);
+			
 		}
 		
-		if(request.getParameter("txtBuscar")== null)
-			doPost(request, response);
+		dispachero.forward(request, response);
 
 	}
 
@@ -110,63 +119,93 @@ public class ServletTurnos extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		RequestDispatcher dispachero;//= request.getRequestDispatcher("/registroTurno.jsp");
+		RequestDispatcher dispachero = request.getRequestDispatcher("/registroTurno.jsp");
 		
 		//CARGAR LA LISTA DE TURNOS
-		String action = request.getParameter("txtBuscar");
-		if(action == null)
-		{
-			request.setAttribute("turnos", gt.listTurnovista());
-			dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
-			dispachero.forward(request, response);
-			
-		}
+//		String action = request.getParameter("txtBuscar");
+//		if(action == null)
+//		{
+//			request.setAttribute("turnos", gt.listTurnovista());
+//			dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
+//			dispachero.forward(request, response);
+//			
+//		}
 		
-		
-
-		if(request.getParameter("btnGuardar") != null)
+		if(request.getSession().getAttribute("usuario") != null)
 		{
-			//Guardar los valores para registrar turno
-			GestionTurno gt = new GestionTurno();
-			String dni;
-			String idOdontologo;
-			String fecha;
-			String hora;
 			
-			dni = request.getParameter("txtDnipaciente");
-			idOdontologo = request.getParameter("ddlOdontologo").toString();
-			hora = request.getParameter("ddlHorario").toString();
-			fecha = request.getParameter("txtFecha").toString();
-			
-			boolean existeOd = gt.existe(idOdontologo,fecha+" "+hora);
-			boolean existePac = gt.existePac(dni, fecha+" "+hora);
-			if(existeOd)
-				request.setAttribute("Correcto", "Ya existe un turno en la misma fecha con el mismo odontólogo\n");
-			if(existePac)
-				request.setAttribute("Correcto", "Ya existe un turno en la misma fecha con el mismo paciente\n");
-			//Aviso de exito
-			if(!existeOd && !existePac)
+			iUsuario us = (iUsuario)request.getSession().getAttribute("usuario");
+			if(us.isTipoUsuario())
 			{
-				if(gt.guardarTurno(dni, idOdontologo, fecha, hora))
+				
+
+				if(request.getParameter("btnGuardar") != null)
 				{
-					request.setAttribute("Correcto", "Se agrego correctamente");
+					String op = request.getParameter("operacion");
+					
+					//Guardar los valores para registrar turno
+					GestionTurno gt = new GestionTurno();
+					String dni;
+					String idOdontologo;
+					String fecha;
+					String hora;
+					
+					dni = request.getParameter("txtDnipaciente");
+					idOdontologo = request.getParameter("ddlOdontologo").toString();
+					hora = request.getParameter("ddlHorario").toString();
+					fecha = request.getParameter("txtFecha").toString();
+					
+					boolean existeOd = gt.existe(idOdontologo,fecha+" "+hora);
+					boolean existePac = gt.existePac(dni, fecha+" "+hora);
+					if(existeOd)
+						request.setAttribute("Correcto", "Ya existe un turno en la misma fecha con el mismo odontólogo\n");
+					if(existePac)
+						request.setAttribute("Correcto", "Ya existe un turno en la misma fecha con el mismo paciente\n");
+					//Aviso de exito
+					if(!existeOd && !existePac)
+					{
+						if(op.equals("modificar"))
+						{
+							int idtur= Integer.parseInt(request.getParameter("idtu").toString());
+							Turno tur = new Turno(idtur);
+							tur.setIDOdontologo(idOdontologo);
+							if(gt.modificarTurno(tur, dni, fecha+" "+hora))
+							{
+								request.setAttribute("Correcto", "Se modifico correctamente");
+							}
+							else
+							{
+								request.setAttribute("Correcto", "No se modifico");
+							}
+							response.sendRedirect("registroTurno.jsp");
+						}else 
+						{
+							
+							if(gt.guardarTurno(dni, idOdontologo, fecha, hora))
+							{
+								request.setAttribute("Correcto", "Se agrego correctamente");
+								
+							}
+							else {
+								request.setAttribute("Correcto", "El paciente no existe.");
+							}
+						}
+						
+						response.sendRedirect("registroTurno.jsp");
+					}else 
+					{
+						response.sendRedirect("registroTurno.jsp");
+					}
+		
 				}
-				else {
-					request.setAttribute("Correcto", "El paciente no existe.");
-				}
-				dispachero = request.getRequestDispatcher("/registroTurno.jsp");
-				dispachero.forward(request, response);
-			}else 
-			{
-				dispachero = request.getRequestDispatcher("/registroTurno.jsp");
-				dispachero.forward(request, response);
 			}
-
-		}
-
+			else
+			{
+				response.sendRedirect("odonTurnos.jsp");
+			}
 //		dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
 //		dispachero.forward(request, response);
 		//doGet(request, response);
+		}
 	}
-
 }

@@ -241,7 +241,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 		List<Turno> lista = new ArrayList<Turno>();
 		try {
 				cn.Open();
-				ResultSet rs = cn.query("SELECT * FROM Turnos WHERE IPaciente_T = "+turno.getIDPaciente()+" "
+				ResultSet rs = cn.query("SELECT * FROM Turnos WHERE IDPaciente_T = "+turno.getIDPaciente()+" "
 						+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"'");
 				while(rs.next())
 				{
@@ -260,6 +260,45 @@ public class TurnosDaoImpl implements ITurnosDao{
 		}
 		if(lista.isEmpty())return false;
 		else return true;
+	}
+
+	@Override
+	public Turno getTurno(int id) {
+		Turno turno =  new Turno(1);
+		
+		try {
+			
+			cn.Open();
+			ResultSet rs = cn.query("SELECT * FROM Turnos WHERE IDTurno = "+id);
+			rs.next();
+			turno = new Turno(rs.getInt("IDTurno"));
+			turno.setIDPaciente(rs.getInt("IDPaciente_T"));
+			turno.setFecha(rs.getObject("Fecha",LocalDateTime.class));
+			turno.setIDOdontologo(rs.getString("IDOdontologo_T"));
+			turno.setEstado(rs.getString("Estado"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally
+		{
+			cn.close();
+		}
+		return turno;
+	}
+
+	@Override
+	public boolean modificar(Turno turno) {
+		String query="UPDATE Turnos SET Estado = 'Activo',IDOdontologo_T = '"+turno.getIDOdontologo()+"', "
+				+ "IDPaciente_T = '"+turno.getIDPaciente()+"', Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"' "
+						+ "WHERE IDTurno = "+turno.getIDTurno();
+		try {
+			cn.Open();
+			return cn.execute(query);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 
