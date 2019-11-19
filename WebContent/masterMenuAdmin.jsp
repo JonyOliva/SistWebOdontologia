@@ -24,8 +24,6 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Reportes</a>
           	<div class="dropdown-menu">
         		<a class="dropdown-item" href="ServletReportes?Param=1">Inasistencias</a>
-        		<a class="dropdown-item" href="#">Tratamientos</a>
-        		<a class="dropdown-item" href="#">Turnos por Médico</a>
       		</div>
         </li>
       </ul>

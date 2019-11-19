@@ -8,6 +8,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="masterInclude.html"></jsp:include>
+
+<%//if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");%>
+
 <title>Odontologos</title>
 </head>
 <body>

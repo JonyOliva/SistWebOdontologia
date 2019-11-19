@@ -6,6 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="masterInclude.html"></jsp:include>
+
+<%//if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");%>
+
 <link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 <script type="text/javascript" src="Resources/js/validar.js"></script>
 <title>Ficha odontologo</title>

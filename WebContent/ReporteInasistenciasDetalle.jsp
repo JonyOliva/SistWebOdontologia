@@ -9,6 +9,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="masterInclude.html"></jsp:include>
+
+<%//if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");%>
+
 <title>Detalle de Inasistencias</title>
 </head>
 <body>
@@ -22,18 +25,19 @@
 {
 	Paciente p = (Paciente)request.getAttribute("PacienteDetalle");
  %>
-<label >
+ <h4>
+<span class="text-imp">
 <%
 	out.println("DNI:"+" "+ p.getDni());
  %>
-</label>&nbsp;&nbsp;
-<label>
+</span>&nbsp;&nbsp;|&nbsp;
+<span class="text-imp">
 <%
 	out.println("Nombre: " +p.getNombre()+" "+p.getApellido());
 	}
  %>
-</label>
-
+</span>
+</h4>
 </div><br>
 
 <table border=1 class="col-6" style="text-align: center;" align="center">

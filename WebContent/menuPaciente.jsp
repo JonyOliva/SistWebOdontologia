@@ -11,11 +11,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="masterInclude.html"></jsp:include>
+
+<%//if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");%>
+
 <title>Ficha paciente</title>
 <link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 </head>
 <body>
-	<jsp:include page="masterMenuOdont.html"></jsp:include>
+	<jsp:include page="masterMenuOdont.jsp"></jsp:include>
 	<%
 		Paciente paciente = null;
 		List<Tratamiento> listTrats = null;
