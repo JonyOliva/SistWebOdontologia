@@ -49,18 +49,19 @@ public class ServletTurnos extends HttpServlet {
 		// TODO Auto-generated method stub
 		//  response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		RequestDispatcher dispachero=request.getRequestDispatcher("ServletTurnos");
-		
 		String operacion = request.getParameter("operacion");
-		
+		RequestDispatcher dispachero = request.getRequestDispatcher("/index.jsp");
 		GestionTurno gt = new GestionTurno();
+		
 		if(request.getSession().getAttribute("usuario") != null)
 		{
 			
 			iUsuario us = (iUsuario)request.getSession().getAttribute("usuario");
 			if(!us.isTipoUsuario())
 			{
-
+				request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
+				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
+				
 				if(operacion != null)
 				{
 					//Esto enlazalo vos joni lo intente pero no quiero romper nada
@@ -78,12 +79,13 @@ public class ServletTurnos extends HttpServlet {
 						dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 					}
 				}
-				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
-				dispachero.forward(request, response);
+
 			}
 			else
 			{
-				
+				request.setAttribute("turnos", gt.listTurnovista());
+				dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
+
 				if(operacion != null)
 				{
 					if(operacion.equals("modificar"))
@@ -102,17 +104,15 @@ public class ServletTurnos extends HttpServlet {
 						gt.borrarTurno(id);
 					}
 				}
-				
-				dispachero.forward(request, response);
-			}
 
+			}
 		}
 		else
 		{
 			dispachero = request.getRequestDispatcher("/index.jsp");
 			
 		}
-
+		dispachero.forward(request, response);
 	}
 
 	/**
@@ -170,7 +170,6 @@ public class ServletTurnos extends HttpServlet {
 							{
 								request.setAttribute("Correcto", "No se modifico");
 							}
-							response.sendRedirect("registroTurno.jsp");
 						}else 
 						{
 							
@@ -183,22 +182,21 @@ public class ServletTurnos extends HttpServlet {
 								request.setAttribute("Correcto", "El paciente no existe.");
 							}
 						}
-						
-						response.sendRedirect("registroTurno.jsp");
-					}else 
-					{
-						response.sendRedirect("registroTurno.jsp");
+						dispachero = request.getRequestDispatcher("/registroTurno.jsp");
 					}
-		
+					
 				}
 			}
 			else
 			{
-				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 				request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
+				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 			}
-
-			dispachero.forward(request, response);
 		}
+		else
+		{
+			dispachero = request.getRequestDispatcher("/index.jsp");
+		}
+		dispachero.forward(request, response);
 	}
 }

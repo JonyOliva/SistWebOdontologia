@@ -71,14 +71,14 @@ public class GestionTurno implements ITurnoNegocio{
 		Paciente pac = pdao.get(dni);
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		LocalDateTime fechaTurno = LocalDateTime.parse(fechahora, df);
+		
 		if(pac != null)
 		{
 			turno.setIDPaciente(pac.getIDPaciente());
 		}
 		turno.setFecha(fechaTurno);
-		tdao.modificar(turno);
-
-		return false;
+		
+		return tdao.modificar(turno);
 	}
 
 	@Override
