@@ -35,6 +35,7 @@
 			</div>
 			<br>
 			<div>
+			<jsp:include page ="Resources/alert.jsp"></jsp:include>
 				<div class="row">
 					<div class="col-6">
 						<form action="ServletTurnos" method="GET">

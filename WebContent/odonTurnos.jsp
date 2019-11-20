@@ -36,6 +36,7 @@
 			</h5>
 			
 		<div>
+		<jsp:include page="Resources/alert.jsp"></jsp:include>
 		<%!List<TurnosVista> lista; %>
 			<input type="hidden" name="loadOdo">
 			<table border=1>

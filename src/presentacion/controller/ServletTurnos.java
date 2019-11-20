@@ -63,7 +63,7 @@ public class ServletTurnos extends HttpServlet {
 					}else if(op.equals("ausente"))
 					{
 						int id = Integer.parseInt(request.getParameter("idturno"));
-						gt.ausente(id);
+						request.setAttribute("resultado", gt.ausente(id));
 						dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 					}
 				}
@@ -91,7 +91,7 @@ public class ServletTurnos extends HttpServlet {
 					if(operacion.equals("borrar"))
 					{
 						int id = Integer.parseInt(request.getParameter("id"));
-						gt.borrarTurno(id);
+						request.setAttribute("resultado",gt.borrarTurno(id));
 					}
 				}
 
