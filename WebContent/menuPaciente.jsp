@@ -125,13 +125,12 @@
 				<div class="subtitular">Registrar nueva consulta</div>
 				<form method="POST" action="ServletHistoriales">
 				<input type="hidden" id="idpaciente" value="<%=paciente.getIDPaciente()%>">
-				<input type="hidden" id="idodontologo" value="<%=paciente.getIDPaciente()%>">
 				<input name="idturno" id="turno" type="hidden" 
 				
 				<% if(request.getParameter("idturno") != null){ %>
 					value="<%= request.getParameter("idturno") %>"
 				<%}else{ %>
-					value="<%= "3" %>"
+					value="<%= "null" %>"
 				<%} %>
 				>
 					<table class="table mt-3">

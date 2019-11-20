@@ -2,27 +2,15 @@ package presentacion.controller;
 
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.mysql.cj.Session;
-
-import Entidad.Odontologo;
-import Entidad.Paciente;
 import Entidad.Turno;
-import Entidad.TurnosVista;
 import Entidad.iUsuario;
-import Negocio.IOdontologoNegocio;
 import Negocio.ITurnoNegocio;
-import NegocioImpl.GestionOdontologos;
 import NegocioImpl.GestionPacientes;
 import NegocioImpl.GestionTurno;
 
@@ -58,27 +46,29 @@ public class ServletTurnos extends HttpServlet {
 			
 			iUsuario us = (iUsuario)request.getSession().getAttribute("usuario");
 			if(!us.isTipoUsuario())
-			{
-				request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
-				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
-				
-				if(operacion != null)
+			{			
+				String op = request.getParameter("op");
+				if(op != null)
 				{
 					//Esto enlazalo vos joni lo intente pero no quiero romper nada
-					if(operacion.equals("presente"))
+					if(op.equals("presente"))
 					{
-						int id = Integer.parseInt(request.getParameter("idtur"));
-						gt.presente(id);
-						dispachero = request.getRequestDispatcher("/ServletPaciente?action=ficha&id="+id);
-					}
-					
-					if(operacion.equals("ausente"))
+						if(request.getParameter("idturno") != null && request.getParameter("idpac") != null) {
+							int idt = Integer.parseInt(request.getParameter("idturno"));
+							int idpac = Integer.parseInt(request.getParameter("idpac"));
+							gt.presente(idt);
+							dispachero = request.getRequestDispatcher("ServletPacientes?action=ficha&idturno="+idt+"&id="+idpac);
+							dispachero.forward(request, response);
+						}
+					}else if(op.equals("ausente"))
 					{
-						int id = Integer.parseInt(request.getParameter("idtur"));
+						int id = Integer.parseInt(request.getParameter("idturno"));
 						gt.ausente(id);
 						dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 					}
 				}
+				request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
+				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 
 			}
 			else

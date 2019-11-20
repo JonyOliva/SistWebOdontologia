@@ -11,6 +11,7 @@ import com.google.gson.*;
 import Entidad.ConsultaData;
 import Entidad.Diente;
 import Entidad.DientePaciente;
+import Entidad.iUsuario;
 import Negocio.IConsultaNegocio;
 import Negocio.IDientePacienteNegocio;
 import NegocioImpl.GestionConsultas;
@@ -92,14 +93,19 @@ public class ServletHistoriales extends HttpServlet {
 					}				
 
 				}				
-			}else if(request.getParameter("tratamiento") != null && request.getParameter("anotacion") != null && request.getParameter("idodontologo") != null) {
-				ConsultaData consulta = new ConsultaData();
-				consulta.setIDTurno(idturno);
-				consulta.setIDPaciente(idpaciente);
-				consulta.setAnotacion(request.getParameter("anotacion"));
-				consulta.setIDTratamiento(request.getParameter("tratamiento"));
-				consulta.setIDOdontologo(request.getParameter("idodontologo"));
-				consNeg.insertar(consulta);
+			}else if(request.getParameter("tratamiento") != null && request.getParameter("anotacion") != null) {
+				if(request.getSession().getAttribute("usuario") != null) {
+					iUsuario user = (iUsuario)request.getSession().getAttribute("usuario");
+					if(!user.isTipoUsuario()) {
+						ConsultaData consulta = new ConsultaData();
+						consulta.setIDTurno(idturno);
+						consulta.setIDPaciente(idpaciente);
+						consulta.setAnotacion(request.getParameter("anotacion"));
+						consulta.setIDTratamiento(request.getParameter("tratamiento"));
+						consulta.setIDOdontologo(user.getIDUsuario());
+						consNeg.insertar(consulta);
+					}
+				}
 			}
 		}
 	}

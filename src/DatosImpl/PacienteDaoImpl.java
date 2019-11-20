@@ -2,7 +2,6 @@ package DatosImpl;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import Datos.IPacienteDao;
 import Entidad.Inasistencias;
 import Entidad.InasistenciasDetalle;
 import Entidad.Paciente;
-import javafx.util.converter.LocalDateTimeStringConverter;
 
 
 public class PacienteDaoImpl implements IPacienteDao{

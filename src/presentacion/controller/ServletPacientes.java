@@ -9,9 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import Entidad.iUsuario;
 import Entidad.Paciente;
 import Entidad.Utilidades;
+import Entidad.iUsuario;
 import Entidad.Gestor;
 import Negocio.IConsultaNegocio;
 import Negocio.IPacienteNegocio;
@@ -63,10 +64,17 @@ public class ServletPacientes extends HttpServlet {
 		RequestDispatcher dispatcher;
 		String action = request.getParameter("action");
 		String view;
-		// if(userType.equals("admin")) ACA TENDRIA QUE CHECKEAR LA VAR DE SESION
-		//view = "/adminPacientes.jsp";
-		// else
-		 view = "/odonPacientes.jsp";
+		if(request.getSession().getAttribute("usuario") != null) {
+			iUsuario user = (iUsuario)request.getSession().getAttribute("usuario");
+			if(user.isTipoUsuario())
+				view = "/adminPacientes.jsp";
+			else
+				view = "/odonPacientes.jsp";
+		}else {
+			view = "/index.js";
+			response.sendRedirect(view);
+		}
+ 
 		if (action == null) {
 			getAllPacientes(request, response);
 			dispatcher = request.getRequestDispatcher(view);
@@ -97,6 +105,8 @@ public class ServletPacientes extends HttpServlet {
 				request.setAttribute("paciente", gp.get(idPaciente));
 				request.setAttribute("tratamientos", gc.getAll());
 				request.setAttribute("consultas", gc.getAll(idPaciente));
+				if(request.getParameter("idturno") != null)
+					request.setAttribute("idturno", request.getParameter("idturno"));
 
 				dispatcher = request.getRequestDispatcher("menuPaciente.jsp");
 				dispatcher.forward(request, response);
