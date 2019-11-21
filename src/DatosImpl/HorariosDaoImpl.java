@@ -1,6 +1,7 @@
 package DatosImpl;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class HorariosDaoImpl implements IHorariosDao {
 			{
 				HorarioOdonto horario = new HorarioOdonto(rs.getInt("IDHorario"));
 				horario.setDia(rs.getString("Dia"));
-				horario.setHoraInicio(rs.getTime("HoraInicio"));
-				horario.setHoraFin(rs.getTime("HoraFin"));
+				horario.setHoraInicio(rs.getObject("HoraInicio",LocalTime.class));
+				horario.setHoraFin(rs.getObject("HoraFin",LocalTime.class));
 				horario.setActivo(rs.getBoolean("Activo"));
 				
 				lista.add(horario);
@@ -93,5 +94,33 @@ public class HorariosDaoImpl implements IHorariosDao {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+
+
+	@Override
+	public List<HorarioOdonto> VerHorarios(String IDOdontologo, String dia) {
+		List<HorarioOdonto> lista = new ArrayList<HorarioOdonto>();
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("SELECT * FROM HORARIOS WHERE IDOdontologo_HOR = '"+IDOdontologo+"' AND Dia = '"+dia+"'" );
+			while(rs.next())
+			{
+				HorarioOdonto horario = new HorarioOdonto(rs.getInt("IDHorario"));
+				horario.setDia(rs.getString("Dia"));
+				horario.setHoraInicio(rs.getObject("HoraInicio",LocalTime.class));
+				horario.setHoraFin(rs.getObject("HoraFin",LocalTime.class));
+				horario.setActivo(rs.getBoolean("Activo"));
+				
+				lista.add(horario);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally
+		{
+			cn.close();
+		}
+		
+		return lista;
 	}
 }

@@ -10,8 +10,8 @@ public class HorarioOdonto {
 private final int IDHorario;
 private String IDOdontologo;
 private String Dia;
-private Time HoraInicio;
-private Time HoraFin;
+private LocalTime HoraInicio;
+private LocalTime HoraFin;
 private Boolean activo;
 
 public HorarioOdonto(int iDHorario) {
@@ -19,7 +19,7 @@ public HorarioOdonto(int iDHorario) {
 }
 
 
-public HorarioOdonto(int iDHorario, String iDOdontologo, String dia, Time horaInicio, Time horaFin,
+public HorarioOdonto(int iDHorario, String iDOdontologo, String dia, LocalTime horaInicio, LocalTime horaFin,
 		Boolean activo) {
 	super();
 	IDHorario = iDHorario;
@@ -59,22 +59,22 @@ public void setDia(String dia) {
 }
 
 
-public Time getHoraInicio() {
+public LocalTime getHoraInicio() {
 	return HoraInicio;
 }
 
 
-public void setHoraInicio(Time horaInicio) {
+public void setHoraInicio(LocalTime horaInicio) {
 	HoraInicio = horaInicio;
 }
 
 
-public Time getHoraFin() {
+public LocalTime getHoraFin() {
 	return HoraFin;
 }
 
 
-public void setHoraFin(Time horaFin) {
+public void setHoraFin(LocalTime horaFin) {
 	HoraFin = horaFin;
 }
 

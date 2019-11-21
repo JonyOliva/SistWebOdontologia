@@ -107,7 +107,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 			cn.Open();
 			ResultSet rs = cn.query("SELECT IDTurno,IDPaciente_T,Fecha,IDOdontologo_T,Estado,Pacientes.Nombre,pacientes.Apellido," + 
 					"pacientes.DNI,odontologos.Nombre,odontologos.Apellido FROM Turnos INNER JOIN " + 
-					"pacientes ON pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T");
+					"pacientes ON pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T WHERE Estado='Activo'");
 			//DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm") ;
 
 			while(rs.next())
@@ -299,6 +299,29 @@ public class TurnosDaoImpl implements ITurnosDao{
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public int nuevoTurno(Turno turno) {
+		if(insertar(turno)) {
+			try {
+				cn.Open();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				ResultSet rs = cn.query("SELECT IDTurno FROM Turnos WHERE Fecha = '"+turno.getFecha().format(formatter)+"' AND Estado='Presente'");
+				if(rs.next())
+				{
+					int id = rs.getInt("IDTurno"); 
+					cn.close();
+					return id;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally
+			{
+				cn.close();
+			}
+		}
+		return -1;
 	}
 	
 

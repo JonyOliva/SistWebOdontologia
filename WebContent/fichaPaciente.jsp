@@ -88,7 +88,7 @@ input {
 					</tr>
 					<tr>
 						<td>Domicilio:</td>
-						<td><input name="Domicilio" value="<%=paciente.getDomicilio()%>" type="text"></td>
+						<td><input name="Domicilio" value="<%=paciente.getDomicilio()%>"></td>
 					</tr>
 					<tr>
 						<td>Fecha de nacimiento:</td>
@@ -132,7 +132,7 @@ input {
 					</tr>
 					<tr>
 						<td>Anotacion:</td>
-						<!-- <td><input name="InfoExtra" type="text"></td> -->
+						<!-- <td><input name="InfoExtra"></td> -->
 						<td><textarea name="InfoExtra" rows="2" cols="22"></textarea></td>
 					</tr>
 					<%

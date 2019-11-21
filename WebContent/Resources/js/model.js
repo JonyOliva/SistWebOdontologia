@@ -113,7 +113,7 @@ class Diente{
 
     inicializar(context, dLeft, dUp, dRight, dBottom, dCenter){
         const cEstados = 3;
-        if(dCenter > cEstados && (dCenter == dLeft && dCenter == dUp && dCenter == dRight && dCenter == dBottom)){
+        if(dCenter >= cEstados && (dCenter == dLeft && dCenter == dUp && dCenter == dRight && dCenter == dBottom)){
         	this.total = new Image();
             this.total.src = Estados[dCenter*2];
             this.total.onload = () => {
@@ -280,12 +280,20 @@ function cambiarEstadoSelect(input){
 }
 
 function enviarServidor(odontograma){
+	var anot = document.getElementById("anotacion").value;
+	var droptrat = document.getElementById("tratamiento");
+	var trat = droptrat.options[droptrat.selectedIndex].value;
+	var turno = document.getElementById("turno").value;
+
 	$.ajax({
 		type: "POST",
 		url: "ServletHistoriales",
-		data: { odontograma: JSON.stringify(odontograma), idpaciente: IDPaciente},
+		data: { odontograma: JSON.stringify(odontograma), idpaciente: IDPaciente,
+			tratamiento: trat, anotacion: anot, idturno: turno},
 		success: (resp)=>{
 			console.log("enviado OK: " + resp);
+			alert("GUARDADO CORRECTO");
+			window.location.replace("ServletPacientes");
 		},
 		error: (resp)=>{
 			console.log("enviado error: " + resp);
@@ -330,12 +338,7 @@ function inicializarDientes(pData, vecMan, vecMax){
 }
 
 function iniciarOdontograma(pData){
-	/*
-	console.log("empiezo con: ");
-	for(var i = 0;i<pData.length;i++){
-		if(pData[i].left)
-		console.log("id: "+pData[i].id+", center:"+pData[i].center+"\n");
-	}*/
+
 	var maxilarImg = new Image();
 	maxilarImg.src = "images/maxilar.png";
 	maxilarImg.onload = () => {
@@ -374,6 +377,7 @@ function iniciarOdontograma(pData){
 	}
 
 	document.getElementById("saveOdont").addEventListener("click", () => {
+		$("#cartelEspera").show();
 		$("#saveOdont").attr("disabled", true);
 	    guardarOdontograma(dientesMaxilar, dientesMandibular);
 	})
