@@ -50,7 +50,6 @@ public class ServletTurnos extends HttpServlet {
 				String op = request.getParameter("op");
 				if(op != null)
 				{
-					//Esto enlazalo vos joni lo intente pero no quiero romper nada
 					if(op.equals("presente"))
 					{
 						if(request.getParameter("idturno") != null && request.getParameter("idpac") != null) {

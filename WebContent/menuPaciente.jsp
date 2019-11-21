@@ -123,7 +123,7 @@
 			</div>
 			<div class="col-5 rounded bordeVerde">
 				<div class="subtitular">Registrar nueva consulta</div>
-				<form method="POST" action="ServletHistoriales">
+				<div><!-- <form method="POST" action="ServletHistoriales"> -->
 				<input type="hidden" id="idpaciente" value="<%=paciente.getIDPaciente()%>">
 				<input name="idturno" id="turno" type="hidden" 
 				
@@ -139,7 +139,7 @@
 							<th>Anotacion extra:</th>
 						</tr>
 						<tr>
-							<td><select name="tratamiento">
+							<td><select id="tratamiento">
 									<%
 										for (Tratamiento trat : listTrats) {
 									%>
@@ -149,11 +149,14 @@
 									%>
 
 							</select></td>
-							<td><textarea name="anotacion" style="width: 100%" rows="1"></textarea></td>
+							<td><textarea id="anotacion" style="width: 100%" rows="1"></textarea></td>
 						</tr>
 					</table>
-					<button type="button" class="btn btn-success m-2" id="saveOdont">Guardar consulta</button>
-				</form>
+					<button type="button" class="btn btn-success m-2" id="saveOdont">Guardar ficha</button>
+					<div class="text-primary border border-primary rounded m-2 p-2" id="cartelEspera" style="display:none;">
+						Guardando.. por favor espere...
+					</div>
+				</div>
 			</div>
 
 		</div>

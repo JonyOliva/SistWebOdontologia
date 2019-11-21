@@ -1,6 +1,6 @@
 var canvas = document.getElementById("odontogram");
 var lienzo = canvas.getContext("2d");
-var IDPaciente = $("#idpaciente").val();
+var IDPaciente;
 
 lienzo.font = "25px Helvetica";
 lienzo.fillText("Der", 10, 25);
@@ -17,4 +17,7 @@ var test = [{id:17,left:"", up:"", right:"", bottom:"", center:"3"},
 
 iniciarOdontograma(test);
 */
-recibirOdontogramaPaciente(IDPaciente);
+$(document).ready(()=>{
+	IDPaciente = $("#idpaciente").val();
+	recibirOdontogramaPaciente(IDPaciente)
+});

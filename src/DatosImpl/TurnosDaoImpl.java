@@ -300,6 +300,29 @@ public class TurnosDaoImpl implements ITurnosDao{
 		}
 		return false;
 	}
+
+	@Override
+	public int nuevoTurno(Turno turno) {
+		if(insertar(turno)) {
+			try {
+				cn.Open();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				ResultSet rs = cn.query("SELECT IDTurno FROM Turnos WHERE Fecha = '"+turno.getFecha().format(formatter)+"' AND Estado='Presente'");
+				if(rs.next())
+				{
+					int id = rs.getInt("IDTurno"); 
+					cn.close();
+					return id;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally
+			{
+				cn.close();
+			}
+		}
+		return -1;
+	}
 	
 
 	

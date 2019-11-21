@@ -2,6 +2,7 @@ package NegocioImpl;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,6 +142,17 @@ public class GestionTurno implements ITurnoNegocio{
 		}
 
 		return existe;
+	}
+
+	@Override
+	public int nuevoTurno(String idOdont, int idPac, LocalDateTime fecha) {
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		Turno turno = new Turno(-1);
+		turno.setIDOdontologo(idOdont);
+		turno.setIDPaciente(idPac);
+		turno.setFecha(fecha.truncatedTo(ChronoUnit.SECONDS));
+		turno.setEstado("Presente");
+		return tdao.nuevoTurno(turno);
 	}
 	
 	

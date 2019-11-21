@@ -19,5 +19,6 @@ public interface ITurnosDao {
 	public boolean presente(int idTurno);
 	public boolean ausente(int idTurno);
 	public boolean modificar(Turno turno);
+	public int nuevoTurno(Turno turno);
 	
 }
