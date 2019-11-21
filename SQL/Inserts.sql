@@ -1,3 +1,8 @@
+﻿INSERT INTO `dientes` VALUES (11,'maxilar'),(12,'maxilar'),(13,'maxilar'),(14,'maxilar'),(15,'maxilar'),(16,'maxilar'),(17,'maxilar'),(18,'maxilar'),(21,'maxilar'),(22,'maxilar'),(23,'maxilar'),(24,'maxilar'),(25,'maxilar'),(26,'maxilar'),(27,'maxilar'),(28,'maxilar'),(31,'mandibular'),(32,'mandibular'),(33,'mandibular'),(34,'mandibular'),(35,'mandibular'),(36,'mandibular'),(37,'mandibular'),(38,'mandibular'),(41,'mandibular'),(42,'mandibular'),(43,'mandibular'),(44,'mandibular'),(45,'mandibular'),(46,'mandibular'),(47,'mandibular'),(48,'mandibular');
+
+
+INSERT INTO `estadosdientes` VALUES (1,'Carie'),(2,'Empaste'),(3,'Ausente/extracción'),(4,'Corona/protesis'),(5,'Puente');
+
 INSERT INTO `odontologiadb`.`usuarios`
 (`IDUsuario`,`TipoUsuario`,`Email`,`Password`)
 VALUES
