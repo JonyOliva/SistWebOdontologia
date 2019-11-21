@@ -35,9 +35,19 @@
 			</div>
 			<br>
 			<div>
+			<jsp:include page ="Resources/alert.jsp"></jsp:include>
 				<div class="row">
 					<div class="col-6">
-						Buscar: <input name="txtBuscar" type="text">
+						<form action="ServletTurnos" method="GET">
+							Busqueda: <input name="buscar"
+								<%if (request.getAttribute("buscar") != null)
+				out.print("value=\"" + request.getAttribute("buscar").toString() + "\"");%>
+								type="text" required> <input name="pag" value="1"
+								type="hidden">
+							<button type="button" class="btn btn-outline-primary">Buscar</button>
+							<a href="ServletTurnos" class="btn btn-outline-danger">
+								&times </a>
+						</form>
 					</div>
 					<div class="col-6" style="text-align: right;">
 						<a href="registroTurno.jsp" class=" btn btn-default btnVerde">Agregar

@@ -2,27 +2,15 @@ package presentacion.controller;
 
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.mysql.cj.Session;
-
-import Entidad.Odontologo;
-import Entidad.Paciente;
 import Entidad.Turno;
-import Entidad.TurnosVista;
 import Entidad.iUsuario;
-import Negocio.IOdontologoNegocio;
 import Negocio.ITurnoNegocio;
-import NegocioImpl.GestionOdontologos;
 import NegocioImpl.GestionPacientes;
 import NegocioImpl.GestionTurno;
 
@@ -49,40 +37,45 @@ public class ServletTurnos extends HttpServlet {
 		// TODO Auto-generated method stub
 		//  response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		RequestDispatcher dispachero=request.getRequestDispatcher("ServletTurnos");
-		
 		String operacion = request.getParameter("operacion");
-		
+		RequestDispatcher dispachero = request.getRequestDispatcher("/index.jsp");
 		GestionTurno gt = new GestionTurno();
+		
 		if(request.getSession().getAttribute("usuario") != null)
 		{
 			
 			iUsuario us = (iUsuario)request.getSession().getAttribute("usuario");
 			if(!us.isTipoUsuario())
-			{
-				request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
-				if(operacion != null)
+			{			
+				String op = request.getParameter("op");
+				if(op != null)
 				{
 					//Esto enlazalo vos joni lo intente pero no quiero romper nada
-					if(operacion.equals("presente"))
+					if(op.equals("presente"))
 					{
-						int id = Integer.parseInt(request.getParameter("idtur"));
-						gt.presente(id);
-						dispachero = request.getRequestDispatcher("/ServletPaciente?action=ficha&id="+id);
-					}
-					
-					if(operacion.equals("ausente"))
+						if(request.getParameter("idturno") != null && request.getParameter("idpac") != null) {
+							int idt = Integer.parseInt(request.getParameter("idturno"));
+							int idpac = Integer.parseInt(request.getParameter("idpac"));
+							gt.presente(idt);
+							dispachero = request.getRequestDispatcher("ServletPacientes?action=ficha&idturno="+idt+"&id="+idpac);
+							dispachero.forward(request, response);
+						}
+					}else if(op.equals("ausente"))
 					{
-						int id = Integer.parseInt(request.getParameter("idtur"));
-						gt.ausente(id);
+						int id = Integer.parseInt(request.getParameter("idturno"));
+						request.setAttribute("resultado", gt.ausente(id));
 						dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 					}
 				}
+				request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
 				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
-				
+
 			}
 			else
 			{
+				request.setAttribute("turnos", gt.listTurnovista());
+				dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
+
 				if(operacion != null)
 				{
 					if(operacion.equals("modificar"))
@@ -98,20 +91,18 @@ public class ServletTurnos extends HttpServlet {
 					if(operacion.equals("borrar"))
 					{
 						int id = Integer.parseInt(request.getParameter("id"));
-						gt.borrarTurno(id);
+						request.setAttribute("resultado",gt.borrarTurno(id));
 					}
 				}
-			}
 
+			}
 		}
 		else
 		{
 			dispachero = request.getRequestDispatcher("/index.jsp");
 			
 		}
-		
 		dispachero.forward(request, response);
-
 	}
 
 	/**
@@ -121,15 +112,6 @@ public class ServletTurnos extends HttpServlet {
 
 		RequestDispatcher dispachero = request.getRequestDispatcher("/registroTurno.jsp");
 		
-		//CARGAR LA LISTA DE TURNOS
-//		String action = request.getParameter("txtBuscar");
-//		if(action == null)
-//		{
-//			request.setAttribute("turnos", gt.listTurnovista());
-//			dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
-//			dispachero.forward(request, response);
-//			
-//		}
 		
 		if(request.getSession().getAttribute("usuario") != null)
 		{
@@ -137,8 +119,9 @@ public class ServletTurnos extends HttpServlet {
 			iUsuario us = (iUsuario)request.getSession().getAttribute("usuario");
 			if(us.isTipoUsuario())
 			{
+				dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
+				request.setAttribute("turnos", gt.listTurnovista());
 				
-
 				if(request.getParameter("btnGuardar") != null)
 				{
 					String op = request.getParameter("operacion");
@@ -177,7 +160,6 @@ public class ServletTurnos extends HttpServlet {
 							{
 								request.setAttribute("Correcto", "No se modifico");
 							}
-							response.sendRedirect("registroTurno.jsp");
 						}else 
 						{
 							
@@ -190,22 +172,21 @@ public class ServletTurnos extends HttpServlet {
 								request.setAttribute("Correcto", "El paciente no existe.");
 							}
 						}
-						
-						response.sendRedirect("registroTurno.jsp");
-					}else 
-					{
-						response.sendRedirect("registroTurno.jsp");
+						dispachero = request.getRequestDispatcher("/registroTurno.jsp");
 					}
-		
+					
 				}
 			}
 			else
 			{
-				response.sendRedirect("odonTurnos.jsp");
+				request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
+				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 			}
-//		dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
-//		dispachero.forward(request, response);
-		//doGet(request, response);
 		}
+		else
+		{
+			dispachero = request.getRequestDispatcher("/index.jsp");
+		}
+		dispachero.forward(request, response);
 	}
 }

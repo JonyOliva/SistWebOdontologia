@@ -30,12 +30,13 @@
 <body>
 	<jsp:include page="masterMenuOdont.jsp"></jsp:include>
 	
-	<form action="ServletTurnos" method="post" class="container mt-3">
+	<div class="container mt-3">
 		<h5 class="titular">
 			Turnos próximos
 			</h5>
 			
 		<div>
+		<jsp:include page="Resources/alert.jsp"></jsp:include>
 		<%!List<TurnosVista> lista; %>
 			<input type="hidden" name="loadOdo">
 			<table border=1>
@@ -59,9 +60,9 @@
 							<td><%= t.getApellidoPac()+", "+t.getNombrePac() %></td>
 							<td><%=t.getTurno().getIDOdontologo()%></td>
 							<td><%= t.getTurno().getFecha().toString().replace('T', ' ') %></td>
-							<td><a href="ServletTurnos?operacion=presente&idtur=<%=t.getTurno().getIDTurno() %>" 
+							<td><a href="ServletTurnos?op=presente&idturno=<%=t.getTurno().getIDTurno() %>&idpac=<%=t.getTurno().getIDPaciente() %>" 
 								class="btn btn-primary">Presente</a>
-							<a href="ServletTurnos?operacion=ausente&idtur=<%=t.getTurno().getIDTurno() %>" class="btn btn-danger">Ausente</a></td>
+							<a href="ServletTurnos?op=ausente&idturno=<%=t.getTurno().getIDTurno() %>&idpac=<%=t.getTurno().getIDPaciente() %>" class="btn btn-danger">Ausente</a></td>
 							</tr>
 				<%
 						}
@@ -70,6 +71,6 @@
 				
 			</table>
 		</div>
-	</form>
+	</div>
 </body>
 </html>
