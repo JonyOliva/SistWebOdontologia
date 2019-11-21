@@ -161,8 +161,19 @@ public class ServletTurnos extends HttpServlet {
 			{
 				dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
 				request.setAttribute("turnos", gt.listTurnovista());
+				if(request.getParameter("ddlHorario")!= null)
+					if(request.getParameter("ddlHorario").equals("null"))
+					{
+						request.setAttribute("Correcto", "El horario no se puede dejar vacío.");
+						dispachero = request.getRequestDispatcher("/registroTurno.jsp");
+					}
+						
 				
-				if(request.getParameter("btnGuardar") != null)
+				if(request.getParameter("btnGuardar") != null && 
+						request.getParameter("txtDnipaciente") != null &&
+						request.getParameter("ddlOdontologo")!= null &&
+						!request.getParameter("ddlHorario").equals("null") && 
+						request.getParameter("txtFecha") != null)
 				{
 					String op = request.getParameter("operacion");
 					
