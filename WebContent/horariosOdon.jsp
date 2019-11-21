@@ -60,8 +60,7 @@
 					<td><%=hor.getHoraInicio()%></td>
 					<td><%=hor.getHoraFin()%></td>
 				<td style="text-align: center;">
-					<a href="ServletHorarios?action=edit&id=<%=hor.getIDHorario()%>"
-						class="btn btn-primary btn-sm">Modificar</a>
+					
 						
 						 <a href="ServletHorarios?action=delete&idHorario=<%=hor.getIDHorario()%>"
 						class="btn btn-primary btn-sm">Eliminar</a>
@@ -74,22 +73,24 @@
 				<%
 					}
 				%>
-				
+				<form method="post" action="ServletHorarios">
 				<tr>
+				
 					<td>
-						<select >
-							<option value="">Lunes</option>
-							<option value="">Martes</option>
-							<option value="">Miercoles</option>
-							<option value="">Jueves</option>
-							<option value="">Viernes</option>
+					
+						<select name="ddlDias">
+							<option value="Lunes">Lunes</option>
+							<option value="Martes">Martes</option>
+							<option value="Miercoles">Miercoles</option>
+							<option value="Jueves">Jueves</option>
+							<option value="Viernes">Viernes</option>
 						</select>
 					</td>
-					<td><input type="time"></td>
-					<td><input type="time"></td>
-					<td style="text-align: center;"><a href="#"
-						class="btn btn-primary btn-sm">Agregar</a></td>
-				</tr>
+					<td><input type="time" name="HoraInicio"></td>
+					<td><input type="time" name="HoraFin" ></td>
+					<td style="text-align: center;"><input type="submit" name="btnAgregarHorario" value="Agregar"
+						class="btn btn-primary btn-sm"/></td>
+				</tr></form>
 			</table>
 		</div>
 

@@ -1,6 +1,7 @@
 package presentacion.controller;
 
 import java.io.IOException;
+import java.time.LocalTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+import Entidad.HorarioOdonto;
 import Negocio.IHorariosNegocio;
 import Negocio.IOdontologoNegocio;
 import Negocio.iUsuarioNegocio;
@@ -71,8 +74,25 @@ public class ServletHorarios extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+String action = request.getParameter("action");
+RequestDispatcher dispatcher;
+
+	if ((request.getAttribute("btnAgregarHorario"))!= null ) {
+		
+		HorarioOdonto nuevo = new HorarioOdonto();
+		nuevo.setActivo(true);
+		nuevo.setIDOdontologo(request.getParameter("id").toString());
+		nuevo.setDia(request.getAttribute("ddlDias").toString());
+		nuevo.setHoraInicio((LocalTime)request.getAttribute("HoraInicio"));
+		nuevo.setHoraFin((LocalTime)request.getAttribute("HoraFin"));
+		
+		gh.insertar(nuevo);
+		dispatcher = request.getRequestDispatcher("index.jsp");
+		dispatcher.forward(request, response);
+	}	
+		
+		
+		
 	}
 
 }

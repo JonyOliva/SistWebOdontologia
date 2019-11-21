@@ -7,16 +7,19 @@ import java.time.LocalTime;
 
 
 public class HorarioOdonto {
-private final int IDHorario;
+private int IDHorario;
 private String IDOdontologo;
 private String Dia;
 private LocalTime HoraInicio;
 private LocalTime HoraFin;
 private Boolean activo;
 
+public HorarioOdonto () {}
+
 public HorarioOdonto(int iDHorario) {
 	this.IDHorario = iDHorario;
 }
+
 
 
 public HorarioOdonto(int iDHorario, String iDOdontologo, String dia, LocalTime horaInicio, LocalTime horaFin,
