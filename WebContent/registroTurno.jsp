@@ -1,8 +1,10 @@
+<%@page import="NegocioImpl.GestionHorarios"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="NegocioImpl.GestionOdontologos"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="Entidad.Odontologo"%>
+<%@page import="Entidad.HorarioOdonto"%>
 <%@page import="Entidad.Paciente"%>
 <%@page import="Entidad.Turno"%>
 <%@page import="java.util.List"%>
@@ -132,17 +134,28 @@ input {
 						</select></td>
 					</tr>
 					<tr>
-						<td>Horario:</td>
-						<td><select name="ddlHorario" style="margin-bottom: 10px;">
-
-								<option>09:30</option>
-								<option>10:00</option>
-								<option>10:30</option>
-						</select></td>
+						<td>Fecha:</td>
+						<td><input name="txtFecha" onchange="ServletTurnos" required min="<%=LocalDateTime.now().toLocalDate().toString() %>" type="date"></td>
 					</tr>
 					<tr>
-						<td>Fecha:</td>
-						<td><input name="txtFecha" required min="<%=LocalDateTime.now().toLocalDate().toString() %>" type="date"></td>
+						<td>Horario:</td>
+						<td><select name="ddlHorario" style="margin-bottom: 10px;">
+						<%
+							if(request.getAttribute("Cambio") != null)
+							{
+								GestionHorarios gh = new GestionHorarios();
+								List<HorarioOdonto> listaHorario = (List<HorarioOdonto>)request.getAttribute("listaHorario");
+								for(HorarioOdonto h : listaHorario)
+								{
+						%>			<option<%=h.getHoraInicio()%>><%=h.getHoraInicio() %></option>
+
+						<%
+								}
+							}
+							
+						%>
+
+						</select></td>
 					</tr>
 				</table>
 				<br>

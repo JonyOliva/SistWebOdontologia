@@ -2,6 +2,10 @@ package presentacion.controller;
 
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import Entidad.Turno;
 import Entidad.iUsuario;
 import Negocio.ITurnoNegocio;
+import NegocioImpl.GestionHorarios;
 import NegocioImpl.GestionPacientes;
 import NegocioImpl.GestionTurno;
 
@@ -91,8 +96,27 @@ public class ServletTurnos extends HttpServlet {
 					if(operacion.equals("borrar"))
 					{
 						int id = Integer.parseInt(request.getParameter("id"));
-						request.setAttribute("resultado",gt.borrarTurno(id));
+						request.setAttribute("resultado",gt.borrarTurno(id) );
 					}
+				}
+				
+				if(request.getParameter("txtFecha") != null)
+				{
+					request.setAttribute("Cambio",true);
+					String IDOdontologo = request.getParameter("ddlOdontologo");
+					String fecha = request.getParameter("txtFecha");
+					Locale spanishLocale=new Locale("es", "ES");
+					DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd",spanishLocale);
+					LocalDateTime fechaTurno = LocalDateTime.parse(fecha, df);
+					
+					request.setAttribute("dni",request.getParameter("txtDnipaciente"));
+					request.setAttribute("odontologo", request.getParameter("ddlOdontologo"));
+					request.setAttribute("fecha", request.getParameter("txtFecha"));
+					
+					GestionHorarios gh = new GestionHorarios();
+
+					request.setAttribute("listaHorario", gh.VerHorarios(IDOdontologo, fechaTurno.getDayOfWeek().toString()));
+					
 				}
 
 			}
