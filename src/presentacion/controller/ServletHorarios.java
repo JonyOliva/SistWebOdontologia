@@ -1,7 +1,10 @@
 package presentacion.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -77,16 +80,21 @@ public class ServletHorarios extends HttpServlet {
 String action = request.getParameter("action");
 RequestDispatcher dispatcher;
 
-	if ((request.getAttribute("btnAgregarHorario"))!= null ) {
+
+	if ((request.getParameter("btnAgregarHorario"))!= null ) {
 		
 		HorarioOdonto nuevo = new HorarioOdonto();
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm");
+		LocalTime horaTurno = LocalTime.parse(request.getParameter("HoraInicio").toString(), df);
+		LocalTime horaFin = LocalTime.parse(request.getParameter("HoraFin").toString(), df);
+		
 		nuevo.setActivo(true);
 		nuevo.setIDOdontologo(request.getParameter("id").toString());
-		nuevo.setDia(request.getAttribute("ddlDias").toString());
-		nuevo.setHoraInicio((LocalTime)request.getAttribute("HoraInicio"));
-		nuevo.setHoraFin((LocalTime)request.getAttribute("HoraFin"));
+		nuevo.setDia(request.getParameter("ddlDias").toString());
+		nuevo.setHoraInicio(horaTurno);
+		nuevo.setHoraFin(horaFin);
 		
-		gh.insertar(nuevo);
+		System.out.println(gh.insertar(nuevo));
 		dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 	}	

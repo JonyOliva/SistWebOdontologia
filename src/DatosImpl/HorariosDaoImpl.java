@@ -54,8 +54,8 @@ public class HorariosDaoImpl implements IHorariosDao {
 	@Override
 	public boolean insertar(HorarioOdonto horario) {
 		String query = "INSERT INTO Horarios (IDOdontologo_HOR,Dia,HoraInicio, HoraFin,Activo) "
-				+ "SELECT '"+horario.getIDOdontologo()+"',"+horario.getDia()+",'"+horario.getHoraInicio()+
-				horario.getHoraFin()+"', '"+horario.getActivo()+"'";
+				+ "SELECT '"+horario.getIDOdontologo()+"','"+horario.getDia()+"','"+horario.getHoraInicio().toString()+
+				horario.getHoraFin().toString()+"', '"+horario.getActivo()+"'";
 		try {
 			cn.Open();
 			boolean asd = cn.execute(query);

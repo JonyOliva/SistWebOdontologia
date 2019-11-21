@@ -74,6 +74,7 @@
 					}
 				%>
 				<form method="post" action="ServletHorarios">
+				<input type="hidden" name="id" value="<%=request.getAttribute("id") %>">
 				<tr>
 				
 					<td>
@@ -88,6 +89,7 @@
 					</td>
 					<td><input type="time" name="HoraInicio"></td>
 					<td><input type="time" name="HoraFin" ></td>
+					
 					<td style="text-align: center;"><input type="submit" name="btnAgregarHorario" value="Agregar"
 						class="btn btn-primary btn-sm"/></td>
 				</tr></form>
