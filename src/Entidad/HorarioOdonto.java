@@ -2,6 +2,7 @@ package Entidad;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 

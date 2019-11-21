@@ -1,9 +1,17 @@
+<%@page import="Entidad.iUsuario"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="Entidad.Odontologo"%>
+<%@page import="Entidad.HorarioOdonto"%>
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="masterInclude.html"></jsp:include>
 
 <%//if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");%>
@@ -15,13 +23,25 @@
 <body>
 	<jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 
-	<div class="container mt-3">
+<%!List<HorarioOdonto> listaHor;%>
+<%
+		if (request.getAttribute("horarios") != null) {
+			listaHor = (List<HorarioOdonto>) request.getAttribute("horarios");
+		}
+	%>
 
+
+
+
+	<div class="container mt-3">
+	
 		<div>
 			<div>
+		
 				<h5 class="titular">
-					Horarios Sergio Agosta
-					</h1>
+				 Tabla de Horarios
+					
+					</h5>
 			</div>
 			<br>
 			<table border=1>
@@ -31,22 +51,30 @@
 					<th>Fin de la jornada</th>
 					<th>Acciones</th>
 				</tr>
+				<%
+					for (HorarioOdonto hor : listaHor) {
+					if (hor.getActivo() == true){
+				%>
 				<tr>
-					<td>Martes</td>
-					<td>08:00hs</td>
-					<td>16:30hs</td>
-					<td style="text-align: center;"><a href="fichaPaciente.jsp"
-						class="btn btn-primary btn-sm">Modificar</a> <a href="#"
-						class="btn btn-primary btn-sm">Eliminar</a></td>
+					<td><%=hor.getDia().toString() %></td>
+					<td><%=hor.getHoraInicio()%></td>
+					<td><%=hor.getHoraFin()%></td>
+				<td style="text-align: center;">
+					<a href="ServletHorarios?action=edit&id=<%=hor.getIDHorario()%>"
+						class="btn btn-primary btn-sm">Modificar</a>
+						
+						 <a href="ServletHorarios?action=delete&idHorario=<%=hor.getIDHorario()%>"
+						class="btn btn-primary btn-sm">Eliminar</a>
+						</td>	
+					<%} %>
+					
+								
+					
 				</tr>
-				<tr>
-					<td>Jueves</td>
-					<td>10:00hs</td>
-					<td>18:00hs</td>
-					<td style="text-align: center;"><a href="#"
-						class="btn btn-primary btn-sm">Modificar</a> <a href="#"
-						class="btn btn-primary btn-sm">Eliminar</a></td>
-				</tr>
+				<%
+					}
+				%>
+				
 				<tr>
 					<td>
 						<select >
@@ -66,6 +94,8 @@
 		</div>
 
 	</div>
+	
+	
 
 </body>
 </html>

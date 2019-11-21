@@ -56,8 +56,9 @@
 					<td><%=odont.getApellido()%></td>
 					<td><%=odont.getDNI()%></td>
 					<td><%=odont.getMatricula()%></td>
-					<td style="text-align: center;"><a href="horariosOdon.jsp"
-						class="btn btn-info btn-sm">Ver horarios</a></td>
+					<td style="text-align: center;"><a
+						href="ServletHorarios?id=<%=odont.getIDUsuario()%>"
+						class="btn btn-secondary btn-sm">Ver Horarios</a></td>
 					<td style="text-align: center;"><a
 						href="ServletOdontologos?action=edit&id=<%=odont.getIDUsuario()%>"
 						class="btn btn-primary btn-sm">Modificar</a> <a href="#"
