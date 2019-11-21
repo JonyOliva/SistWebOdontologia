@@ -71,7 +71,7 @@ public class ConsultaDaoImpl implements IConsultaDao{
 	public boolean insertar(ConsultaData consulta) {
 		try {
 			cn.Open();
-			String query = "INSERT INTO Odontologos(IDTurno_CON, IDOdontologo_CON, IDTratamiento_CON, IDPaciente_CON, AnotacionExtra) ";
+			String query = "INSERT INTO consultas(IDTurno_CON, IDOdontologo_CON, IDTratamiento_CON, IDPaciente_CON, AnotacionExtra) ";
 			String data = "SELECT "+consulta.getIDTurno()+", '"+consulta.getIDOdontologo()+"', '"+consulta.getIDTratamiento()
 			+"',"+consulta.getIDPaciente()+", "+ "'"+consulta.getAnotacion()+"'";
 			boolean res = cn.execute(query+data);

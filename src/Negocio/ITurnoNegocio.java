@@ -1,5 +1,6 @@
 package Negocio;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import Entidad.Turno;
@@ -18,5 +19,6 @@ public interface ITurnoNegocio {
 	public List<TurnosVista> listaTurnoOdontologo(String idod);
 	public boolean presente(int idturno);
 	public boolean ausente(int idturno);
+	public int nuevoTurno(String idOdont, int idPac, LocalDateTime fecha);
 	
 }
