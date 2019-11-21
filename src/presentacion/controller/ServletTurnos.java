@@ -2,8 +2,10 @@ package presentacion.controller;
 
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
 import Entidad.Turno;
 import Entidad.iUsuario;
 import Negocio.ITurnoNegocio;
@@ -42,90 +47,102 @@ public class ServletTurnos extends HttpServlet {
 		// TODO Auto-generated method stub
 		//  response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		String operacion = request.getParameter("operacion");
-		RequestDispatcher dispachero = request.getRequestDispatcher("/index.jsp");
-		GestionTurno gt = new GestionTurno();
+		if(request.getParameter("idodontologo") != null && request.getParameter("fecha") != null) {
+			Gson gson = new Gson();
+			GestionHorarios gh = new GestionHorarios();
+			String fecha = request.getParameter("fecha");
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("es","ES"));
+			LocalDate fechaTurno = LocalDate.parse(fecha, df);
+			String pData = gson.toJson(gh.VerHorarios(request.getParameter("idodontologo"), fechaTurno.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es","ES"))));
+			// response.getWriter().append("Served at: ").append(request.getContextPath());
+			response.getWriter().append(pData);
+		}else {
 		
-		if(request.getSession().getAttribute("usuario") != null)
-		{
+			String operacion = request.getParameter("operacion");
+			RequestDispatcher dispachero = request.getRequestDispatcher("/index.jsp");
+			GestionTurno gt = new GestionTurno();
 			
-			iUsuario us = (iUsuario)request.getSession().getAttribute("usuario");
-			if(!us.isTipoUsuario())
-			{			
-				String op = request.getParameter("op");
-				if(op != null)
-				{
-					if(op.equals("presente"))
+			if(request.getSession().getAttribute("usuario") != null)
+			{
+				
+				iUsuario us = (iUsuario)request.getSession().getAttribute("usuario");
+				if(!us.isTipoUsuario())
+				{			
+					String op = request.getParameter("op");
+					if(op != null)
 					{
-						if(request.getParameter("idturno") != null && request.getParameter("idpac") != null) {
-							int idt = Integer.parseInt(request.getParameter("idturno"));
-							int idpac = Integer.parseInt(request.getParameter("idpac"));
-							gt.presente(idt);
-							dispachero = request.getRequestDispatcher("ServletPacientes?action=ficha&idturno="+idt+"&id="+idpac);
-							dispachero.forward(request, response);
+						if(op.equals("presente"))
+						{
+							if(request.getParameter("idturno") != null && request.getParameter("idpac") != null) {
+								int idt = Integer.parseInt(request.getParameter("idturno"));
+								int idpac = Integer.parseInt(request.getParameter("idpac"));
+								gt.presente(idt);
+								dispachero = request.getRequestDispatcher("ServletPacientes?action=ficha&idturno="+idt+"&id="+idpac);
+								dispachero.forward(request, response);
+							}
+						}else if(op.equals("ausente"))
+						{
+							int id = Integer.parseInt(request.getParameter("idturno"));
+							request.setAttribute("resultado", gt.ausente(id));
+							dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 						}
-					}else if(op.equals("ausente"))
-					{
-						int id = Integer.parseInt(request.getParameter("idturno"));
-						request.setAttribute("resultado", gt.ausente(id));
-						dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 					}
+					request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
+					dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
+	
 				}
-				request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
-				dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
-
+				else
+				{
+					request.setAttribute("turnos", gt.listTurnovista());
+					dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
+	
+					if(operacion != null)
+					{
+						if(operacion.equals("modificar"))
+						{
+							GestionPacientes gp = new GestionPacientes();
+							int id = Integer.parseInt(request.getParameter("idturno"));
+							int idpac = Integer.parseInt(request.getParameter("dni"));
+							request.setAttribute("dnipac", gp.get(idpac).getDni());
+							request.setAttribute("turnomod", gt.getTurno(id));
+							dispachero = request.getRequestDispatcher("/registroTurno.jsp");
+						}
+						
+						if(operacion.equals("borrar"))
+						{
+							int id = Integer.parseInt(request.getParameter("id"));
+							request.setAttribute("resultado",gt.borrarTurno(id) );
+						}
+					}
+					/*
+					if(request.getParameter("txtFecha") != null)
+					{
+						request.setAttribute("Cambio",true);
+						String IDOdontologo = request.getParameter("ddlOdontologo");
+						String fecha = request.getParameter("txtFecha");
+						Locale spanishLocale=new Locale("es", "ES");
+						DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd",spanishLocale);
+						LocalDateTime fechaTurno = LocalDateTime.parse(fecha, df);
+						
+						request.setAttribute("dni",request.getParameter("txtDnipaciente"));
+						request.setAttribute("odontologo", request.getParameter("ddlOdontologo"));
+						request.setAttribute("fecha", request.getParameter("txtFecha"));
+						
+						GestionHorarios gh = new GestionHorarios();
+	
+						request.setAttribute("listaHorario", gh.VerHorarios(IDOdontologo, fechaTurno.getDayOfWeek().toString()));
+						
+					}*/
+	
+				}
 			}
 			else
 			{
-				request.setAttribute("turnos", gt.listTurnovista());
-				dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
-
-				if(operacion != null)
-				{
-					if(operacion.equals("modificar"))
-					{
-						GestionPacientes gp = new GestionPacientes();
-						int id = Integer.parseInt(request.getParameter("idturno"));
-						int idpac = Integer.parseInt(request.getParameter("dni"));
-						request.setAttribute("dnipac", gp.get(idpac).getDni());
-						request.setAttribute("turnomod", gt.getTurno(id));
-						dispachero = request.getRequestDispatcher("/registroTurno.jsp");
-					}
-					
-					if(operacion.equals("borrar"))
-					{
-						int id = Integer.parseInt(request.getParameter("id"));
-						request.setAttribute("resultado",gt.borrarTurno(id) );
-					}
-				}
+				dispachero = request.getRequestDispatcher("/index.jsp");
 				
-				if(request.getParameter("txtFecha") != null)
-				{
-					request.setAttribute("Cambio",true);
-					String IDOdontologo = request.getParameter("ddlOdontologo");
-					String fecha = request.getParameter("txtFecha");
-					Locale spanishLocale=new Locale("es", "ES");
-					DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd",spanishLocale);
-					LocalDateTime fechaTurno = LocalDateTime.parse(fecha, df);
-					
-					request.setAttribute("dni",request.getParameter("txtDnipaciente"));
-					request.setAttribute("odontologo", request.getParameter("ddlOdontologo"));
-					request.setAttribute("fecha", request.getParameter("txtFecha"));
-					
-					GestionHorarios gh = new GestionHorarios();
-
-					request.setAttribute("listaHorario", gh.VerHorarios(IDOdontologo, fechaTurno.getDayOfWeek().toString()));
-					
-				}
-
 			}
+			dispachero.forward(request, response);
 		}
-		else
-		{
-			dispachero = request.getRequestDispatcher("/index.jsp");
-			
-		}
-		dispachero.forward(request, response);
 	}
 
 	/**
@@ -167,6 +184,8 @@ public class ServletTurnos extends HttpServlet {
 						request.setAttribute("Correcto", "Ya existe un turno en la misma fecha con el mismo odontólogo\n");
 					if(existePac)
 						request.setAttribute("Correcto", "Ya existe un turno en la misma fecha con el mismo paciente\n");
+					
+
 					//Aviso de exito
 					if(!existeOd && !existePac)
 					{

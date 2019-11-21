@@ -1,4 +1,6 @@
+<%@page import="java.time.LocalDate"%>
 <%@page import="NegocioImpl.GestionHorarios"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="NegocioImpl.GestionOdontologos"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -76,6 +78,8 @@ input {
 					<input type="hidden" name="operacion" value="modificar">
 					<input type="hidden" name="idtu" value="<%=tur.getIDTurno() %>">
 			<%
+				}else{
+					out.println("<input type=\"hidden\" name=\"operacion\" value=\"facuselacome\">");
 				}
 				if(request.getAttribute("Correcto")!= null)
 				{
@@ -120,7 +124,7 @@ input {
 					
 					<tr>
 						<td>Odontologo:</td>
-						<td><select id="ddlOdontologo" name="ddlOdontologo" style="margin-bottom: 10px; width: 100%;">
+						<td><select onchange="cargarHorarios()" id="ddlOdontologo" name="ddlOdontologo" style="margin-bottom: 10px; width: 100%;">
 
 								<%
 									for (Odontologo odon : listaOdontologo) {
@@ -135,26 +139,12 @@ input {
 					</tr>
 					<tr>
 						<td>Fecha:</td>
-						<td><input name="txtFecha" onchange="ServletTurnos" required min="<%=LocalDateTime.now().toLocalDate().toString() %>" type="date"></td>
+						<td><input id="txtFecha" name="txtFecha" onchange="cargarHorarios()" value="<%= LocalDate.now() %>" required min="<%=LocalDate.now() %>" type="date"></td>
 					</tr>
 					<tr>
 						<td>Horario:</td>
-						<td><select name="ddlHorario" style="margin-bottom: 10px;">
-						<%
-							if(request.getAttribute("Cambio") != null)
-							{
-								GestionHorarios gh = new GestionHorarios();
-								List<HorarioOdonto> listaHorario = (List<HorarioOdonto>)request.getAttribute("listaHorario");
-								for(HorarioOdonto h : listaHorario)
-								{
-						%>			<option<%=h.getHoraInicio()%>><%=h.getHoraInicio() %></option>
-
-						<%
-								}
-							}
-							
-						%>
-
+						<td><select name="ddlHorario" id="ddlHorario" style="margin-bottom: 10px;">
+							<option value="null"> Seleccione hora</option>
 						</select></td>
 					</tr>
 				</table>
@@ -170,6 +160,35 @@ input {
 </body>
 
 <script type="text/javascript">
+	function cargarHorarios(){
+		var dropOdont = document.getElementById("ddlOdontologo");
+		var odont = dropOdont.options[dropOdont.selectedIndex].value;
+		console.log(odont)
+		console.log($('#txtFecha').val())
+		
+		$.ajax({
+			type: "GET",
+			url: "ServletTurnos",
+			data: { idodontologo: odont, fecha: $('#txtFecha').val()},
+			success: (resp) => {
+				let data = JSON.parse(resp);
+				rellenarddl(data);
+			}
+		});
+	}
+	
+	function rellenarddl(data){
+		$('#ddlHorario').empty();
+		$('#ddlHorario').append('<option value="null">Seleccione hora </option>'); 
+		for (var i = 0; i < data.length; i++) {
+			let min = data[i].HoraInicio.minute;
+			if(data[i].HoraInicio.minute == "0")
+				min = "00";
+			let hor = data[i].HoraInicio.hour +':'+ min;
+			$('#ddlHorario').append('<option value='+hor+'> '+hor+' </option>'); 
+		}
+	}
+	
 	document.getElementById("btnCheck").addEventListener("click", () => {
 		$.get("ServletPacientes?action=get&dni="+$("#dni").val(), (resp) => {
 			if(resp != "null"){

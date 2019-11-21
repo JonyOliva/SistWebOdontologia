@@ -39,7 +39,7 @@
 		<div>
 			<form method="post" action="ServletUsuarios" class="box">
 			<div class="subtitular mb-4 mt-0"> <h6> Iniciar sesión </h6> </div>
-				<table><%=LocalDateTime.now().getDayOfWeek() %>
+				<table>
 				<tr>
 					<td>
 						Email:
