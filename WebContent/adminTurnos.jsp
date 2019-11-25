@@ -22,41 +22,52 @@
 	<jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 	<link rel="stylesheet" href="Resources/css/tables.css">
 	<link rel="stylesheet" href="Resources/css/stylesheetMain.css">
-<form action="ServletTurnos" method="POST" class="container mt-3">
+
 	<% if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp"); %>
 
-	<%!List<TurnosVista> listaTurnos;%>
+	<%!
+		List<TurnosVista> listaTurnos;
+		String buscar = null;
+	%>
+	<%
+		if (request.getAttribute("turnos") != null) {
+			listaTurnos = (List<TurnosVista>) request.getAttribute("turnos");
+		}
+		if (request.getAttribute("buscar") != null) {
+			buscar = request.getAttribute("buscar").toString();
+		}
+	%>
+	
 
-		<div>
-			<div>
+		
+		<div class="container mt-3">
 				<h5 class="titular">
 					Menú Turnos
 					</h5>
-			</div>
 			<br>
 			<div>
 			<jsp:include page ="Resources/alert.jsp"></jsp:include>
 				<div class="row">
 					<div class="col-6">
-<!-- 						<form action="ServletTurnos" method="GET"> -->
-<!-- 							Busqueda: <input name="buscar" -->
-<%-- 								<%if (request.getAttribute("buscar") != null) --%>
-<%-- 				out.print("value=\"" + request.getAttribute("buscar").toString() + "\"");%> --%>
-<!-- 								type="text" required> <input name="pag" value="1" -->
-<!-- 								type="hidden"> -->
-<!-- 							<button type="button" class="btn btn-outline-primary">Buscar</button> -->
-<!-- 							<a href="ServletTurnos" class="btn btn-outline-danger"> -->
-<!-- 								&times </a> -->
-<!-- 						</form> -->
+						<form action="ServletTurnos" method="GET">
+							Busqueda: <input name="buscar"
+								<%if (request.getAttribute("buscar") != null)
+									out.print("value=\"" + request.getAttribute("buscar").toString() + "\"");%>
+								type="text" required> <input name="pag" value="1"
+								type="hidden">
+							<button type="submit" class="btn btn-outline-primary">Buscar</button>
+							<a href="ServletTurnos" class="btn btn-outline-danger">
+								&times </a>
+						</form>
 					</div>
+		
 					<div class="col-6" style="text-align: right;">
 						<a href="registroTurno.jsp" class=" btn btn-default btnVerde">Agregar
 							nuevo turno</a>
 					</div>
 				</div>
 			</div>
-			<div></div>
-			<br>
+		<form action="ServletTurnos" method="POST" class="container mt-3">
 			<table border=1>
 				<tr>
 					<th>Paciente</th>
@@ -87,8 +98,50 @@
 				}
 			%>
 			</table>
-		</div>
-
-</form>
+		</form>
+			<div>
+				<div class="row mt-2">
+					<div class="col text-right">
+						<%
+							if (request.getAttribute("anterior") != null) {
+								String pagAnterior = request.getAttribute("anterior").toString();
+						%>
+						<form action="ServletTurnos" method="GET">
+							<%
+								if (request.getAttribute("buscar") != null) {
+							%>
+							<input type="hidden" name="buscar" value="<%=buscar%>">
+							<%
+								}
+							%>
+							<input type="hidden" name="pag" value="<%=pagAnterior%>">
+							<button type="submit" class="btn btn-light">Anterior</button>
+						</form>
+						<%
+							}
+						%>
+					</div>
+					<div class="col">
+						<%
+							if (request.getAttribute("siguiente") != null) {
+								String pagSiguiente = request.getAttribute("siguiente").toString();
+						%>
+						<form action="ServletTurnos" method="GET">
+							<%
+								if (request.getAttribute("buscar") != null) {
+							%>
+							<input type="hidden" name="buscar" value="<%=buscar%>">
+							<%
+								}
+							%>
+							<input type="hidden" name="pag" value="<%=pagSiguiente%>">
+							<button type="submit" class="btn btn-light">Siguiente</button>
+						</form>
+						<%
+							}
+						%>
+					</div>
+				</div>
+			</div>
 </body>
 </html>

@@ -130,7 +130,7 @@ input {
 									for (Odontologo odon : listaOdontologo) {
 								%>
 								<option value="<%=odon.getIDUsuario()%>"><%=odon.getApellido()%>,
-									<%=odon.getNombre()%></option>
+									<%=odon.getNombre()%>, DNI:<%=odon.getDNI() %></option>
 								<%
 									}
 								%>
@@ -179,7 +179,10 @@ input {
 	
 	function rellenarddl(data){
 		$('#ddlHorario').empty();
-		$('#ddlHorario').append('<option value="null">Seleccione hora </option>'); 
+		if(data.length == 0)
+			$('#ddlHorario').append('<option value="null">No hay horarios </option>'); 
+		else
+			$('#ddlHorario').append('<option value="null">Seleccione hora </option>'); 
 		for (var i = 0; i < data.length; i++) {
 			let min = data[i].HoraInicio.minute;
 			if(data[i].HoraInicio.minute == "0")

@@ -3,10 +3,11 @@ package Negocio;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import Entidad.IGestionable;
 import Entidad.Turno;
 import Entidad.TurnosVista;
 
-public interface ITurnoNegocio {
+public interface ITurnoNegocio extends IGestionable<TurnosVista>{
 
 	public Turno getTurno(int id);
 	public List<Turno> listTurno();
@@ -20,5 +21,6 @@ public interface ITurnoNegocio {
 	public boolean presente(int idturno);
 	public boolean ausente(int idturno);
 	public int nuevoTurno(String idOdont, int idPac, LocalDateTime fecha);
+	public List<TurnosVista> listaPaginable(int inicio, int tamPagina, String busqueda);
 	
 }

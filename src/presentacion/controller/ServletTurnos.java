@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import Entidad.Gestor;
 import Entidad.Turno;
+import Entidad.TurnosVista;
 import Entidad.iUsuario;
 import Negocio.ITurnoNegocio;
 import NegocioImpl.GestionHorarios;
@@ -76,6 +78,7 @@ public class ServletTurnos extends HttpServlet {
 							if(request.getParameter("idturno") != null && request.getParameter("idpac") != null) {
 								int idt = Integer.parseInt(request.getParameter("idturno"));
 								int idpac = Integer.parseInt(request.getParameter("idpac"));
+								
 								gt.presente(idt);
 								dispachero = request.getRequestDispatcher("ServletPacientes?action=ficha&idturno="+idt+"&id="+idpac);
 								dispachero.forward(request, response);
@@ -93,7 +96,25 @@ public class ServletTurnos extends HttpServlet {
 				}
 				else
 				{
-					request.setAttribute("turnos", gt.listTurnovista());
+					Gestor<TurnosVista> pagTurnos = new Gestor<TurnosVista>( new GestionTurno(), 2);
+					String buscar = request.getParameter("buscar");
+					String pag = request.getParameter("pag");
+					int nroPagina = 1;
+					if (pag != null) {
+						nroPagina = Integer.valueOf(pag);
+						if (buscar != null) {
+							request.setAttribute("buscar", buscar);
+						}
+					}
+					request.setAttribute("turnos", pagTurnos.get(buscar, nroPagina));
+					int siguiente = pagTurnos.haySiguiente();
+					int anterior = pagTurnos.hayAnterior();
+
+					if (siguiente != -1)
+						request.setAttribute("siguiente", siguiente);
+					if (anterior != -1)
+						request.setAttribute("anterior", anterior);
+					
 					dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
 	
 					if(operacion != null)
@@ -103,6 +124,7 @@ public class ServletTurnos extends HttpServlet {
 							GestionPacientes gp = new GestionPacientes();
 							int id = Integer.parseInt(request.getParameter("idturno"));
 							int idpac = Integer.parseInt(request.getParameter("dni"));
+							
 							request.setAttribute("dnipac", gp.get(idpac).getDni());
 							request.setAttribute("turnomod", gt.getTurno(id));
 							dispachero = request.getRequestDispatcher("/registroTurno.jsp");
@@ -114,26 +136,6 @@ public class ServletTurnos extends HttpServlet {
 							request.setAttribute("resultado",gt.borrarTurno(id) );
 						}
 					}
-					/*
-					if(request.getParameter("txtFecha") != null)
-					{
-						request.setAttribute("Cambio",true);
-						String IDOdontologo = request.getParameter("ddlOdontologo");
-						String fecha = request.getParameter("txtFecha");
-						Locale spanishLocale=new Locale("es", "ES");
-						DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd",spanishLocale);
-						LocalDateTime fechaTurno = LocalDateTime.parse(fecha, df);
-						
-						request.setAttribute("dni",request.getParameter("txtDnipaciente"));
-						request.setAttribute("odontologo", request.getParameter("ddlOdontologo"));
-						request.setAttribute("fecha", request.getParameter("txtFecha"));
-						
-						GestionHorarios gh = new GestionHorarios();
-	
-						request.setAttribute("listaHorario", gh.VerHorarios(IDOdontologo, fechaTurno.getDayOfWeek().toString()));
-						
-					}*/
-	
 				}
 			}
 			else
@@ -160,7 +162,26 @@ public class ServletTurnos extends HttpServlet {
 			if(us.isTipoUsuario())
 			{
 				dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
-				request.setAttribute("turnos", gt.listTurnovista());
+				
+//				Gestor<TurnosVista> pagTurnos = new Gestor<TurnosVista>( new GestionTurno(), 2);
+//				String buscar = request.getParameter("buscar");
+//				String pag = request.getParameter("pag");
+//				int nroPagina = 1;
+//				if (pag != null) {
+//					nroPagina = Integer.valueOf(pag);
+//					if (buscar != null) {
+//						request.setAttribute("buscar", buscar);
+//					}
+//				}
+//				request.setAttribute("turnos", pagTurnos.get(buscar, nroPagina));
+//				int siguiente = pagTurnos.haySiguiente();
+//				int anterior = pagTurnos.hayAnterior();
+//
+//				if (siguiente != -1)
+//					request.setAttribute("siguiente", siguiente);
+//				if (anterior != -1)
+//					request.setAttribute("anterior", anterior);
+				
 				if(request.getParameter("ddlHorario")!= null)
 					if(request.getParameter("ddlHorario").equals("null"))
 					{
@@ -227,6 +248,10 @@ public class ServletTurnos extends HttpServlet {
 						}
 						dispachero = request.getRequestDispatcher("/registroTurno.jsp");
 					}
+					else
+					{
+						dispachero = request.getRequestDispatcher("/registroTurno.jsp");
+					}
 					
 				}
 			}
@@ -240,6 +265,7 @@ public class ServletTurnos extends HttpServlet {
 		{
 			dispachero = request.getRequestDispatcher("/index.jsp");
 		}
-		dispachero.forward(request, response);
+		//dispachero.forward(request, response);
+		doGet(request, response);
 	}
 }

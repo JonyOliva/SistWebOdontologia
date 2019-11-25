@@ -178,7 +178,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 			ResultSet rs = cn.query("SELECT IDTurno,IDPaciente_T,Fecha,IDOdontologo_T,Estado,Pacientes.Nombre,pacientes.Apellido," + 
 					"pacientes.DNI,odontologos.Nombre,odontologos.Apellido FROM Turnos INNER JOIN " + 
 					"pacientes ON pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T "
-					+ "WHERE IDOdontologo_T = '"+idod+"' AND Estado = 'Activo' AND Fecha >= current_date()");
+					+ "WHERE IDOdontologo_T = '"+idod+"' AND Estado = 'Activo' AND Fecha = current_date()");
 			
 			while(rs.next())
 			{
@@ -309,7 +309,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				ResultSet rs = cn.query("SELECT IDTurno FROM Turnos WHERE Fecha = '"+turno.getFecha().format(formatter)+"' AND Estado='Presente'");
 				if(rs.next())
-				{
+				{   
 					int id = rs.getInt("IDTurno"); 
 					cn.close();
 					return id;
@@ -322,6 +322,71 @@ public class TurnosDaoImpl implements ITurnosDao{
 			}
 		}
 		return -1;
+	}
+
+	@Override
+	public List<TurnosVista> turnosVistapaginado(int inicio, int cantidad, String busqueda) {
+List<TurnosVista> lista = new ArrayList<TurnosVista>();
+		
+		try {
+			cn.Open();
+			String consulta ="SELECT IDTurno,IDPaciente_T,Fecha,IDOdontologo_T,Estado,Pacientes.Nombre,pacientes.Apellido," + 
+					"pacientes.DNI,odontologos.Nombre,odontologos.Apellido FROM Turnos INNER JOIN " + 
+					"pacientes ON pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T  WHERE Estado = 'Activo' ";
+			String condiciones="AND (pacientes.Nombre LIKE '%"+busqueda+"%' OR pacientes.DNI LIKE '%"+busqueda+"%' OR "
+					+ "pacientes.Apellido LIKE '%"+busqueda+"%') ";
+			String pagina="LIMIT "+inicio+", "+cantidad;
+			if(busqueda != null)
+				consulta = consulta + condiciones;
+			ResultSet rs = cn.query(consulta+pagina);
+			
+			while(rs.next())
+			{
+				TurnosVista TurnoVista= new TurnosVista();
+				Turno turno = new Turno(rs.getInt("IDTurno"));
+				turno.setIDPaciente(rs.getInt("IDPaciente_T"));
+				turno.setFecha(rs.getObject("Fecha", LocalDateTime.class));
+				turno.setIDOdontologo(rs.getString("IDOdontologo_T"));
+				turno.setEstado(rs.getString("Estado"));
+				TurnoVista.setTurno(turno);
+				TurnoVista.setApellidoPac(rs.getString("Pacientes.Apellido"));
+				TurnoVista.setNombrePac(rs.getString("Pacientes.Nombre"));
+				TurnoVista.setNombreOd(rs.getString("Odontologos.Nombre"));
+				TurnoVista.setApellidoOd(rs.getString("Odontologos.Apellido"));
+				
+				lista.add(TurnoVista);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally
+		{
+			cn.close();
+		}
+		
+
+		return lista;
+	}
+
+	public int size(String busqueda) {
+		try {
+			cn.Open();
+			String query = "SELECT COUNT(IDPaciente_T) AS Cantidad FROM Turnos INNER JOIN pacientes ON IDPaciente_T = IDPaciente"
+					+ " WHERE Activo=1 ";
+			if(busqueda != null) {
+				if(!busqueda.isEmpty()) {
+					query += "AND (pacientes.Nombre LIKE '%"+busqueda+"%' OR pacientes.Apellido LIKE '%"+busqueda+"%' OR pacientes.DNI LIKE '%"+busqueda+"%') ";
+				}
+			}
+			ResultSet rs = cn.query(query);
+			if(rs.next()) {
+				return rs.getInt("Cantidad");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			cn.close();
+		}
+		return 0;
 	}
 	
 

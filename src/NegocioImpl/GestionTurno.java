@@ -154,6 +154,25 @@ public class GestionTurno implements ITurnoNegocio{
 		turno.setEstado("Presente");
 		return tdao.nuevoTurno(turno);
 	}
+
+	@Override
+	public List<TurnosVista> listaPaginable(int inicio, int tamPagina, String busqueda) {
+		return null;
+	}
+
+	@Override
+	public List<TurnosVista> get(int inicio, int tamPagina, String aBuscar) {
+		
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		return tdao.turnosVistapaginado(inicio, tamPagina, aBuscar);
+	}
+
+	@Override
+	public int size(String busqueda) {
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		
+		return tdao.size(busqueda);
+	}
 	
 	
 	

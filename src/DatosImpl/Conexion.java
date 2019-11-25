@@ -15,7 +15,7 @@ public class Conexion {
 	private String pass = "root";
 
 	private String dbName = "odontologiadb?profileSQL=true&useSSL=false&serverTimezone=UTC";
-	//una hora para configurar esta mierda
+	//una hora para configurar esto
 	protected Connection connection;
 	
 	public Connection Open()
