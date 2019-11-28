@@ -79,7 +79,7 @@ input {
 					<input type="hidden" name="idtu" value="<%=tur.getIDTurno() %>">
 			<%
 				}else{
-					out.println("<input type=\"hidden\" name=\"operacion\" value=\"facuselacome\">");
+					out.println("<input type=\"hidden\" name=\"operacion\" value=\"asd\">");
 				}
 				if(request.getAttribute("Correcto")!= null)
 				{

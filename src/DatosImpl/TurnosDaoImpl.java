@@ -371,7 +371,7 @@ List<TurnosVista> lista = new ArrayList<TurnosVista>();
 		try {
 			cn.Open();
 			String query = "SELECT COUNT(IDPaciente_T) AS Cantidad FROM Turnos INNER JOIN pacientes ON IDPaciente_T = IDPaciente"
-					+ " WHERE Activo=1 ";
+					+ " WHERE Estado = 'Activo' ";
 			if(busqueda != null) {
 				if(!busqueda.isEmpty()) {
 					query += "AND (pacientes.Nombre LIKE '%"+busqueda+"%' OR pacientes.Apellido LIKE '%"+busqueda+"%' OR pacientes.DNI LIKE '%"+busqueda+"%') ";
