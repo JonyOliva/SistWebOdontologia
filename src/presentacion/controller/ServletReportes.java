@@ -1,8 +1,11 @@
 package presentacion.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -85,6 +88,20 @@ public class ServletReportes extends HttpServlet {
 			miDispatcher = request.getRequestDispatcher("ReporteInasistenciasDetalle.jsp");
 			miDispatcher.forward(request, response);
 			
+		}
+		
+		//Filtro Por Fecha
+		if(request.getParameter("btnFiltrar")!=null)
+		{
+			LocalDate Desde, Hasta;
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String d = request.getParameter("txtDesde");
+			Desde = LocalDate.parse(d, df);
+			String h = request.getParameter("txtHasta");
+			Hasta = LocalDate.parse(h,df);
+			request.setAttribute("listaInasistencias", pn.getInasistencias(Desde, Hasta));
+			miDispatcher = request.getRequestDispatcher("ReporteInasistencias.jsp");
+			miDispatcher.forward(request, response);
 		}
 	}
 

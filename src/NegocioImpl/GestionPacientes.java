@@ -1,5 +1,6 @@
 package NegocioImpl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +73,11 @@ public class GestionPacientes implements IPacienteNegocio{
 	@Override
 	public ArrayList<InasistenciasDetalle> getInasistenciasDet(Paciente pac) {
 		return (ArrayList<InasistenciasDetalle>)pdao.getInasistenciasDetalle(pac);
+	}
+
+	@Override
+	public ArrayList<Inasistencias> getInasistencias(LocalDate desde, LocalDate hasta) {
+		return (ArrayList<Inasistencias>)pdao.getInasistencias(desde, hasta);
 	}
 
 }

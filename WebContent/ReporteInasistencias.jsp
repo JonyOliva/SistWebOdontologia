@@ -15,25 +15,30 @@
 <body>
 <link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 <link rel="stylesheet" href="Resources/css/tables.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 <br>
 			<div align="center">
 				<h5 class="titular">
 					Reporte de Inasistencias
 					</h5>
-			</div>
-<form method="post" action="ServletReportes">
-<div align="center">
-<input type="number" name="txtDNI" placeholder="DNI">
-<input type="submit" class=" btn btn-default btnVerde" value="Buscar" name="btnBuscar">
-</div>
-</form>
-<div align=center><label>
-		<% if(request.getAttribute("NoExiste")!=null)out.println(request.getAttribute("NoExiste").toString()); %>
-	</label></div>
-<br>
+			</div><br>
 
+
+
+<form action="ServletReportes" method="post">
+<div align=center>
+Desde: <input type="date" id="txtDesde" name="txtDesde" required>&nbsp;&nbsp;&nbsp;|
+&nbsp;&nbsp;Hasta: <input type="date" id="txtHasta" name="txtHasta" required>&nbsp;&nbsp;&nbsp;
+<input type="submit" value="Filtrar"class=" btn btn-default btnVerde" id="btnFiltrar" name="btnFiltrar">
+</div></form><br>
+
+<div align="center">
+<input id="Busqueda" type="text" placeholder="Buscar.." style="width: 284px; ">
+</div><br>
 <table border=1 class="col-6" style="text-align: center;" align="center">
+			<thead>
 				<tr>
 					<th>Nombre</th>
 					<th>Apellido</th>
@@ -42,6 +47,7 @@
 					<th>Estado</th>
 					<th>Detalle</th>
 				</tr>
+			</thead>
 				<%
 					List<Inasistencias> listaInasistencias = null;
 					if(request.getAttribute("listaInasistencias")!= null)
@@ -50,6 +56,7 @@
 						for (Inasistencias i : listaInasistencias) {
 				%>
 				<form method="post" action="ServletReportes?Param=<%=i.getPac().getIDPaciente()%>">
+				<tbody id="Tabla">
 				<tr>
 					<td><%out.println(i.getPac().getNombre()); %></td>
 					<td><%out.println(i.getPac().getApellido()); %></td>
@@ -60,11 +67,25 @@
 						<input type="submit" class="btn btn-light" name="btnDetalle" title="Detalle" value="Detalle">
 					</td>
 				</tr>
+				</tbody>
 				</form>
 				<%
 					}
 					}
 				%>
 			</table>
+			
+			
+<script>
+$(document).ready(function(){
+  $("#Busqueda").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#Tabla tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
 </body>
 </html>

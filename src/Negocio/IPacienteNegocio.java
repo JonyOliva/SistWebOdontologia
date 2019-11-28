@@ -1,5 +1,6 @@
 package Negocio;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import Entidad.IGestionable;
@@ -16,6 +17,7 @@ public interface IPacienteNegocio extends IGestionable<Paciente>{
 	public boolean modificar(Paciente paciente);
 	public boolean eliminar(int idPaciente);
 	public ArrayList<Inasistencias> getInasistencias();
+	public ArrayList<Inasistencias> getInasistencias(LocalDate desde, LocalDate hasta);
 	public Inasistencias getInasistencias(String dniPaciente);
 	public ArrayList<InasistenciasDetalle> getInasistenciasDet(Paciente pac);
 	
