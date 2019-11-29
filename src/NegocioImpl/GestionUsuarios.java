@@ -68,6 +68,12 @@ public class GestionUsuarios implements iUsuarioNegocio{
 		return ud.getNextID(tipoUsuario);
 	}
 
+	@Override
+	public String getPass(String mail, String dni) {
+		iUsuarioDao userDao = new UsuarioDaoImpl();
+		return userDao.getPass(mail, dni);
+	}
+
 
 
 }

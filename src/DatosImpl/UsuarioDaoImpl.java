@@ -190,5 +190,44 @@ public class UsuarioDaoImpl implements iUsuarioDao {
 			return null;
 		}
 	}
+
+	@Override
+	public String getPass(String mail, String dni) {
+		iUsuario usuario = null;
+		try {
+			cn.Open();
+			ResultSet rs = cn.query("Select * from usuarios where Email='" + mail + "'");
+			if (rs.next()) {
+				if (1 == rs.getInt("usuarios.TipoUsuario")) {
+					usuario = new Administrador(rs.getString("usuarios.IDUsuario"));
+					usuario.setEmail(rs.getString("usuarios.Email"));
+					usuario.setPassword(rs.getString("usuarios.Password"));
+					usuario.setTipoUsuario(1 == rs.getInt("usuarios.TipoUsuario"));
+					usuario = getPerfil(usuario);
+					if(((Administrador)usuario).getDni().equals(dni))
+					{
+						return usuario.getPassword();
+					}
+				} else {
+					usuario = new Odontologo(rs.getString("usuarios.IDUsuario"));
+					usuario.setEmail(rs.getString("usuarios.Email"));
+					usuario.setPassword(rs.getString("usuarios.Password"));
+					usuario.setTipoUsuario(1 == rs.getInt("usuarios.TipoUsuario"));
+					usuario = getPerfil(usuario);
+					if(((Odontologo)usuario).getDNI().equals(dni))
+					{
+						return usuario.getPassword();
+					}
+				}
+				cn.close();
+				return "No existe el usuario";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cn.close();
+		}
+		return "No existe el usuario";
+	}
 	
 }

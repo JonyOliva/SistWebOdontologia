@@ -14,6 +14,7 @@ public interface iUsuarioDao {
 	public ArrayList<iUsuario> getAll() throws SQLException;
 	public iUsuario getPerfil(iUsuario user);
 	public iUsuario get(String id);
+	public String getPass(String mail, String dni);
 	public String getNextID(boolean tipoUsuario);
 	
 }

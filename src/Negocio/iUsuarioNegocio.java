@@ -13,6 +13,7 @@ public interface iUsuarioNegocio {
 	public ArrayList<iUsuario> getAll();
 	public Administrador getAdm(iUsuario user );
 	public Odontologo getOdo(iUsuario user);
+	public String getPass(String mail, String dni);
 	public boolean insertar(iUsuario odontologo);
 	public boolean modificar(iUsuario odontologo);
 	public boolean eliminar(String idUsuario);

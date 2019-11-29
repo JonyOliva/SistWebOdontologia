@@ -66,11 +66,26 @@
 								out.println("Los datos ingresados son incorrectos.");
 							}
 			 			%>
-			 
+				 <div>
+			 		<br><a href="#" onclick="abrirVentana()" title="VenEmergente">
+			 		¿Olvidaste tu contraseña?</a>
+			 	</div>
 			</form>
 			
 		</div>
 	
 	</div>
+	
+<script type="text/javascript">
+
+function abrirVentana() {
+	var windowObjectReference;
+  	windowObjectReference = window.open(
+    "http://localhost:8080/SistWebOdontologia/RecuperarPass.jsp",
+    "RecuperarContraseña",
+     "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes"
+  );
+}
+</script>	
 </body>
 </html>

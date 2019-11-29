@@ -81,6 +81,18 @@ public class ServletUsuarios extends HttpServlet {
 			miDispacher.forward(request, response);
 			//response.sendRedirect("index.jsp");
 		}
+		
+		//Recuperar Contraseña
+		if(request.getParameter("btnPass")!=null)
+		{
+			RequestDispatcher miDispacher = request.getRequestDispatcher("/RecuperarPass.jsp");
+			String mail, dni;
+			mail = request.getParameter("txtEmail").toString();
+			dni = request.getParameter("txtDni").toString();
+			String pass = gu.getPass(mail, dni);
+			request.setAttribute("Pass", pass);
+			miDispacher.forward(request, response);
+		}
 	}
 
 }
