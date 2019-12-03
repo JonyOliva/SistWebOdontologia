@@ -7,7 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="masterInclude.html"></jsp:include>
 
-<%//if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");%>
+<%
+	//if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");
+%>
 
 <link rel="stylesheet" href="Resources/css/stylesheetMain.css">
 <script type="text/javascript" src="Resources/js/validar.js"></script>
@@ -57,29 +59,36 @@ input {
 			<div>
 				<h5 class="titular">Odontologo</h5>
 			</div>
-			<form class="box" method="POST" action="ServletOdontologos" onsubmit="return validarCampoText()">
+			<form class="box" method="POST" action="ServletOdontologos"
+				onsubmit="return validarCampoText()">
 				<%
 					if (odont != null) {
 				%>
-				<input type="hidden" name="action" value="edit">
-				<input type="hidden" name="ID" value="<%= odont.getIDUsuario() %>">
+				<input type="hidden" name="action" value="edit"> <input
+					type="hidden" name="ID" value="<%=odont.getIDUsuario()%>">
 				<p class="text-imp">Datos personales</p>
 				<table>
 					<tr>
 						<td>Nombre:</td>
-						<td><input name="Nombre" type="text" onkeypress="validarTecla(event)" value="<%= odont.getNombre() %>" required></td>
+						<td><input name="Nombre" type="text"
+							onkeypress="validarTecla(event)" value="<%=odont.getNombre()%>"
+							required></td>
 					</tr>
 					<tr>
 						<td>Apellido:</td>
-						<td><input name="Apellido" type="text" onkeypress="validarTecla(event)" value="<%= odont.getApellido() %>" required></td>
+						<td><input name="Apellido" type="text"
+							onkeypress="validarTecla(event)"
+							value="<%=odont.getApellido()%>" required></td>
 					</tr>
 					<tr>
 						<td>DNI:</td>
-						<td><input name="DNI" value="<%= odont.getDNI() %>" type="number" required></td>
+						<td><input name="DNI" value="<%=odont.getDNI()%>"
+							type="number" required></td>
 					</tr>
 					<tr>
 						<td>Matricula:</td>
-						<td><input name="Matricula" value="<%= odont.getMatricula() %>" required></td>
+						<td><input name="Matricula"
+							value="<%=odont.getMatricula()%>" required></td>
 					</tr>
 				</table>
 				<hr>
@@ -87,11 +96,13 @@ input {
 				<table>
 					<tr>
 						<td>Email:</td>
-						<td><input name="Email" value="<%= odont.getEmail() %>" type="email" required></td>
+						<td><input name="Email" value="<%=odont.getEmail()%>"
+							type="email" required></td>
 					</tr>
 					<tr>
 						<td>Contraseña:</td>
-						<td><input name="Password" type="password" value="<%= odont.getPassword() %>" required></td>
+						<td><input name="Password" type="password"
+							value="<%=odont.getPassword()%>" required></td>
 					</tr>
 				</table>
 				<%
@@ -102,11 +113,13 @@ input {
 				<table>
 					<tr>
 						<td>Nombre:</td>
-						<td><input name="Nombre" type="text" onkeypress="validarTecla(event)" required></td>
+						<td><input name="Nombre" type="text"
+							onkeypress="validarTecla(event)" required></td>
 					</tr>
 					<tr>
 						<td>Apellido:</td>
-						<td><input name="Apellido" type="text" onkeypress="validarTecla(event)" required></td>
+						<td><input name="Apellido" type="text"
+							onkeypress="validarTecla(event)" required></td>
 					</tr>
 					<tr>
 						<td>DNI:</td>
@@ -134,7 +147,10 @@ input {
 				%>
 				<br>
 				<div class="text-center">
+					<button class="btn btn-danger" type="button"
+						onclick="window.location='ServletOdontologos'">Cancelar</button>
 					<button class="btn btn-primary">Guardar</button>
+
 				</div>
 			</form>
 		</div>

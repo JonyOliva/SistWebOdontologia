@@ -61,8 +61,8 @@
 						class="btn btn-secondary btn-sm">Ver Horarios</a></td>
 					<td style="text-align: center;"><a
 						href="ServletOdontologos?action=edit&id=<%=odont.getIDUsuario()%>"
-						class="btn btn-primary btn-sm">Modificar</a> <a href="#"
-						class="btn btn-primary btn-sm">Eliminar</a></td>
+						class="btn btn-primary btn-sm">Modificar</a> 
+						<!-- <a href="#" class="btn btn-primary btn-sm">Eliminar</a></td> -->
 				</tr>
 				<%
 					}

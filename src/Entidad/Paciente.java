@@ -10,11 +10,12 @@ public class Paciente {
 	private String dni;
 	private String telefono;
 	private String domicilio;
+	private String localidad;
 	private LocalDate FechaNacimiento;
 	private String InfoExtra;
 	private boolean activo;
 
-	public Paciente(int iDPaciente, String nombre, String apellido, String dni, String telefono, String domicilio,
+	public Paciente(int iDPaciente, String nombre, String apellido, String dni, String telefono, String domicilio, String localidad,
 			LocalDate fechaNacimiento, String infoExtra, boolean activo) {
 		super();
 		IDPaciente = iDPaciente;
@@ -23,6 +24,7 @@ public class Paciente {
 		this.dni = dni;
 		this.telefono = telefono;
 		this.domicilio = domicilio;
+		this.localidad = localidad;
 		FechaNacimiento = fechaNacimiento;
 		InfoExtra = infoExtra;
 		this.activo = activo;
@@ -38,6 +40,14 @@ public class Paciente {
 
 	public String getNombre() {
 		return nombre;
+	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
 	}
 
 	public void setNombre(String nombre) {

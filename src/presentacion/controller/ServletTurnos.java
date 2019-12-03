@@ -73,22 +73,22 @@ public class ServletTurnos extends HttpServlet {
 					String op = request.getParameter("op");
 					if(op != null)
 					{
-						if(op.equals("presente"))
-						{
-							if(request.getParameter("idturno") != null && request.getParameter("idpac") != null) {
-								int idt = Integer.parseInt(request.getParameter("idturno"));
-								int idpac = Integer.parseInt(request.getParameter("idpac"));
-								
-								gt.presente(idt);
-								dispachero = request.getRequestDispatcher("ServletPacientes?action=ficha&idturno="+idt+"&id="+idpac);
-								dispachero.forward(request, response);
-							}
-						}else if(op.equals("ausente"))
-						{
-							int id = Integer.parseInt(request.getParameter("idturno"));
-							request.setAttribute("resultado", gt.ausente(id));
-							dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
-						}
+//						if(op.equals("presente"))	ESTO NO SE USA MAS
+//						{
+//							if(request.getParameter("idturno") != null && request.getParameter("idpac") != null) {
+//								int idt = Integer.parseInt(request.getParameter("idturno"));
+//								int idpac = Integer.parseInt(request.getParameter("idpac"));
+//								
+//								gt.presente(idt);
+//								dispachero = request.getRequestDispatcher("ServletPacientes?action=ficha&idturno="+idt+"&id="+idpac);
+//								dispachero.forward(request, response);
+//							}
+//						}else if(op.equals("ausente"))
+//						{
+//							int id = Integer.parseInt(request.getParameter("idturno"));
+//							request.setAttribute("resultado", gt.ausente(id));
+//							dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
+//						}
 					}
 					request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
 					dispachero = request.getRequestDispatcher("/odonTurnos.jsp");

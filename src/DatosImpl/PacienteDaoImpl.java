@@ -30,6 +30,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 				paciente.setApellido(rs.getString("Apellido"));
 				paciente.setDni(rs.getString("DNI"));
 				paciente.setTelefono(rs.getString("Telefono"));
+				paciente.setLocalidad(rs.getString("Localidad"));
 				paciente.setDomicilio(rs.getString("Domicilio"));
 				paciente.setInfoExtra(rs.getString("InformacionExtra"));
 				paciente.setFechaNacimiento(rs.getObject("FechaNacimiento", LocalDate.class));
@@ -58,6 +59,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 				paciente.setApellido(rs.getString("Apellido"));
 				paciente.setDni(rs.getString("DNI"));
 				paciente.setTelefono(rs.getString("Telefono"));
+				paciente.setLocalidad(rs.getString("Localidad"));
 				paciente.setDomicilio(rs.getString("Domicilio"));
 				paciente.setInfoExtra(rs.getString("InformacionExtra"));
 				paciente.setFechaNacimiento(rs.getObject("FechaNacimiento", LocalDate.class));
@@ -76,9 +78,9 @@ public class PacienteDaoImpl implements IPacienteDao{
 	public boolean insertar(Paciente paciente) {
 		try {
 			cn.Open();
-			String query = "INSERT INTO pacientes(Nombre, Apellido, DNI, Telefono, Domicilio, FechaNacimiento, InformacionExtra, Activo) ";
-			String data = "SELECT '"+paciente.getNombre()+"', '"+paciente.getApellido()+"', '"+paciente.getDni()+"','"+paciente.getTelefono()+"', "
-					+ "'"+paciente.getDomicilio()+"', '"+paciente.getFechaNacimiento()+"', '"+paciente.getInfoExtra()+"', '"+paciente.isActivo()+"'";
+			String query = "INSERT INTO pacientes(Nombre, Apellido, DNI, Telefono, Localidad, Domicilio, FechaNacimiento, InformacionExtra, Activo) ";
+			String data = "SELECT '"+paciente.getNombre()+"', '"+paciente.getApellido()+"', '"+paciente.getDni()+"','"+paciente.getTelefono()+"', "+ "'"+paciente.getLocalidad()
+					+"', "+ "'"+paciente.getDomicilio()+"', '"+paciente.getFechaNacimiento()+"', '"+paciente.getInfoExtra()+"', '"+paciente.isActivo()+"'";
 			
 			return cn.execute(query+data);
 		}catch(Exception e) {
@@ -95,8 +97,8 @@ public class PacienteDaoImpl implements IPacienteDao{
 			cn.Open();
 			String query = "UPDATE pacientes SET ";
 			String data = "Nombre='"+paciente.getNombre()+"', Apellido='"+paciente.getApellido()+"', DNI='"+paciente.getDni()+"', Telefono='"+paciente.getTelefono()
-			+"', Domicilio='"+paciente.getDomicilio()+"', FechaNacimiento='"+paciente.getFechaNacimiento()+"', InformacionExtra='"+paciente.getInfoExtra()
-			+"' WHERE IDPaciente=" + paciente.getIDPaciente();
+			+"', Localidad='"+paciente.getLocalidad()+"', Domicilio='"+paciente.getDomicilio()+"', FechaNacimiento='"+paciente.getFechaNacimiento()
+			+"', InformacionExtra='"+paciente.getInfoExtra()+"' WHERE IDPaciente=" + paciente.getIDPaciente();
 			return cn.execute(query+data);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -161,6 +163,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 				paciente.setApellido(rs.getString("Apellido"));
 				paciente.setDni(rs.getString("DNI"));
 				paciente.setTelefono(rs.getString("Telefono"));
+				paciente.setLocalidad(rs.getString("Localidad"));
 				paciente.setDomicilio(rs.getString("Domicilio"));
 				paciente.setInfoExtra(rs.getString("InformacionExtra"));
 				paciente.setFechaNacimiento(rs.getObject("FechaNacimiento", LocalDate.class));
@@ -185,6 +188,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 				paciente.setApellido(rs.getString("Apellido"));
 				paciente.setDni(rs.getString("DNI"));
 				paciente.setTelefono(rs.getString("Telefono"));
+				paciente.setLocalidad(rs.getString("Localidad"));
 				paciente.setDomicilio(rs.getString("Domicilio"));
 				paciente.setInfoExtra(rs.getString("InformacionExtra"));
 				paciente.setFechaNacimiento(rs.getObject("FechaNacimiento", LocalDate.class));

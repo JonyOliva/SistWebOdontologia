@@ -178,7 +178,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 			ResultSet rs = cn.query("SELECT IDTurno,IDPaciente_T,Fecha,IDOdontologo_T,Estado,Pacientes.Nombre,pacientes.Apellido," + 
 					"pacientes.DNI,odontologos.Nombre,odontologos.Apellido FROM Turnos INNER JOIN " + 
 					"pacientes ON pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T "
-					+ "WHERE IDOdontologo_T = '"+idod+"' AND Estado = 'Activo' AND Fecha = current_date()");
+					+ "WHERE IDOdontologo_T = '"+idod+"' AND Estado = 'Activo' AND date(Fecha) = current_date()");
 			
 			while(rs.next())
 			{

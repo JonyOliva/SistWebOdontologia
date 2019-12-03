@@ -87,6 +87,10 @@ input {
 						<td><input name="Telefono" value="<%=paciente.getTelefono()%>" type="number"></td>
 					</tr>
 					<tr>
+						<td>Localidad:</td>
+						<td><input name="Localidad" type="text" value="<%=paciente.getLocalidad()%>" required></td>
+					</tr>
+					<tr>
 						<td>Domicilio:</td>
 						<td><input name="Domicilio" value="<%=paciente.getDomicilio()%>"></td>
 					</tr>
@@ -95,14 +99,11 @@ input {
 						<td><input name="Fecha" value="<%=paciente.getFechaNacimiento()%>"
 							type="date" required></td>
 					</tr>
-					<% if(paciente.hayExtra()){ %>
 					<tr>
 						<td>Anotacion:</td>
-						<td><input name="InfoExtra" value="<%=paciente.getInfoExtra()%>"></td>
+						<td><textarea rows="2" cols="22" name="InfoExtra"><% if(paciente.hayExtra()){out.println(paciente.getInfoExtra());}%></textarea></td>
 					</tr>
-					<%
-					}
-					%>
+
 					<%
 						} else {
 					%>
@@ -123,6 +124,10 @@ input {
 						<td><input name="Telefono" type="number"></td>
 					</tr>
 					<tr>
+						<td>Localidad:</td>
+						<td><input type="text" onkeypress="validarTecla(event)" name="Localidad" required></td>
+					</tr>
+					<tr>
 						<td>Domicilio:</td>
 						<td><input name="Domicilio"></td>
 					</tr>
@@ -141,7 +146,10 @@ input {
 				</table>
 				<br>
 				<div style="text-align: center">
-					<input value="Guardar" type="submit" class="btn btn-primary">
+					
+					<button class="btn btn-danger" type="button" onclick="window.location='ServletPacientes'"> Cancelar</button>
+					<button class="btn btn-primary"> Guardar</button>
+
 				</div>
 			</form>
 		</div>

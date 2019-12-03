@@ -60,9 +60,9 @@
 							<td><%= t.getApellidoPac()+", "+t.getNombrePac() %></td>
 							<td><%=t.getTurno().getIDOdontologo()%></td>
 							<td><%= t.getTurno().getFecha().toString().replace('T', ' ') %></td>
-							<td><a href="ServletTurnos?op=presente&idturno=<%=t.getTurno().getIDTurno() %>&idpac=<%=t.getTurno().getIDPaciente() %>" 
+							<td><a href="ServletPacientes?action=presente&idturno=<%=t.getTurno().getIDTurno() %>&idpac=<%=t.getTurno().getIDPaciente() %>" 
 								class="btn btn-primary">Presente</a>
-							<a href="ServletTurnos?op=ausente&idturno=<%=t.getTurno().getIDTurno() %>&idpac=<%=t.getTurno().getIDPaciente() %>" class="btn btn-danger">Ausente</a></td>
+							<a href="ServletPacientes?action=ausente&idturno=<%=t.getTurno().getIDTurno() %>&idpac=<%=t.getTurno().getIDPaciente() %>" class="btn btn-danger">Ausente</a></td>
 							</tr>
 				<%
 						}

@@ -16,8 +16,11 @@ import Entidad.iUsuario;
 import Entidad.Gestor;
 import Negocio.IConsultaNegocio;
 import Negocio.IPacienteNegocio;
+import Negocio.ITurnoNegocio;
 import NegocioImpl.GestionConsultas;
 import NegocioImpl.GestionPacientes;
+import NegocioImpl.GestionTurno;
+
 import com.google.gson.*;
 
 @WebServlet("/ServletPacientes")
@@ -25,6 +28,7 @@ public class ServletPacientes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	IPacienteNegocio gp = new GestionPacientes();
 	IConsultaNegocio gc = new GestionConsultas();
+	ITurnoNegocio gt = new GestionTurno();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -39,7 +43,7 @@ public class ServletPacientes extends HttpServlet {
 	 */
 	protected void getAllPacientes(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Gestor<Paciente> pagPacientes = new Gestor<Paciente>(new GestionPacientes(), 2);
+		Gestor<Paciente> pagPacientes = new Gestor<Paciente>(new GestionPacientes(), 4);
 		String buscar = request.getParameter("buscar");
 		String pag = request.getParameter("pag");
 		int nroPagina = 1;
@@ -64,8 +68,9 @@ public class ServletPacientes extends HttpServlet {
 		RequestDispatcher dispatcher;
 		String action = request.getParameter("action");
 		String view;
+		iUsuario user = null;
 		if(request.getSession().getAttribute("usuario") != null) {
-			iUsuario user = (iUsuario)request.getSession().getAttribute("usuario");
+			user = (iUsuario)request.getSession().getAttribute("usuario");
 			if(user.isTipoUsuario())
 				view = "/adminPacientes.jsp";
 			else
@@ -118,6 +123,32 @@ public class ServletPacientes extends HttpServlet {
 				Gson gson = new Gson();
 				response.getWriter().append(gson.toJson(paciente));
 			}
+		}else if(action.equals("presente")) {
+				if(!user.isTipoUsuario())
+				{			
+					if(request.getParameter("idturno") != null && request.getParameter("idpac") != null) {
+						int idt = Integer.parseInt(request.getParameter("idturno"));
+						int idPaciente = Integer.parseInt(request.getParameter("idpac"));
+						
+						gt.presente(idt);
+						request.setAttribute("paciente", gp.get(idPaciente));
+						request.setAttribute("tratamientos", gc.getAll());
+						request.setAttribute("consultas", gc.getAll(idPaciente));
+						request.setAttribute("idturno", request.getParameter("idturno"));
+
+						dispatcher = request.getRequestDispatcher("menuPaciente.jsp");
+						dispatcher.forward(request, response);
+					}
+				}
+		}else if(action.equals("ausente")) {
+				if(!user.isTipoUsuario()) {
+					if(request.getParameter("idturno") != null) {
+						int id = Integer.parseInt(request.getParameter("idturno"));
+						request.setAttribute("resultado", gt.ausente(id));
+						dispatcher = request.getRequestDispatcher("/ServletTurnos");
+						dispatcher.forward(request, response);
+					}
+				}
 		}
 
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -139,6 +170,7 @@ public class ServletPacientes extends HttpServlet {
 				p.setDni(request.getParameter("DNI"));
 				p.setTelefono(request.getParameter("Telefono"));
 				p.setDomicilio(Utilidades.cleanString(request.getParameter("Domicilio"), true));
+				p.setLocalidad(Utilidades.cleanString(request.getParameter("Localidad"), true));
 				p.setFechaNacimiento(LocalDate.parse(request.getParameter("Fecha")));
 				p.setInfoExtra(request.getParameter("InfoExtra"));
 				p.setActivo(true);
@@ -154,6 +186,7 @@ public class ServletPacientes extends HttpServlet {
 				p.setDni(request.getParameter("DNI"));
 				p.setTelefono(request.getParameter("Telefono"));
 				p.setDomicilio(Utilidades.cleanString(request.getParameter("Domicilio"), true));
+				p.setLocalidad(Utilidades.cleanString(request.getParameter("Localidad"), true));
 				p.setFechaNacimiento(LocalDate.parse(request.getParameter("Fecha")));
 				p.setInfoExtra(request.getParameter("InfoExtra"));
 				p.setActivo(true);
