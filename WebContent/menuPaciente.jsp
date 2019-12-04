@@ -6,6 +6,7 @@
 <%@page import="Entidad.Consulta"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -96,24 +97,27 @@
 					</tr>
 					<%
 						for (Consulta con : listCons) {
-							String det = "";
-							if (con.getAnotacion() != null)
+							String det = "<b>Odontologo:</b> " + con.getNombreOdontologo() + " " + con.getApellidoOdontologo() +
+							", DNI: " + con.getDniOdontologo() + "</br></br>";
+							if (con.getAnotacion() != null && !con.getAnotacion().isEmpty())
 								det += "<b>Anotacion:</b> " + con.getAnotacion() + "</br></br>";
-							det += "<b>Piezas</b></br>";
-							for (String p : con.getPiezasArregladas()) {
-								det += p + "</br>";
+							if(!con.getPiezasArregladas().isEmpty()){
+								det += "<b>Piezas</b></br>";
+								for (String p : con.getPiezasArregladas()) {
+									det += p + "</br>";
+								}
 							}
 					%>
 					<tr>
 						<td><%=con.getIDTurno()%></td>
-						<td><%=con.getNombreOdontologo()%></td>
+						<td><%=con.getApellidoOdontologo()%></td>
 						<td><%=con.getIdTratamiento()%></td>
-						<td><%=con.getFecha()%></td>
+						<td><%= con.getFecha().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))  %></td>
 						<td><button
-								onclick="verDetalles(this, <%=con.getIDTurno() + 99%>)"
+								onclick="verDetalles(this, '<%=con.getIDTurno() + "T"%>')"
 								class="btn btn-outline-primary btn-sm">Ver detalle</button></td>
 					</tr>
-					<tr id="<%=con.getIDTurno() + 99%>" style="display: none;">
+					<tr id="<%=con.getIDTurno() + "T"%>" style="display: none;">
 						<td colspan="5"><%=det%></td>
 					</tr>
 					<%

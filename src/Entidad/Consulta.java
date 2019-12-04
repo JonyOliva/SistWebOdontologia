@@ -7,6 +7,8 @@ public class Consulta {
 	
 	int IDTurno;
 	String nombreOdontologo;
+	String apellidoOdontologo;
+	String dniOdontologo;
 	String idTratamiento;
 	LocalDateTime fecha;
 	String anotacion;
@@ -25,6 +27,23 @@ public class Consulta {
 	public String getNombreOdontologo() {
 		return nombreOdontologo;
 	}
+	
+	public String getApellidoOdontologo() {
+		return apellidoOdontologo;
+	}
+
+	public void setApellidoOdontologo(String apellidoOdontologo) {
+		this.apellidoOdontologo = apellidoOdontologo;
+	}
+
+	public String getDniOdontologo() {
+		return dniOdontologo;
+	}
+
+	public void setDniOdontologo(String dniOdontologo) {
+		this.dniOdontologo = dniOdontologo;
+	}
+
 	public void setNombreOdontologo(String nombreOdontologo) {
 		this.nombreOdontologo = nombreOdontologo;
 	}

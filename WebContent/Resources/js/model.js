@@ -292,7 +292,7 @@ function enviarServidor(odontograma){
 			tratamiento: trat, anotacion: anot, idturno: turno},
 		success: (resp)=>{
 			console.log("enviado OK: " + resp);
-			alert("GUARDADO CORRECTO");
+			alert("Se ha guardado correctamente");
 			window.location.replace("ServletPacientes");
 		},
 		error: (resp)=>{

@@ -24,13 +24,15 @@ public class ConsultaDaoImpl implements IConsultaDao{
 		List<Consulta> listCons = new ArrayList<Consulta>();
 		try {
 			cn.Open();
-			ResultSet rs = cn.query("SELECT IDTurno_CON, odontologos.nombre AS NombreOdontologo, IDTratamiento_CON, Fecha, AnotacionExtra  FROM consultas " + 
+			ResultSet rs = cn.query("SELECT IDTurno_CON, odontologos.nombre, odontologos.apellido, odontologos.dni, IDTratamiento_CON, Fecha, AnotacionExtra  FROM consultas " + 
 					"INNER JOIN odontologos ON IDOdontologo_CON=IDOdontologo " + 
 					"INNER JOIN turnos ON IDTurno_CON=IDTurno WHERE IDPaciente_CON ="+idPaciente);
 			while(rs.next()) {
 				Consulta Con = new Consulta();
 				Con.setIDTurno(rs.getInt("IDTurno_CON"));
-				Con.setNombreOdontologo(rs.getString("NombreOdontologo"));
+				Con.setNombreOdontologo(rs.getString("odontologos.nombre"));
+				Con.setApellidoOdontologo(rs.getString("odontologos.apellido"));
+				Con.setDniOdontologo(rs.getString("odontologos.dni"));
 				Con.setIdTratamiento(rs.getString("IDTratamiento_CON"));
 				Con.setFecha(rs.getObject("Fecha", LocalDateTime.class));
 				Con.setAnotacion(rs.getString("AnotacionExtra"));
