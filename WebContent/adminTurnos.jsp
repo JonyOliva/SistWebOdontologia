@@ -48,23 +48,47 @@
 			<div>
 			<jsp:include page ="Resources/alert.jsp"></jsp:include>
 				<div class="row">
-					<div class="col-6">
+					<div class="col-12">
 						<form action="ServletTurnos" method="GET">
+						<div>
+						<select name="tbusqueda">
+						<option value="v">Buscar por...</option>
+						<option 
+					<%
+						if(request.getAttribute("tbusque") != null)
+							if(request.getAttribute("tbusque").toString().equals("od")) 
+								out.print("selected=\"true"+"\"");
+					%> 				value="od"> Buscar por odontologo</option>
+						<option 
+					<%	
+						if(request.getAttribute("tbusque") != null)
+							if(request.getAttribute("tbusque").toString().equals("pac")) 
+								out.print("selected=\"true"+"\"");
+					%> 				value="pac"> Buscar por paciente</option>
+						</select>
+						</div>
+						<br>
 							Busqueda: <input name="buscar"
 								<%if (request.getAttribute("buscar") != null)
 									out.print("value=\"" + request.getAttribute("buscar").toString() + "\"");%>
-								type="text" required> <input name="pag" value="1"
+								type="text" > <input name="pag" value="1"
 								type="hidden">
 							<button type="submit" class="btn btn-outline-primary">Buscar</button>
-							<a href="ServletTurnos" class="btn btn-outline-danger">
+							<a href="ServletTurnos?tbusqueda=v" class="btn btn-outline-danger">
 								&times </a>
+								
+							Desde: <input type="date" name = "desde" >
+							Hasta: <input type="date" name = "hasta">
+							
+							
+							<a href="registroTurno.jsp" class=" btn btn-default btnVerde">Agregar
+								nuevo turno</a>
 						</form>
+
+					</div>
 					</div>
 		
-					<div class="col-6" style="text-align: right;">
-						<a href="registroTurno.jsp" class=" btn btn-default btnVerde">Agregar
-							nuevo turno</a>
-					</div>
+
 				</div>
 			</div>
 		<form action="ServletTurnos" method="POST" class="container mt-3">

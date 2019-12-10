@@ -36,6 +36,10 @@ public class Gestor<T> {
 		return paginable.size(busqueda);
 	}
 	
+	public int size(String busqueda,String desde,String hasta,int d) {
+		return paginable.size(busqueda,desde,hasta, d);
+	}
+	
 	public List<T> get(String aBuscar, int nroPagina){
 		cantPaginas = (int)Math.ceil((float)size(aBuscar) / (float)tamPaginas);
 		if(nroPagina > 0 && nroPagina <= cantPaginas) {
@@ -44,5 +48,15 @@ public class Gestor<T> {
 			paginaActual = 1;
 		}
 		return paginable.get((paginaActual-1)*tamPaginas, tamPaginas, aBuscar);
+	}
+	
+	public List<T> get(String aBuscar, int nroPagina,String desde, String hasta,int d){
+		cantPaginas = (int)Math.ceil((float)size(aBuscar) / (float)tamPaginas);
+		if(nroPagina > 0 && nroPagina <= cantPaginas) {
+			paginaActual = nroPagina;
+		}else {
+			paginaActual = 1;
+		}
+		return paginable.get((paginaActual-1)*tamPaginas, tamPaginas, aBuscar,desde,hasta,d);
 	}
 }

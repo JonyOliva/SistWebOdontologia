@@ -96,8 +96,18 @@ public class ServletTurnos extends HttpServlet {
 				}
 				else
 				{
+					String tipobus="";
+					if(request.getParameter("tbusqueda") != null)
+					{
+						tipobus= request.getParameter("tbusqueda");
+						request.setAttribute("tbusque", tipobus);
+					}
+
+					
 					Gestor<TurnosVista> pagTurnos = new Gestor<TurnosVista>( new GestionTurno(), 2);
 					String buscar = request.getParameter("buscar");
+					String desde = request.getParameter("desde");
+					String hasta = request.getParameter("hasta");
 					String pag = request.getParameter("pag");
 					int nroPagina = 1;
 					if (pag != null) {
@@ -106,7 +116,12 @@ public class ServletTurnos extends HttpServlet {
 							request.setAttribute("buscar", buscar);
 						}
 					}
-					request.setAttribute("turnos", pagTurnos.get(buscar, nroPagina));
+					if(!tipobus.equals("od"))
+						request.setAttribute("turnos", pagTurnos.get(buscar, nroPagina, desde, hasta,1));
+					else
+					{
+						request.setAttribute("turnos", pagTurnos.get(buscar, nroPagina, desde, hasta, 2));
+					}
 					int siguiente = pagTurnos.haySiguiente();
 					int anterior = pagTurnos.hayAnterior();
 
@@ -162,9 +177,18 @@ public class ServletTurnos extends HttpServlet {
 			if(us.isTipoUsuario())
 			{
 				dispachero = request.getRequestDispatcher("/adminTurnos.jsp");
+				String tipobus="";
+				if(request.getParameter("tbusqueda") != null)
+				{
+					tipobus= request.getParameter("tbusqueda");
+					request.setAttribute("tbusque", tipobus);
+				}
+
 				
 				Gestor<TurnosVista> pagTurnos = new Gestor<TurnosVista>( new GestionTurno(), 2);
 				String buscar = request.getParameter("buscar");
+				String desde = request.getParameter("desde");
+				String hasta = request.getParameter("hasta");
 				String pag = request.getParameter("pag");
 				int nroPagina = 1;
 				if (pag != null) {
@@ -173,7 +197,12 @@ public class ServletTurnos extends HttpServlet {
 						request.setAttribute("buscar", buscar);
 					}
 				}
-				request.setAttribute("turnos", pagTurnos.get(buscar, nroPagina));
+				if(!tipobus.equals("od"))
+					request.setAttribute("turnos", pagTurnos.get(buscar, nroPagina, desde, hasta,1));
+				else
+				{
+					request.setAttribute("turnos", pagTurnos.get(buscar, nroPagina, desde, hasta,2));
+				}
 				int siguiente = pagTurnos.haySiguiente();
 				int anterior = pagTurnos.hayAnterior();
 
@@ -181,7 +210,7 @@ public class ServletTurnos extends HttpServlet {
 					request.setAttribute("siguiente", siguiente);
 				if (anterior != -1)
 					request.setAttribute("anterior", anterior);
-					
+				
 				if(request.getParameter("btnGuardar") != null)
 				{
 					String op = request.getParameter("operacion");
