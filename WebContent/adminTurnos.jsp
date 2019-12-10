@@ -76,11 +76,29 @@
 							<button type="submit" class="btn btn-outline-primary">Buscar</button>
 							<a href="ServletTurnos?tbusqueda=v" class="btn btn-outline-danger">
 								&times </a>
+						Desde: <input
+						<% 
+							if(request.getAttribute("desde")!= null) 
+							{
+								out.print("value=\""+request.getAttribute("desde").toString()+"\"");
 								
-							Desde: <input type="date" name = "desde" >
-							Hasta: <input type="date" name = "hasta">
+							}
+								
+						%>  	
+								type="date" name = "desde">
 							
+						
 							
+							Hasta: <input
+						<% 
+							if(request.getAttribute("hasta")!= null) 
+							{
+								out.print("value=\""+request.getAttribute("hasta").toString()+"\"");
+								
+							}
+								
+						%>  	
+							type="date" name = "hasta">
 							<a href="registroTurno.jsp" class=" btn btn-default btnVerde">Agregar
 								nuevo turno</a>
 						</form>
@@ -138,6 +156,22 @@
 							<%
 								}
 							%>
+							<input type="hidden" name="desde"
+						<%
+							if(request.getAttribute("desde")!= null)
+							{
+								out.print(" value=\""+request.getAttribute("desde").toString()+"\"");
+							} 
+						%>
+							>
+							<input type="hidden" name="hasta" 
+						<%
+							if(request.getAttribute("hasta")!= null)
+							{
+								out.print("value=\""+request.getAttribute("hasta").toString()+"\"");
+							} 
+						%>
+							>
 							<input type="hidden" name="pag" value="<%=pagAnterior%>">
 							<button type="submit" class="btn btn-light">Anterior</button>
 						</form>
@@ -158,6 +192,22 @@
 							<%
 								}
 							%>
+							<input type="hidden" name="desde"
+						<%
+							if(request.getAttribute("desde")!= null)
+							{
+								out.print(" value=\""+request.getAttribute("desde").toString()+"\"");
+							} 
+						%>
+							>
+							<input type="hidden" name="hasta" 
+						<%
+							if(request.getAttribute("hasta")!= null)
+							{
+								out.print("value=\""+request.getAttribute("hasta").toString()+"\"");
+							} 
+						%>
+							>
 							<input type="hidden" name="pag" value="<%=pagSiguiente%>">
 							<button type="submit" class="btn btn-light">Siguiente</button>
 						</form>

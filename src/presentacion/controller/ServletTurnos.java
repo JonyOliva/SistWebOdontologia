@@ -107,7 +107,9 @@ public class ServletTurnos extends HttpServlet {
 					Gestor<TurnosVista> pagTurnos = new Gestor<TurnosVista>( new GestionTurno(), 2);
 					String buscar = request.getParameter("buscar");
 					String desde = request.getParameter("desde");
+					request.setAttribute("desde", desde);
 					String hasta = request.getParameter("hasta");
+					request.setAttribute("hasta", hasta);
 					String pag = request.getParameter("pag");
 					int nroPagina = 1;
 					if (pag != null) {
@@ -188,7 +190,9 @@ public class ServletTurnos extends HttpServlet {
 				Gestor<TurnosVista> pagTurnos = new Gestor<TurnosVista>( new GestionTurno(), 2);
 				String buscar = request.getParameter("buscar");
 				String desde = request.getParameter("desde");
+				request.setAttribute("desde", desde);
 				String hasta = request.getParameter("hasta");
+				request.setAttribute("hasta", hasta);
 				String pag = request.getParameter("pag");
 				int nroPagina = 1;
 				if (pag != null) {
