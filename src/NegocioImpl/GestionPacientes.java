@@ -81,15 +81,17 @@ public class GestionPacientes implements IPacienteNegocio{
 	}
 
 	@Override
-	public List<Paciente> get(int inicio, int tamPagina, String aBuscar, String desde, String hasta) {
+	public List<Paciente> get(int inicio, int tamPagina, String aBuscar, String desde, String hasta, int d) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int size(String busqueda, String desde, String hasta) {
+	public int size(String busqueda, String desde, String hasta, int d) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 }

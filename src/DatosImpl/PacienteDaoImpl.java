@@ -23,7 +23,8 @@ public class PacienteDaoImpl implements IPacienteDao{
 	public Paciente get(int IDPaciente) {
 		try {
 			cn.Open();
-			ResultSet rs = cn.query("SELECT * FROM pacientes WHERE IDPaciente =" + IDPaciente);
+			String query = "SELECT * FROM pacientes WHERE IDPaciente = " + IDPaciente;
+			ResultSet rs = cn.query(query);
 			if(rs.next()) {
 				Paciente paciente = new Paciente(rs.getInt("IDPaciente"));
 				paciente.setNombre(rs.getString("Nombre"));
@@ -317,13 +318,13 @@ public class PacienteDaoImpl implements IPacienteDao{
 	}
 
 	@Override
-	public List<Paciente> get(int inicio, int tamPagina, String aBuscar, String desde, String hasta) {
+	public List<Paciente> get(int inicio, int tamPagina, String aBuscar, String desde, String hasta, int d) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int size(String busqueda, String desde, String hasta) {
+	public int size(String busqueda, String desde, String hasta, int d) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
