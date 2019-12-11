@@ -4,6 +4,7 @@
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="Entidad.Odontologo"%>
 <%@page import="Entidad.HorarioOdonto"%>
+<%@page import="NegocioImpl.GestionOdontologos"%>
 
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -24,6 +25,10 @@
 	<jsp:include page="masterMenuAdmin.jsp"></jsp:include>
 
 <%!List<HorarioOdonto> listaHor;%>
+<%!String Nombre="";%>
+
+
+
 <%
 		if (request.getAttribute("horarios") != null) {
 			listaHor = (List<HorarioOdonto>) request.getAttribute("horarios");
@@ -37,11 +42,17 @@
 	
 		<div>
 			<div>
-			
+			<%!GestionOdontologos gh = new GestionOdontologos();%>
+<% 
+if (request.getParameter("id")!= null){
+Odontologo od = gh.get(request.getParameter("id").toString());
+Nombre= od.getNombre() +" "+ od.getApellido();
+}
+%>
 		
 				<h5 class="titular">
-				 Tabla de Horarios
-					
+				 Tabla de Horarios<br/>
+					Dr. <%= Nombre %>
 					</h5>
 			</div>
 			<br>
@@ -102,7 +113,9 @@
 			%>
 			Horario Insertado con éxito
 			
-			<% } 
+			<% 
+		
+			} 
 			else {%>
 			Ingreso datos incorrectos
 			 <%}

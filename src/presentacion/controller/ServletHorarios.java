@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
@@ -36,7 +37,7 @@ public class ServletHorarios extends HttpServlet {
     public ServletHorarios() {
         super();
         gh = new GestionHorarios();
-       
+      
         
         // TODO Auto-generated constructor stub
     }
@@ -53,8 +54,9 @@ public class ServletHorarios extends HttpServlet {
 		request.setAttribute("id",request.getParameter("id"));
 		if(action == null) {
 			request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
+			
 			dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
-			dispatcher.forward(request, response);
+		 dispatcher.forward(request, response);
 					}
 		else if(action.equals("edit")) {
 			String id = request.getParameter("id");
@@ -62,6 +64,7 @@ public class ServletHorarios extends HttpServlet {
 				
 				
 				request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
+				
 				dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
 				dispatcher.forward(request, response);
 			}
@@ -70,6 +73,7 @@ public class ServletHorarios extends HttpServlet {
 			int id = Integer.parseInt(request.getParameter("idHorario"));
 			gh.eliminar(id);
 			request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
+			
 			dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
 			dispatcher.forward(request, response);
 		}
@@ -88,19 +92,21 @@ RequestDispatcher dispatcher;
 if ((request.getParameter("btnAgregarHorario"))!= null ) {
 		
 		
-		
+	List <HorarioOdonto> lista =  gh.VerHorarios(request.getParameter("id"));
+	
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm");
 		LocalTime horaInicio = LocalTime.parse(request.getParameter("HoraInicio").toString(), df);
 		LocalTime horaFin = LocalTime.parse(request.getParameter("HoraFin").toString(), df);
 		
 		
 		
-		// nh.setIDOdontologo(request.getParameter("id").toString());
+		
 			
 		String prueba = request.getParameter("id").toString();
 		HorarioOdonto nh = new HorarioOdonto (prueba,request.getParameter("ddlDias").toString(),horaInicio,horaFin,true);
 		
-		if (VerificarHorarios(nh) == true) {
+		// el que va es el verificar horarios, cuando lo termino lo cambio
+		if (VerificarHorarios2(nh) == true) {
 		
 		request.setAttribute("Insertado", gh.insertar(nh));
 		dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
@@ -116,12 +122,39 @@ else {
 		
 	}
 	
-	public Boolean VerificarHorarios (HorarioOdonto hor) {
-		 if (hor.getHoraInicio() == null)
+	public Boolean VerificarHorarios (HorarioOdonto horNuevo, List <HorarioOdonto> lista) {
+		for (HorarioOdonto h : lista) {
+			if (h.equals(horNuevo))
+				return false;
+			if (h.getIDOdontologo() == horNuevo.getIDOdontologo() && h.getActivo()==true) {
+				if (h.getHoraInicio() == horNuevo.getHoraInicio()) {
+					return false;
+				}
+				else if (horNuevo.getHoraInicio().isBefore(h.getHoraInicio()) && horNuevo.getHoraFin().isAfter(h.getHoraFin())) {
+					return false;
+				}
+				
+			}
+		}
+		
+		 if (horNuevo.getHoraInicio() == null)
 			 return false;
-		 else if (hor.getHoraFin() == null)
+		 else if (horNuevo.getHoraFin() == null)
 			 return false;
-		 else if (hor.getHoraFin().isBefore(hor.getHoraInicio()))
+		 else if (horNuevo.getHoraFin().isBefore(horNuevo.getHoraInicio()))
+	return false;
+		
+		 else
+		return true;
+	}
+	
+	public Boolean VerificarHorarios2 (HorarioOdonto horNuevo) {
+		
+		 if (horNuevo.getHoraInicio() == null)
+			 return false;
+		 else if (horNuevo.getHoraFin() == null)
+			 return false;
+		 else if (horNuevo.getHoraFin().isBefore(horNuevo.getHoraInicio()))
 	return false;
 		
 		 else
