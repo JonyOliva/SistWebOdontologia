@@ -163,8 +163,7 @@ public class GestionTurno implements ITurnoNegocio{
 	@Override
 	public List<TurnosVista> get(int inicio, int tamPagina, String aBuscar) {
 		
-		TurnosDaoImpl tdao = new TurnosDaoImpl();
-		return tdao.turnosVistapaginado(inicio, tamPagina, aBuscar);
+		return null;
 	}
 
 	@Override
@@ -172,6 +171,30 @@ public class GestionTurno implements ITurnoNegocio{
 		TurnosDaoImpl tdao = new TurnosDaoImpl();
 		
 		return tdao.size(busqueda);
+	}
+
+	@Override
+	public List<TurnosVista> get(int inicio, int tamPagina, String aBuscar, String desde, String hasta,int d) {
+		TurnosDaoImpl tdao = new TurnosDaoImpl();
+		List<TurnosVista> lista = new ArrayList<TurnosVista>();
+		if(d==1)
+			lista = tdao.turnosVistapaginado(inicio, tamPagina, aBuscar, desde, hasta);
+		else if (d==2)
+			lista= tdao.turnosVistapaginadoOD(inicio, tamPagina, aBuscar, desde, hasta);
+		
+		return lista;
+	}
+
+	@Override
+	public int size(String busqueda, String desde, String hasta,int d) {
+		TurnosDaoImpl tdao= new TurnosDaoImpl();
+		int cant;
+		if (d==1)
+			cant = tdao.size(busqueda, desde, hasta);
+		else 
+			cant = tdao.sizeod(busqueda, desde, hasta);
+		
+		return cant;
 	}
 	
 	

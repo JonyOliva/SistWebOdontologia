@@ -12,7 +12,8 @@ public interface ITurnosDao {
 	List<Turno> turnosPaciente(int idPaciente);
 	List<TurnosVista> turnosOdontologo(String idod);
 	List<TurnosVista> turnosPacienteVista();
-	List<TurnosVista> turnosVistapaginado(int inicio, int pagTam, String busqueda);
+	List<TurnosVista> turnosVistapaginadoOD(int inicio, int pagTam, String busqueda, String desde,String hasta);
+	List<TurnosVista> turnosVistapaginado(int inicio, int pagTam, String busqueda, String desde,String hasta);
 	public boolean existe(Turno turno);
 	public boolean existePac(Turno turno);
 	public boolean insertar(Turno turno);
@@ -21,5 +22,7 @@ public interface ITurnosDao {
 	public boolean ausente(int idTurno);
 	public boolean modificar(Turno turno);
 	public int nuevoTurno(Turno turno);
+	public int size(String busqueda,String desde,String hasta);
+	public int sizeod(String busqueda,String desde,String hasta);
 	
 }

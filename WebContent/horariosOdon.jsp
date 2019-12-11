@@ -37,7 +37,6 @@
 	
 		<div>
 			<div>
-			
 		
 				<h5 class="titular">
 				 Tabla de Horarios
@@ -91,23 +90,9 @@
 					<td><input type="time" name="HoraInicio"></td>
 					<td><input type="time" name="HoraFin" ></td>
 					
-					<td style="text-align: center;"><input type="submit" name="btnAgregarHorario" value="Agregar" 
+					<td style="text-align: center;"><input type="submit" name="btnAgregarHorario" value="Agregar"
 						class="btn btn-primary btn-sm"/></td>
 				</tr></form>
-				
-				<%
-				if (request.getAttribute("Insertado")!= null) {
-			Boolean listo = Boolean.parseBoolean(request.getAttribute("Insertado").toString());
-			if (listo == true){
-			%>
-			Horario Insertado con éxito
-			
-			<% } 
-			else {%>
-			Ingreso datos incorrectos
-			 <%}
-			;}
-			 %> 
 			</table>
 		</div>
 
