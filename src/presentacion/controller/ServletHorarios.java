@@ -50,6 +50,7 @@ public class ServletHorarios extends HttpServlet {
 		
 		RequestDispatcher dispatcher;
 		String action = request.getParameter("action");
+		request.setAttribute("id",request.getParameter("id"));
 		if(action == null) {
 			request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
 			dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
@@ -59,7 +60,7 @@ public class ServletHorarios extends HttpServlet {
 			String id = request.getParameter("id");
 			if(id != null) {
 				
-				//request.setAttribute("horarios", gh.get(id));
+				
 				request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
 				dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
 				dispatcher.forward(request, response);
@@ -96,8 +97,8 @@ if ((request.getParameter("btnAgregarHorario"))!= null ) {
 		
 		// nh.setIDOdontologo(request.getParameter("id").toString());
 			
-		
-		HorarioOdonto nh = new HorarioOdonto ("O001",request.getParameter("ddlDias").toString(),horaInicio,horaFin,true);
+		String prueba = request.getParameter("id").toString();
+		HorarioOdonto nh = new HorarioOdonto (prueba,request.getParameter("ddlDias").toString(),horaInicio,horaFin,true);
 		
 		if (VerificarHorarios(nh) == true) {
 		
