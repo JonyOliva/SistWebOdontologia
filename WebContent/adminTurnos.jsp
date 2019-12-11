@@ -52,19 +52,18 @@
 						<form action="ServletTurnos" method="GET">
 						<div>
 						<select name="tbusqueda">
-						<option value="v">Buscar por...</option>
-						<option 
-					<%
-						if(request.getAttribute("tbusque") != null)
-							if(request.getAttribute("tbusque").toString().equals("od")) 
-								out.print("selected=\"true"+"\"");
-					%> 				value="od"> Buscar por odontologo</option>
 						<option 
 					<%	
 						if(request.getAttribute("tbusque") != null)
 							if(request.getAttribute("tbusque").toString().equals("pac")) 
 								out.print("selected=\"true"+"\"");
 					%> 				value="pac"> Buscar por paciente</option>
+						<option 
+					<%
+						if(request.getAttribute("tbusque") != null)
+							if(request.getAttribute("tbusque").toString().equals("od")) 
+								out.print("selected=\"true"+"\"");
+					%> 				value="od"> Buscar por odontologo</option>
 						</select>
 						</div>
 						<br>
