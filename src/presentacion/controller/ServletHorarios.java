@@ -36,6 +36,7 @@ public class ServletHorarios extends HttpServlet {
     public ServletHorarios() {
         super();
         gh = new GestionHorarios();
+       
         
         // TODO Auto-generated constructor stub
     }
@@ -44,6 +45,9 @@ public class ServletHorarios extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		
+		
 		RequestDispatcher dispatcher;
 		String action = request.getParameter("action");
 		if(action == null) {
@@ -80,27 +84,47 @@ public class ServletHorarios extends HttpServlet {
 String action = request.getParameter("action");
 RequestDispatcher dispatcher;
 
-
-	if ((request.getParameter("btnAgregarHorario"))!= null ) {
+if ((request.getParameter("btnAgregarHorario"))!= null ) {
 		
-		HorarioOdonto nuevo = new HorarioOdonto();
+		
+		
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("HH:mm");
-		LocalTime horaTurno = LocalTime.parse(request.getParameter("HoraInicio").toString(), df);
+		LocalTime horaInicio = LocalTime.parse(request.getParameter("HoraInicio").toString(), df);
 		LocalTime horaFin = LocalTime.parse(request.getParameter("HoraFin").toString(), df);
 		
-		nuevo.setActivo(true);
-		nuevo.setIDOdontologo(request.getParameter("id").toString());
-		nuevo.setDia(request.getParameter("ddlDias").toString());
-		nuevo.setHoraInicio(horaTurno);
-		nuevo.setHoraFin(horaFin);
 		
-		System.out.println(gh.insertar(nuevo));
-		dispatcher = request.getRequestDispatcher("index.jsp");
-		dispatcher.forward(request, response);
+		
+		// nh.setIDOdontologo(request.getParameter("id").toString());
+			
+		
+		HorarioOdonto nh = new HorarioOdonto ("O001",request.getParameter("ddlDias").toString(),horaInicio,horaFin,true);
+		
+		if (VerificarHorarios(nh) == true) {
+		
+		request.setAttribute("Insertado", gh.insertar(nh));
+		dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
+		dispatcher.forward(request, response);}
+		
 	}	
+else {
+	request.setAttribute("Insertado", false);
+	dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
+	dispatcher.forward(request, response);}	
+
 		
 		
+	}
+	
+	public Boolean VerificarHorarios (HorarioOdonto hor) {
+		 if (hor.getHoraInicio() == null)
+			 return false;
+		 else if (hor.getHoraFin() == null)
+			 return false;
+		 else if (hor.getHoraFin().isBefore(hor.getHoraInicio()))
+	return false;
 		
+		 else
+		return true;
 	}
 
 }

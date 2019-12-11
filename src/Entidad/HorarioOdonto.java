@@ -22,14 +22,13 @@ public HorarioOdonto(int iDHorario) {
 
 
 
-public HorarioOdonto(int iDHorario, String iDOdontologo, String dia, LocalTime horaInicio, LocalTime horaFin,
+public HorarioOdonto(String iDOdontologo, String dia, LocalTime horaInicio, LocalTime horaFin,
 		Boolean activo) {
 	super();
-	IDHorario = iDHorario;
-	IDOdontologo = iDOdontologo;
-	Dia = dia;
-	HoraInicio = horaInicio;
-	HoraFin = horaFin;
+	this.IDOdontologo = iDOdontologo;
+	this.Dia = dia;
+	this.HoraInicio = horaInicio;
+	this.HoraFin = horaFin;
 	this.activo = activo;
 	
 	
