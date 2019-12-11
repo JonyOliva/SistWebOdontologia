@@ -51,7 +51,7 @@ public class Gestor<T> {
 	}
 	
 	public List<T> get(String aBuscar, int nroPagina,String desde, String hasta,int d){
-		cantPaginas = (int)Math.ceil((float)size(aBuscar) / (float)tamPaginas);
+		cantPaginas = (int)Math.ceil((float)size(aBuscar,desde,hasta,d) / (float)tamPaginas);
 		if(nroPagina > 0 && nroPagina <= cantPaginas) {
 			paginaActual = nroPagina;
 		}else {

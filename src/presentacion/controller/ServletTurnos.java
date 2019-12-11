@@ -70,26 +70,7 @@ public class ServletTurnos extends HttpServlet {
 				iUsuario us = (iUsuario)request.getSession().getAttribute("usuario");
 				if(!us.isTipoUsuario())
 				{			
-					String op = request.getParameter("op");
-					if(op != null)
-					{
-//						if(op.equals("presente"))	ESTO NO SE USA MAS
-//						{
-//							if(request.getParameter("idturno") != null && request.getParameter("idpac") != null) {
-//								int idt = Integer.parseInt(request.getParameter("idturno"));
-//								int idpac = Integer.parseInt(request.getParameter("idpac"));
-//								
-//								gt.presente(idt);
-//								dispachero = request.getRequestDispatcher("ServletPacientes?action=ficha&idturno="+idt+"&id="+idpac);
-//								dispachero.forward(request, response);
-//							}
-//						}else if(op.equals("ausente"))
-//						{
-//							int id = Integer.parseInt(request.getParameter("idturno"));
-//							request.setAttribute("resultado", gt.ausente(id));
-//							dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
-//						}
-					}
+
 					request.setAttribute("listaod", gt.listaTurnoOdontologo(us.getIDUsuario()));
 					dispachero = request.getRequestDispatcher("/odonTurnos.jsp");
 	
@@ -230,9 +211,15 @@ public class ServletTurnos extends HttpServlet {
 					idOdontologo = request.getParameter("ddlOdontologo").toString();
 					hora = request.getParameter("ddlHorario").toString();
 					fecha = request.getParameter("txtFecha").toString();
-					
+					boolean verifHora=true;
 					if(hora.equals("null"))
 						request.setAttribute("Correcto", "El horario no puede quedar vacio.");
+					if(LocalDateTime.now().isAfter(LocalDateTime.parse(fecha+" "+hora,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))))
+					{
+						request.setAttribute("Correcto", "Ese turno ya paso.");
+						verifHora = false;
+					}
+						
 					
 					if(dni != null && idOdontologo != null && fecha != null && !hora.equals("null"))
 					{
@@ -245,7 +232,7 @@ public class ServletTurnos extends HttpServlet {
 
 	
 						//Aviso de exito
-						if(!existeOd && !existePac)
+						if(!existeOd && !existePac && verifHora)
 						{
 							if(op.equals("modificar"))
 							{

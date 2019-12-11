@@ -149,7 +149,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 		try {
 				cn.Open();
 				ResultSet rs = cn.query("SELECT * FROM Turnos WHERE IDOdontologo_T = '"+turno.getIDOdontologo()+"' "
-						+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"'");
+						+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"' AND Estado = 'Activo");
 				while(rs.next())
 				{
 					Turno tur = new Turno(rs.getInt("IDTurno"));
@@ -242,7 +242,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 		try {
 				cn.Open();
 				ResultSet rs = cn.query("SELECT * FROM Turnos WHERE IDPaciente_T = "+turno.getIDPaciente()+" "
-						+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"'");
+						+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"' AND Estado = 'Activo'");
 				while(rs.next())
 				{
 					Turno tur = new Turno(rs.getInt("IDTurno"));
@@ -333,11 +333,20 @@ List<TurnosVista> lista = new ArrayList<TurnosVista>();
 			String consulta ="SELECT IDTurno,IDPaciente_T,Fecha,IDOdontologo_T,Estado,Pacientes.Nombre,pacientes.Apellido," + 
 					"pacientes.DNI,odontologos.Nombre,odontologos.Apellido FROM Turnos INNER JOIN " + 
 					"pacientes ON pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T  WHERE Estado = 'Activo' ";
-			String condiciones="AND (odontologos.Nombre LIKE '%"+busqueda+"%' OR odontologos.DNI LIKE '%"+busqueda+"%' OR "
-					+ "odontologos.Apellido LIKE '%"+busqueda+"%') ";
+			String condiciones="";
 			String pagina="LIMIT "+inicio+", "+cantidad;
 			if(busqueda != null)
-				consulta = consulta + condiciones;
+				if(!busqueda.isEmpty())
+					condiciones="AND (odontologos.Nombre LIKE '%"+busqueda+"%' OR odontologos.DNI LIKE '%"+busqueda+"%' OR "
+							+ "odontologos.Apellido LIKE '%"+busqueda+"%') ";;
+			if(desde != null)
+				if(!desde.isEmpty())
+					condiciones += "AND date(Fecha) >= '"+desde+"' ";
+			if(hasta != null)
+				if(!hasta.isEmpty())
+					condiciones += "AND date(Fecha) <= '"+hasta+"' ";
+			
+			consulta+=condiciones;
 			ResultSet rs = cn.query(consulta+pagina);
 			
 			while(rs.next())
@@ -400,8 +409,11 @@ List<TurnosVista> lista = new ArrayList<TurnosVista>();
 					"pacientes ON pacientes.IDPaciente = IDPaciente_T INNER JOIN Odontologos ON IDOdontologo = IDOdontologo_T  WHERE Estado = 'Activo' ";
 			if(busqueda != null)
 			{
-				condiciones="AND (pacientes.Nombre LIKE '%"+busqueda+"%' OR pacientes.DNI LIKE '%"+busqueda+"%' OR "
+				if(!busqueda.isEmpty())
+				{
+					condiciones="AND (pacientes.Nombre LIKE '%"+busqueda+"%' OR pacientes.DNI LIKE '%"+busqueda+"%' OR "
 						+ "pacientes.Apellido LIKE '%"+busqueda+"%') ";
+				}
 			}
 
 			if(desde != null)
@@ -454,9 +466,11 @@ List<TurnosVista> lista = new ArrayList<TurnosVista>();
 				}
 			}
 			if(desde != null)
-				query += "AND date(Fecha >= '"+desde+"' ";
+				if(!desde.isEmpty())
+					query += "AND date(Fecha >= '"+desde+"' ";
 			if(hasta != null)
-				query += "AND date(Fecha <= '"+desde+"' ";
+				if(!hasta.isEmpty())
+					query += "AND date(Fecha <= '"+desde+"' ";
 			ResultSet rs = cn.query(query);
 			if(rs.next()) {
 				return rs.getInt("Cantidad");
@@ -481,9 +495,11 @@ List<TurnosVista> lista = new ArrayList<TurnosVista>();
 				}
 			}
 			if(desde != null)
-				query += "AND date(Fecha >= '"+desde+"' ";
+				if(!desde.isEmpty())
+					query += "AND date(Fecha >= '"+desde+"' ";
 			if(hasta != null)
-				query += "AND date(Fecha <= '"+desde+"' ";
+				if(!hasta.isEmpty())
+					query += "AND date(Fecha <= '"+desde+"' ";
 			ResultSet rs = cn.query(query);
 			if(rs.next()) {
 				return rs.getInt("Cantidad");
