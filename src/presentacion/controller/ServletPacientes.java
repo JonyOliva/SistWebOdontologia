@@ -46,6 +46,8 @@ public class ServletPacientes extends HttpServlet {
 		Gestor<Paciente> pagPacientes = new Gestor<Paciente>(new GestionPacientes(), 4);
 		String buscar = request.getParameter("buscar");
 		String pag = request.getParameter("pag");
+		
+		buscar = (buscar != null) ? Utilidades.cleanString(buscar, true) : null;
 		int nroPagina = 1;
 		if (pag != null) {
 			nroPagina = Integer.valueOf(pag);

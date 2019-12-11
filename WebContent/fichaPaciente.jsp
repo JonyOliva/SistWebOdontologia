@@ -88,7 +88,7 @@ input {
 					</tr>
 					<tr>
 						<td>Localidad:</td>
-						<td><input name="Localidad" type="text" value="<%=paciente.getLocalidad()%>" required></td>
+						<td><input name="Localidad" type="text" value="<%=paciente.getLocalidad()%>" onkeypress="validarTecla(event)" required></td>
 					</tr>
 					<tr>
 						<td>Domicilio:</td>
@@ -154,5 +154,6 @@ input {
 			</form>
 		</div>
 	</div>
+	<br>
 </body>
 </html>

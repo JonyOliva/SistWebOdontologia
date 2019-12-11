@@ -75,13 +75,13 @@
 					<td><%=p.getDni()%></td>
 					<td><%=p.getTelefono()%></td>
 					<td><%=p.getFechaNacimiento()%></td>
-					<td><%=p.getDomicilio()%></td>
+					<td><%=p.getLocalidad()%>, <%=p.getDomicilio()%></td>
 					<td>
 						<%
 							if (p.hayExtra()) {
 						%> <input type="button" class="btn btn-light"
 						data-toggle="tooltip" data-placement="bottom"
-						title="<%=p.getInfoExtra()%>" value="Info"> <%
+						title="<%=p.getInfoExtra()%>" value="Info" style="cursor:default;"> <%
  	}
  %>
 					</td>
