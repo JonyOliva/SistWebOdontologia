@@ -20,11 +20,11 @@ VALUES
 ('A001','Camila','Rodriguez','32222333'),('A002','Ernesto','Batan','32566878');
 
 INSERT INTO `odontologiadb`.`pacientes`
-(`Nombre`,`Apellido`,`DNI`,`Telefono`,`Domicilio`,`FechaNacimiento`,`InformacionExtra`,`Activo`)
+(`Nombre`,`Apellido`,`DNI`,`Telefono`,`Domicilio`,`FechaNacimiento`,`InformacionExtra`,`Activo`,`Localidad`)
 VALUES
-('Javier','Perez','23555555','32456788','Loperrega 3232','1980-8-5','',1),('Laura','Riquelme','55678556','11111111','Cabildo 3232','1975-11-12','',1),
-('Jimena','Lux','34324578','1123324567','La cabaña 1254','1990-5-8','Telefono de hogar:4323-6598',1),
-('Nicolas','De la Cruz','41523698','1188956235','Udaondo 1560','1999-3-9','En su pasaporte figura tambien el apellido Sanchez',1);
+('Javier','Perez','23555555','32456788','Loperrega 3232','1980-8-5','',1,'Olivos'),('Laura','Riquelme','55678556','11111111','Cabildo 3232','1975-11-12','',1,'Gral Pacheco'),
+('Jimena','Lux','34324578','1123324567','La cabaña 1254','1990-5-8','Telefono de hogar:4323-6598',1,'Tigre'),
+('Nicolas','De la Cruz','41523698','1188956235','Udaondo 1560','1999-3-9','En su pasaporte figura tambien el apellido Sanchez',1,'Viedma');
 
 INSERT INTO `odontologiadb`.`horarios`
 (`IDOdontologo_HOR`,`Dia`,`HoraInicio`,`HoraFin`,`Activo`)

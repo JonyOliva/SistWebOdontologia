@@ -139,7 +139,7 @@ input {
 					</tr>
 					<tr>
 						<td>Fecha:</td>
-						<td><input id="txtFecha" name="txtFecha" onchange="cargarHorarios()" value="<%= LocalDate.now() %>" required min="<%=LocalDate.now() %>" type="date"></td>
+						<td><input id="txtFecha" name="txtFecha" onblur="cargarHorarios()" value="<%= LocalDate.now() %>" required min="<%=LocalDate.now() %>" type="date"></td>
 					</tr>
 					<tr>
 						<td>Horario:</td>

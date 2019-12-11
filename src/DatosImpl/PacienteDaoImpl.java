@@ -23,7 +23,8 @@ public class PacienteDaoImpl implements IPacienteDao{
 	public Paciente get(int IDPaciente) {
 		try {
 			cn.Open();
-			ResultSet rs = cn.query("SELECT * FROM pacientes WHERE IDPaciente =" + IDPaciente);
+			String query = "SELECT * FROM pacientes WHERE IDPaciente = " + IDPaciente;
+			ResultSet rs = cn.query(query);
 			if(rs.next()) {
 				Paciente paciente = new Paciente(rs.getInt("IDPaciente"));
 				paciente.setNombre(rs.getString("Nombre"));
@@ -267,7 +268,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 					"from turnos " + 
 					"inner join pacientes on pacientes.IDPaciente = turnos.idpaciente_T " + 
 					"inner join odontologos on odontologos.IDOdontologo = turnos.idodontologo_t " + 
-					"where turnos.idpaciente_t = "+pac.getIDPaciente() +" order by turnos.Fecha desc;");
+					"where turnos.idpaciente_t = "+pac.getIDPaciente() +" and turnos.Estado = 'Ausente' order by turnos.Fecha desc;");
 			while(rs.next())
 			{
 				InasistenciasDetalle inaDet = new InasistenciasDetalle(pac);
@@ -314,6 +315,18 @@ public class PacienteDaoImpl implements IPacienteDao{
 			cn.close();
 		}
 		return listaInasistencias;
+	}
+
+	@Override
+	public List<Paciente> get(int inicio, int tamPagina, String aBuscar, String desde, String hasta, int d) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int size(String busqueda, String desde, String hasta, int d) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

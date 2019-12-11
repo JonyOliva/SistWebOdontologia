@@ -42,6 +42,7 @@
 	
 		<div>
 			<div>
+
 			<%!GestionOdontologos gh = new GestionOdontologos();%>
 <% 
 if (request.getParameter("id")!= null){
@@ -49,6 +50,7 @@ Odontologo od = gh.get(request.getParameter("id").toString());
 Nombre= od.getNombre() +" "+ od.getApellido();
 }
 %>
+
 		
 				<h5 class="titular">
 				 Tabla de Horarios<br/>
@@ -58,7 +60,7 @@ Nombre= od.getNombre() +" "+ od.getApellido();
 			<br>
 			<table border=1>
 				<tr>
-					<th>Día</th>
+					<th>Dï¿½a</th>
 					<th>Inicio de la jornada</th>
 					<th>Fin de la jornada</th>
 					<th>Acciones</th>
@@ -102,16 +104,16 @@ Nombre= od.getNombre() +" "+ od.getApellido();
 					<td><input type="time" name="HoraInicio"></td>
 					<td><input type="time" name="HoraFin" ></td>
 					
-					<td style="text-align: center;"><input type="submit" name="btnAgregarHorario" value="Agregar" 
+					<td style="text-align: center;"><input type="submit" name="btnAgregarHorario" value="Agregar"
 						class="btn btn-primary btn-sm"/></td>
 				</tr></form>
-				
+
 				<%
 				if (request.getAttribute("Insertado")!= null) {
 			Boolean listo = Boolean.parseBoolean(request.getAttribute("Insertado").toString());
 			if (listo == true){
 			%>
-			Horario Insertado con éxito
+			Horario Insertado con ï¿½xito
 			
 			<% 
 		
@@ -121,6 +123,7 @@ Nombre= od.getNombre() +" "+ od.getApellido();
 			 <%}
 			;}
 			 %> 
+
 			</table>
 		</div>
 
