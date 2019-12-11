@@ -268,7 +268,7 @@ public class PacienteDaoImpl implements IPacienteDao{
 					"from turnos " + 
 					"inner join pacientes on pacientes.IDPaciente = turnos.idpaciente_T " + 
 					"inner join odontologos on odontologos.IDOdontologo = turnos.idodontologo_t " + 
-					"where turnos.idpaciente_t = "+pac.getIDPaciente() +" order by turnos.Fecha desc;");
+					"where turnos.idpaciente_t = "+pac.getIDPaciente() +" and turnos.Estado = 'Ausente' order by turnos.Fecha desc;");
 			while(rs.next())
 			{
 				InasistenciasDetalle inaDet = new InasistenciasDetalle(pac);
