@@ -105,7 +105,7 @@ if ((request.getParameter("btnAgregarHorario"))!= null ) {
 		HorarioOdonto nh = new HorarioOdonto (prueba,request.getParameter("ddlDias").toString(),horaInicio,horaFin,true);
 		
 		// el que va es el verificar horarios, cuando lo termino lo cambio
-		if (VerificarHorarios2(nh) == true) {
+		if (VerificarHorarios(nh,lista) == true) {
 		
 		request.setAttribute("Insertado", gh.insertar(nh));
 		}
@@ -113,6 +113,7 @@ if ((request.getParameter("btnAgregarHorario"))!= null ) {
 	}	
 	else {
 	request.setAttribute("Insertado", false);
+	
 	}	
 	request.setAttribute("id", request.getParameter("id"));
 	request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
@@ -123,16 +124,21 @@ if ((request.getParameter("btnAgregarHorario"))!= null ) {
 	
 	
 	public Boolean VerificarHorarios (HorarioOdonto horNuevo, List <HorarioOdonto> lista) {
+		
 		for (HorarioOdonto h : lista) {
+			
 			if (h.equals(horNuevo))
+				
 				return false;
-			if (h.getIDOdontologo() == horNuevo.getIDOdontologo() && h.getActivo()==true) {
-				if (h.getHoraInicio() == horNuevo.getHoraInicio()) {
+			if (h.getActivo()==true && h.getDia().equals(horNuevo.getDia())) {
+				System.out.print("entra");
+				if (h.getHoraInicio().equals(horNuevo.getHoraInicio())) {
 					return false;
 				}
 				else if (horNuevo.getHoraInicio().isBefore(h.getHoraInicio()) && horNuevo.getHoraFin().isAfter(h.getHoraFin())) {
 					return false;
 				}
+				else if (horNuevo.getHoraInicio().isAfter(h.getHoraInicio()) && horNuevo.getHoraInicio().isBefore(h.getHoraFin()) ) {return false;}
 				
 			}
 		}

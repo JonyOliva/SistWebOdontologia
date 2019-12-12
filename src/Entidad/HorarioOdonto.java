@@ -7,6 +7,47 @@ import java.time.LocalTime;
 
 
 public class HorarioOdonto {
+@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((Dia == null) ? 0 : Dia.hashCode());
+		result = prime * result + ((HoraFin == null) ? 0 : HoraFin.hashCode());
+		result = prime * result + ((HoraInicio == null) ? 0 : HoraInicio.hashCode());
+		result = prime * result + IDHorario;
+		result = prime * result + ((IDOdontologo == null) ? 0 : IDOdontologo.hashCode());
+		result = prime * result + ((activo == null) ? 0 : activo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	
+		HorarioOdonto other = (HorarioOdonto) obj;
+		if (Dia == null) {
+			if (other.Dia != null)
+				return false;
+		} else if (!Dia.equals(other.Dia))
+			return false;
+		if (HoraFin == null) {
+			if (other.HoraFin != null)
+				return false;
+		} else if (!HoraFin.equals(other.HoraFin))
+			return false;
+		if (HoraInicio == null) {
+			if (other.HoraInicio != null)
+				return false;
+		} else if (!HoraInicio.equals(other.HoraInicio))
+			return false;
+		if (activo == null) {
+			if (other.activo != null)
+				return false;
+		} else if (!activo.equals(other.activo))
+			return false;
+		return true;
+	}
+
+
 private int IDHorario;
 private String IDOdontologo;
 private String Dia;
