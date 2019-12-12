@@ -114,7 +114,7 @@ if ((request.getParameter("btnAgregarHorario"))!= null ) {
 	else {
 	request.setAttribute("Insertado", false);
 	}	
-
+	request.setAttribute("id", request.getParameter("id"));
 	request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
 	dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
 	dispatcher.forward(request, response);	

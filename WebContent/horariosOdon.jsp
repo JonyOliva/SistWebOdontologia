@@ -45,8 +45,8 @@
 
 			<%!GestionOdontologos gh = new GestionOdontologos();%>
 <% 
-if (request.getParameter("id")!= null){
-Odontologo od = gh.get(request.getParameter("id").toString());
+if (request.getAttribute("id")!= null){
+Odontologo od = gh.get(request.getAttribute("id").toString());
 Nombre= od.getNombre() +" "+ od.getApellido();
 }
 %>
@@ -60,7 +60,7 @@ Nombre= od.getNombre() +" "+ od.getApellido();
 			<br>
 			<table border=1>
 				<tr>
-					<th>Dï¿½a</th>
+					<th>Día</th>
 					<th>Inicio de la jornada</th>
 					<th>Fin de la jornada</th>
 					<th>Acciones</th>
@@ -115,7 +115,7 @@ Nombre= od.getNombre() +" "+ od.getApellido();
 			Boolean listo = Boolean.parseBoolean(request.getAttribute("Insertado").toString());
 			if (listo == true){
 			%>
-			Horario Insertado con ï¿½xito
+			Horario Insertado con éxito
 			
 			<% 
 		

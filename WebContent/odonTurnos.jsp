@@ -1,3 +1,5 @@
+<%@page import="NegocioImpl.GestionOdontologos"%>
+<%@page import="Entidad.Odontologo"%>
 <%@page import="Entidad.iUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -10,19 +12,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="masterInclude.html"></jsp:include>
-<%
-	/*iUsuario user =null;
-	if(session.getAttribute("usuarios") != null)
-	{
-		user = (iUsuario)session.getAttribute("usuario");
-	}
-	else
-	{
-		response.sendRedirect("index.jsp");
-	}*/
-	//if(session.getAttribute("usuario") == null) response.sendRedirect("index.jsp");
 
- %>
 <title>Turnos</title>
 <link rel="stylesheet" href="Resources/css/tables.css">
 <link rel="stylesheet" href="Resources/css/stylesheetMain.css">
@@ -32,7 +22,17 @@
 	
 	<div class="container mt-3">
 		<h5 class="titular">
-			Turnos próximos
+	<% 		
+			if(session.getAttribute("usuario") != null)
+			{
+				Odontologo od ;
+				GestionOdontologos go = new GestionOdontologos();
+				od = go.get(((Odontologo)session.getAttribute("usuario")).getIDUsuario()); 
+	%>			Turnos próximos de <br>Dr. <%=od.getApellido()+", "+od.getNombre() %>
+	<%
+			}else{response.sendRedirect("index.jsp");}
+	%>
+			
 			</h5>
 			
 		<div>
