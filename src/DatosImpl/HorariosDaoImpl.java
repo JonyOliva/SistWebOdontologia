@@ -27,7 +27,7 @@ public class HorariosDaoImpl implements IHorariosDao {
 		List<HorarioOdonto> lista = new ArrayList<HorarioOdonto>();
 		try {
 			cn.Open();
-			ResultSet rs = cn.query("SELECT * FROM HORARIOS WHERE IDOdontologo_HOR = '"+IDOdontologo+"'");
+			ResultSet rs = cn.query("SELECT * FROM HORARIOS WHERE IDOdontologo_HOR = '"+IDOdontologo+"' order by Dia, HoraInicio;");
 			while(rs.next())
 			{
 				HorarioOdonto horario = new HorarioOdonto(rs.getInt("IDHorario"));
