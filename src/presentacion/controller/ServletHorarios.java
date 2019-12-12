@@ -52,32 +52,31 @@ public class ServletHorarios extends HttpServlet {
 		RequestDispatcher dispatcher;
 		String action = request.getParameter("action");
 		request.setAttribute("id",request.getParameter("id"));
-		if(action == null) {
-			request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
-			
-			dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
-		 dispatcher.forward(request, response);
-					}
-		else if(action.equals("edit")) {
-			String id = request.getParameter("id");
-			if(id != null) {
+		if(action != null)
+		{
+			if(action.equals("edit")) {
+				String id = request.getParameter("id");
+				if(id != null) {
+					
+					
+					request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
+					
+					dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
+					dispatcher.forward(request, response);
+				}
 				
-				
+			} else if(action.equals("delete")) {
+				int id = Integer.parseInt(request.getParameter("idHorario"));
+				gh.eliminar(id);
 				request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
 				
 				dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
 				dispatcher.forward(request, response);
 			}
-			
-		} else if(action.equals("delete")) {
-			int id = Integer.parseInt(request.getParameter("idHorario"));
-			gh.eliminar(id);
-			request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
-			
-			dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
-			dispatcher.forward(request, response);
 		}
-
+		request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
+		dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
+		dispatcher.forward(request, response);
 			
 	
 	}
@@ -109,18 +108,19 @@ if ((request.getParameter("btnAgregarHorario"))!= null ) {
 		if (VerificarHorarios2(nh) == true) {
 		
 		request.setAttribute("Insertado", gh.insertar(nh));
-		dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
-		dispatcher.forward(request, response);}
+		}
 		
 	}	
-else {
+	else {
 	request.setAttribute("Insertado", false);
-	dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
-	dispatcher.forward(request, response);}	
+	}	
 
-		
+	request.setAttribute("horarios", gh.VerHorarios(request.getParameter("id")));
+	dispatcher = request.getRequestDispatcher("horariosOdon.jsp");
+	dispatcher.forward(request, response);	
 		
 	}
+	
 	
 	public Boolean VerificarHorarios (HorarioOdonto horNuevo, List <HorarioOdonto> lista) {
 		for (HorarioOdonto h : lista) {

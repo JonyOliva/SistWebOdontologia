@@ -76,7 +76,7 @@ Nombre= od.getNombre() +" "+ od.getApellido();
 				<td style="text-align: center;">
 					
 						
-						 <a href="ServletHorarios?action=delete&idHorario=<%=hor.getIDHorario()%>"
+						 <a href="ServletHorarios?action=delete&id=<%=request.getAttribute("id")%>&idHorario=<%=hor.getIDHorario()%>"
 						class="btn btn-primary btn-sm">Eliminar</a>
 						</td>	
 					<%} %>
@@ -106,7 +106,9 @@ Nombre= od.getNombre() +" "+ od.getApellido();
 					
 					<td style="text-align: center;"><input type="submit" name="btnAgregarHorario" value="Agregar"
 						class="btn btn-primary btn-sm"/></td>
-				</tr></form>
+						
+				</tr>
+				</form>
 
 				<%
 				if (request.getAttribute("Insertado")!= null) {
