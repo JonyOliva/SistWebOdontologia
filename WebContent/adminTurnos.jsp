@@ -1,3 +1,5 @@
+<%@page import="NegocioImpl.GestionOdontologos"%>
+<%@page import="Entidad.Odontologo"%>
 <%@page import="Entidad.iUsuario"%>
 <%@page import="Datos.iUsuarioDao"%>
 <%@page import="DatosImpl.UsuarioDaoImpl"%>
@@ -121,10 +123,13 @@
 				<%if(request.getAttribute("turnos") != null)
 				{
 					listaTurnos =(List<TurnosVista>)request.getAttribute("turnos");
-				
-				for(TurnosVista t : listaTurnos){ %>
-					<td><%=t.getApellidoPac()+", "+t.getNombrePac() %></td>
-					<td><%=t.getApellidoOd()+", "+t.getNombreOd()%></td>
+					
+				for(TurnosVista t : listaTurnos){
+					GestionOdontologos go = new GestionOdontologos();
+					Odontologo od =  go.get(t.getTurno().getIDOdontologo());
+					%>
+					<td><%=t.getApellidoPac()+", "+t.getNombrePac()+" DNI: "+t.getDni() %></td>
+					<td><%=t.getApellidoOd()+", "+t.getNombreOd()+" DNI: "+od.getDNI()%></td>
 					<td><%=t.getTurno().getFecha().toString().replace("T", " ") %></td>
 					<td><%=t.getTurno().getEstado() %></td>
 					<td style="text-align: center;"><a 
