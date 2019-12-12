@@ -120,8 +120,10 @@ Nombre= od.getNombre() +" "+ od.getApellido();
 			<% 
 		
 			} 
-			else {%>
-			Ingreso datos incorrectos
+			else if (listo == false){
+			
+			%>
+			Faltan datos o los datos ingresados son incorrectos.
 			 <%}
 			;}
 			 %> 
