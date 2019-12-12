@@ -362,6 +362,7 @@ List<TurnosVista> lista = new ArrayList<TurnosVista>();
 				TurnoVista.setNombrePac(rs.getString("Pacientes.Nombre"));
 				TurnoVista.setNombreOd(rs.getString("Odontologos.Nombre"));
 				TurnoVista.setApellidoOd(rs.getString("Odontologos.Apellido"));
+				TurnoVista.setDni(rs.getString("pacientes.DNI"));
 				
 				lista.add(TurnoVista);
 			}
@@ -440,6 +441,8 @@ List<TurnosVista> lista = new ArrayList<TurnosVista>();
 				TurnoVista.setNombrePac(rs.getString("Pacientes.Nombre"));
 				TurnoVista.setNombreOd(rs.getString("Odontologos.Nombre"));
 				TurnoVista.setApellidoOd(rs.getString("Odontologos.Apellido"));
+				TurnoVista.setDni(rs.getString("pacientes.DNI"));
+
 				
 				lista.add(TurnoVista);
 			}
