@@ -149,7 +149,7 @@ public class TurnosDaoImpl implements ITurnosDao{
 		try {
 				cn.Open();
 				ResultSet rs = cn.query("SELECT * FROM Turnos WHERE IDOdontologo_T = '"+turno.getIDOdontologo()+"' "
-						+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"' AND Estado = 'Activo");
+						+ "AND Fecha = '"+turno.getFecha().toString().replace('T', ' ')+"' AND Estado = 'Activo'");
 				while(rs.next())
 				{
 					Turno tur = new Turno(rs.getInt("IDTurno"));

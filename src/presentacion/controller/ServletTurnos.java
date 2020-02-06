@@ -186,8 +186,9 @@ public class ServletTurnos extends HttpServlet {
 					fecha = request.getParameter("txtFecha").toString();
 					boolean verifHora=true;
 					if(hora.equals("null"))
+					{
 						request.setAttribute("Correcto", "El horario no puede quedar vacio.");
-					if(LocalDateTime.now().isAfter(LocalDateTime.parse(fecha+" "+hora,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))))
+					}else if(LocalDateTime.now().isAfter(LocalDateTime.parse(fecha+" "+hora,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))))
 					{
 						request.setAttribute("Correcto", "Ese turno ya paso.");
 						verifHora = false;
